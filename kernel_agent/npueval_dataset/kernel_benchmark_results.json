@@ -1,0 +1,838 @@
+{
+  "summary": {
+    "timestamp": "2025-09-09 18:38:34",
+    "total_kernels": 55,
+    "passed": 55,
+    "failed": 0,
+    "errors": 0,
+    "total_execution_time_seconds": 481.0496850013733,
+    "success_rate": 1.0
+  },
+  "results": [
+    {
+      "kernel_name": "abs_int8",
+      "success": true,
+      "metrics": {
+        "avg_npu_time_us": 129.0,
+        "min_npu_time_us": 117.0,
+        "avg_cycles": 9990.0,
+        "min_cycles": 9990,
+        "max_cycles": 9990,
+        "num_invocations": 25,
+        "status": "pass"
+      },
+      "error_message": null,
+      "execution_time_seconds": 8.695119380950928
+    },
+    {
+      "kernel_name": "add_offset_int8",
+      "success": true,
+      "metrics": {
+        "avg_npu_time_us": 146.0,
+        "min_npu_time_us": 117.0,
+        "avg_cycles": 2566.0,
+        "min_cycles": 2566,
+        "max_cycles": 2566,
+        "num_invocations": 25,
+        "status": "pass"
+      },
+      "error_message": null,
+      "execution_time_seconds": 8.7322416305542
+    },
+    {
+      "kernel_name": "argmax_bfloat16",
+      "success": true,
+      "metrics": {
+        "avg_npu_time_us": 115.75,
+        "min_npu_time_us": 106.0,
+        "avg_cycles": 2472.0,
+        "min_cycles": 2472,
+        "max_cycles": 2472,
+        "num_invocations": 25,
+        "status": "pass"
+      },
+      "error_message": null,
+      "execution_time_seconds": 8.793545246124268
+    },
+    {
+      "kernel_name": "argmax_int32",
+      "success": true,
+      "metrics": {
+        "avg_npu_time_us": 122.15,
+        "min_npu_time_us": 108.0,
+        "avg_cycles": 1792.0,
+        "min_cycles": 1792,
+        "max_cycles": 1792,
+        "num_invocations": 25,
+        "status": "pass"
+      },
+      "error_message": null,
+      "execution_time_seconds": 8.61901044845581
+    },
+    {
+      "kernel_name": "argmin_bfloat16",
+      "success": true,
+      "metrics": {
+        "avg_npu_time_us": 124.45,
+        "min_npu_time_us": 107.0,
+        "avg_cycles": 2472.0,
+        "min_cycles": 2472,
+        "max_cycles": 2472,
+        "num_invocations": 24,
+        "status": "pass"
+      },
+      "error_message": null,
+      "execution_time_seconds": 8.795641660690308
+    },
+    {
+      "kernel_name": "avgpool1d_bfloat16",
+      "success": true,
+      "metrics": {
+        "avg_npu_time_us": 1051.8,
+        "min_npu_time_us": 587.0,
+        "avg_cycles": 56368.0,
+        "min_cycles": 56368,
+        "max_cycles": 56368,
+        "num_invocations": 25,
+        "status": "pass"
+      },
+      "error_message": null,
+      "execution_time_seconds": 8.745465993881226
+    },
+    {
+      "kernel_name": "avgpool1d_relu_bfloat16",
+      "success": true,
+      "metrics": {
+        "avg_npu_time_us": 273.6,
+        "min_npu_time_us": 155.0,
+        "avg_cycles": 51264.0,
+        "min_cycles": 51264,
+        "max_cycles": 51264,
+        "num_invocations": 25,
+        "status": "pass"
+      },
+      "error_message": null,
+      "execution_time_seconds": 8.65971302986145
+    },
+    {
+      "kernel_name": "avgpool2d_bfloat16",
+      "success": true,
+      "metrics": {
+        "avg_npu_time_us": 865.95,
+        "min_npu_time_us": 410.0,
+        "avg_cycles": 192940,
+        "min_cycles": 192940,
+        "max_cycles": 192940,
+        "num_invocations": 22,
+        "status": "pass"
+      },
+      "error_message": null,
+      "execution_time_seconds": 8.677372694015503
+    },
+    {
+      "kernel_name": "avgpool2d_relu_bfloat16",
+      "success": true,
+      "metrics": {
+        "avg_npu_time_us": 338.3,
+        "min_npu_time_us": 308.0,
+        "avg_cycles": 206514.0,
+        "min_cycles": 206514,
+        "max_cycles": 206514,
+        "num_invocations": 10,
+        "status": "pass"
+      },
+      "error_message": null,
+      "execution_time_seconds": 8.694220066070557
+    },
+    {
+      "kernel_name": "bitcount_int16",
+      "success": true,
+      "metrics": {
+        "avg_npu_time_us": 239.9,
+        "min_npu_time_us": 158.0,
+        "avg_cycles": 42015.0,
+        "min_cycles": 42015,
+        "max_cycles": 42015,
+        "num_invocations": 25,
+        "status": "pass"
+      },
+      "error_message": null,
+      "execution_time_seconds": 8.647358894348145
+    },
+    {
+      "kernel_name": "cast_bfloat16_to_float32",
+      "success": true,
+      "metrics": {
+        "avg_npu_time_us": 119.35,
+        "min_npu_time_us": 102.0,
+        "avg_cycles": 2183.0,
+        "min_cycles": 2183,
+        "max_cycles": 2183,
+        "num_invocations": 25,
+        "status": "pass"
+      },
+      "error_message": null,
+      "execution_time_seconds": 8.652970552444458
+    },
+    {
+      "kernel_name": "cast_bfloat16_to_int8",
+      "success": true,
+      "metrics": {
+        "avg_npu_time_us": 264.7,
+        "min_npu_time_us": 228.0,
+        "avg_cycles": 122075.0,
+        "min_cycles": 122075,
+        "max_cycles": 122075,
+        "num_invocations": 25,
+        "status": "pass"
+      },
+      "error_message": null,
+      "execution_time_seconds": 8.662466049194336
+    },
+    {
+      "kernel_name": "cast_float32_to_bfloat16",
+      "success": true,
+      "metrics": {
+        "avg_npu_time_us": 119.7,
+        "min_npu_time_us": 105.0,
+        "avg_cycles": 3079.0,
+        "min_cycles": 3079,
+        "max_cycles": 3079,
+        "num_invocations": 25,
+        "status": "pass"
+      },
+      "error_message": null,
+      "execution_time_seconds": 8.619850158691406
+    },
+    {
+      "kernel_name": "cast_int8_to_int32",
+      "success": true,
+      "metrics": {
+        "avg_npu_time_us": 110.4,
+        "min_npu_time_us": 105.0,
+        "avg_cycles": 2311.0,
+        "min_cycles": 2311,
+        "max_cycles": 2311,
+        "num_invocations": 25,
+        "status": "pass"
+      },
+      "error_message": null,
+      "execution_time_seconds": 8.60903024673462
+    },
+    {
+      "kernel_name": "ceil_bfloat16",
+      "success": true,
+      "metrics": {
+        "avg_npu_time_us": 250.85,
+        "min_npu_time_us": 163.0,
+        "avg_cycles": 52357.0,
+        "min_cycles": 52357,
+        "max_cycles": 52357,
+        "num_invocations": 25,
+        "status": "pass"
+      },
+      "error_message": null,
+      "execution_time_seconds": 8.648988246917725
+    },
+    {
+      "kernel_name": "compare_equal_bfloat16",
+      "success": true,
+      "metrics": {
+        "avg_npu_time_us": 120.4,
+        "min_npu_time_us": 112.0,
+        "avg_cycles": 4167.0,
+        "min_cycles": 4167,
+        "max_cycles": 4167,
+        "num_invocations": 25,
+        "status": "pass"
+      },
+      "error_message": null,
+      "execution_time_seconds": 8.822009086608887
+    },
+    {
+      "kernel_name": "compare_equal_int32",
+      "success": true,
+      "metrics": {
+        "avg_npu_time_us": 149.65,
+        "min_npu_time_us": 114.0,
+        "avg_cycles": 2887.0,
+        "min_cycles": 2887,
+        "max_cycles": 2887,
+        "num_invocations": 25,
+        "status": "pass"
+      },
+      "error_message": null,
+      "execution_time_seconds": 8.656118631362915
+    },
+    {
+      "kernel_name": "compare_gt_int8",
+      "success": true,
+      "metrics": {
+        "avg_npu_time_us": 124.25,
+        "min_npu_time_us": 108.0,
+        "avg_cycles": 2758.0,
+        "min_cycles": 2758,
+        "max_cycles": 2758,
+        "num_invocations": 25,
+        "status": "pass"
+      },
+      "error_message": null,
+      "execution_time_seconds": 8.660823106765747
+    },
+    {
+      "kernel_name": "compare_lt_int8",
+      "success": true,
+      "metrics": {
+        "avg_npu_time_us": 133.0,
+        "min_npu_time_us": 113.0,
+        "avg_cycles": 2758.0,
+        "min_cycles": 2758,
+        "max_cycles": 2758,
+        "num_invocations": 25,
+        "status": "pass"
+      },
+      "error_message": null,
+      "execution_time_seconds": 8.662304639816284
+    },
+    {
+      "kernel_name": "complexabs_bfloat16",
+      "success": true,
+      "metrics": {
+        "avg_npu_time_us": 541.5,
+        "min_npu_time_us": 190.0,
+        "avg_cycles": 79768.0,
+        "min_cycles": 79768,
+        "max_cycles": 79768,
+        "num_invocations": 25,
+        "status": "pass"
+      },
+      "error_message": null,
+      "execution_time_seconds": 8.701083421707153
+    },
+    {
+      "kernel_name": "conv1d_bfloat16",
+      "success": true,
+      "metrics": {
+        "avg_npu_time_us": 251.25,
+        "min_npu_time_us": 245.0,
+        "avg_cycles": 131557,
+        "min_cycles": 131557,
+        "max_cycles": 131557,
+        "num_invocations": 24,
+        "status": "pass"
+      },
+      "error_message": null,
+      "execution_time_seconds": 8.717185974121094
+    },
+    {
+      "kernel_name": "conv1d_bias_relu_bfloat16",
+      "success": true,
+      "metrics": {
+        "avg_npu_time_us": 457.05,
+        "min_npu_time_us": 411.0,
+        "avg_cycles": 284191.0,
+        "min_cycles": 284191,
+        "max_cycles": 284191,
+        "num_invocations": 25,
+        "status": "pass"
+      },
+      "error_message": null,
+      "execution_time_seconds": 9.141111373901367
+    },
+    {
+      "kernel_name": "conv1d_int32",
+      "success": true,
+      "metrics": {
+        "avg_npu_time_us": 138.9,
+        "min_npu_time_us": 118.0,
+        "avg_cycles": 6155.0,
+        "min_cycles": 6155,
+        "max_cycles": 6155,
+        "num_invocations": 25,
+        "status": "pass"
+      },
+      "error_message": null,
+      "execution_time_seconds": 8.626820802688599
+    },
+    {
+      "kernel_name": "conv1d_k2_s1_bias_relu_bfloat16",
+      "success": true,
+      "metrics": {
+        "avg_npu_time_us": 337.15,
+        "min_npu_time_us": 303.0,
+        "avg_cycles": 190616.0,
+        "min_cycles": 190616,
+        "max_cycles": 190616,
+        "num_invocations": 25,
+        "status": "pass"
+      },
+      "error_message": null,
+      "execution_time_seconds": 8.739827394485474
+    },
+    {
+      "kernel_name": "conv1d_k2_s2_bias_int16",
+      "success": true,
+      "metrics": {
+        "avg_npu_time_us": 127.7,
+        "min_npu_time_us": 110.0,
+        "avg_cycles": 920.0,
+        "min_cycles": 920,
+        "max_cycles": 920,
+        "num_invocations": 25,
+        "status": "pass"
+      },
+      "error_message": null,
+      "execution_time_seconds": 9.507004737854004
+    },
+    {
+      "kernel_name": "conv1d_k4_s1_bias_relu_bfloat16",
+      "success": true,
+      "metrics": {
+        "avg_npu_time_us": 1141.05,
+        "min_npu_time_us": 659.0,
+        "avg_cycles": 77350.0,
+        "min_cycles": 77350,
+        "max_cycles": 77350,
+        "num_invocations": 25,
+        "status": "pass"
+      },
+      "error_message": null,
+      "execution_time_seconds": 9.163684844970703
+    },
+    {
+      "kernel_name": "cumsum_int16",
+      "success": true,
+      "metrics": {
+        "avg_npu_time_us": 126.45,
+        "min_npu_time_us": 110.0,
+        "avg_cycles": 4423.0,
+        "min_cycles": 4423,
+        "max_cycles": 4423,
+        "num_invocations": 25,
+        "status": "pass"
+      },
+      "error_message": null,
+      "execution_time_seconds": 8.674983978271484
+    },
+    {
+      "kernel_name": "dotproduct_bias_relu_int8",
+      "success": true,
+      "metrics": {
+        "avg_npu_time_us": 126.2,
+        "min_npu_time_us": 116.0,
+        "avg_cycles": 1424.0,
+        "min_cycles": 1424,
+        "max_cycles": 1424,
+        "num_invocations": 25,
+        "status": "pass"
+      },
+      "error_message": null,
+      "execution_time_seconds": 8.726789474487305
+    },
+    {
+      "kernel_name": "dotproduct_int32",
+      "success": true,
+      "metrics": {
+        "avg_npu_time_us": 151.9,
+        "min_npu_time_us": 124.0,
+        "avg_cycles": 3207.0,
+        "min_cycles": 3207,
+        "max_cycles": 3207,
+        "num_invocations": 25,
+        "status": "pass"
+      },
+      "error_message": null,
+      "execution_time_seconds": 8.812551975250244
+    },
+    {
+      "kernel_name": "elementwise_max_int8",
+      "success": true,
+      "metrics": {
+        "avg_npu_time_us": 147.05,
+        "min_npu_time_us": 118.0,
+        "avg_cycles": 3270.0,
+        "min_cycles": 3270,
+        "max_cycles": 3270,
+        "num_invocations": 25,
+        "status": "pass"
+      },
+      "error_message": null,
+      "execution_time_seconds": 9.161813974380493
+    },
+    {
+      "kernel_name": "elementwise_min_bfloat16",
+      "success": true,
+      "metrics": {
+        "avg_npu_time_us": 126.5,
+        "min_npu_time_us": 112.0,
+        "avg_cycles": 1991.0,
+        "min_cycles": 1991,
+        "max_cycles": 1991,
+        "num_invocations": 25,
+        "status": "pass"
+      },
+      "error_message": null,
+      "execution_time_seconds": 8.74711275100708
+    },
+    {
+      "kernel_name": "elementwise_min_int8",
+      "success": true,
+      "metrics": {
+        "avg_npu_time_us": 131.85,
+        "min_npu_time_us": 108.0,
+        "avg_cycles": 3270.0,
+        "min_cycles": 3270,
+        "max_cycles": 3270,
+        "num_invocations": 25,
+        "status": "pass"
+      },
+      "error_message": null,
+      "execution_time_seconds": 8.760338306427002
+    },
+    {
+      "kernel_name": "gather_bfloat16_int32idx",
+      "success": true,
+      "metrics": {
+        "avg_npu_time_us": 119.65,
+        "min_npu_time_us": 115.0,
+        "avg_cycles": 3591.0,
+        "min_cycles": 3591,
+        "max_cycles": 3591,
+        "num_invocations": 25,
+        "status": "pass"
+      },
+      "error_message": null,
+      "execution_time_seconds": 8.881072282791138
+    },
+    {
+      "kernel_name": "hardsigmoid_int8",
+      "success": true,
+      "metrics": {
+        "avg_npu_time_us": 384.55,
+        "min_npu_time_us": 341.0,
+        "avg_cycles": 227904.0,
+        "min_cycles": 227904,
+        "max_cycles": 227904,
+        "num_invocations": 25,
+        "status": "pass"
+      },
+      "error_message": null,
+      "execution_time_seconds": 8.778417348861694
+    },
+    {
+      "kernel_name": "matmul_16x16_int8",
+      "success": true,
+      "metrics": {
+        "avg_npu_time_us": 138.6,
+        "min_npu_time_us": 135.0,
+        "avg_cycles": 25009.0,
+        "min_cycles": 25009,
+        "max_cycles": 25009,
+        "num_invocations": 25,
+        "status": "pass"
+      },
+      "error_message": null,
+      "execution_time_seconds": 8.665353059768677
+    },
+    {
+      "kernel_name": "matrixvector_mult_int8",
+      "success": true,
+      "metrics": {
+        "avg_npu_time_us": 123.3,
+        "min_npu_time_us": 106.0,
+        "avg_cycles": 977.0,
+        "min_cycles": 977,
+        "max_cycles": 977,
+        "num_invocations": 25,
+        "status": "pass"
+      },
+      "error_message": null,
+      "execution_time_seconds": 8.638702154159546
+    },
+    {
+      "kernel_name": "maxpool2d_relu_int8",
+      "success": true,
+      "metrics": {
+        "avg_npu_time_us": 129.75,
+        "min_npu_time_us": 104.0,
+        "avg_cycles": 1807.0,
+        "min_cycles": 1807,
+        "max_cycles": 1807,
+        "num_invocations": 25,
+        "status": "pass"
+      },
+      "error_message": null,
+      "execution_time_seconds": 8.654553174972534
+    },
+    {
+      "kernel_name": "negate_int8",
+      "success": true,
+      "metrics": {
+        "avg_npu_time_us": 120.35,
+        "min_npu_time_us": 103.0,
+        "avg_cycles": 2503.0,
+        "min_cycles": 2503,
+        "max_cycles": 2503,
+        "num_invocations": 25,
+        "status": "pass"
+      },
+      "error_message": null,
+      "execution_time_seconds": 8.790428400039673
+    },
+    {
+      "kernel_name": "pad1d_int32",
+      "success": true,
+      "metrics": {
+        "avg_npu_time_us": 123.25,
+        "min_npu_time_us": 114.0,
+        "avg_cycles": 4807.0,
+        "min_cycles": 4807,
+        "max_cycles": 4807,
+        "num_invocations": 25,
+        "status": "pass"
+      },
+      "error_message": null,
+      "execution_time_seconds": 8.689917802810669
+    },
+    {
+      "kernel_name": "pad2d_int32",
+      "success": true,
+      "metrics": {
+        "avg_npu_time_us": 168.2,
+        "min_npu_time_us": 120.0,
+        "avg_cycles": 5560.0,
+        "min_cycles": 5560,
+        "max_cycles": 5560,
+        "num_invocations": 25,
+        "status": "pass"
+      },
+      "error_message": null,
+      "execution_time_seconds": 8.685731410980225
+    },
+    {
+      "kernel_name": "reduce_add_relu_int8",
+      "success": true,
+      "metrics": {
+        "avg_npu_time_us": 125.4,
+        "min_npu_time_us": 104.0,
+        "avg_cycles": 392.0,
+        "min_cycles": 392,
+        "max_cycles": 392,
+        "num_invocations": 25,
+        "status": "pass"
+      },
+      "error_message": null,
+      "execution_time_seconds": 8.70105266571045
+    },
+    {
+      "kernel_name": "reducemin_bfloat16",
+      "success": true,
+      "metrics": {
+        "avg_npu_time_us": 149.45,
+        "min_npu_time_us": 107.0,
+        "avg_cycles": 448.0,
+        "min_cycles": 448,
+        "max_cycles": 448,
+        "num_invocations": 25,
+        "status": "pass"
+      },
+      "error_message": null,
+      "execution_time_seconds": 8.680854558944702
+    },
+    {
+      "kernel_name": "relu_int8",
+      "success": true,
+      "metrics": {
+        "avg_npu_time_us": 188.05,
+        "min_npu_time_us": 126.0,
+        "avg_cycles": 11015.0,
+        "min_cycles": 11015,
+        "max_cycles": 11015,
+        "num_invocations": 25,
+        "status": "pass"
+      },
+      "error_message": null,
+      "execution_time_seconds": 8.627493858337402
+    },
+    {
+      "kernel_name": "shuffle_int32",
+      "success": true,
+      "metrics": {
+        "avg_npu_time_us": 175.65,
+        "min_npu_time_us": 124.0,
+        "avg_cycles": 15388.0,
+        "min_cycles": 15388,
+        "max_cycles": 15388,
+        "num_invocations": 25,
+        "status": "pass"
+      },
+      "error_message": null,
+      "execution_time_seconds": 8.665602445602417
+    },
+    {
+      "kernel_name": "sigmoid_bfloat16",
+      "success": true,
+      "metrics": {
+        "avg_npu_time_us": 1359.7,
+        "min_npu_time_us": 1105.0,
+        "avg_cycles": 110252.0,
+        "min_cycles": 110252,
+        "max_cycles": 110252,
+        "num_invocations": 25,
+        "status": "pass"
+      },
+      "error_message": null,
+      "execution_time_seconds": 8.717255115509033
+    },
+    {
+      "kernel_name": "sign_int8",
+      "success": true,
+      "metrics": {
+        "avg_npu_time_us": 148.45,
+        "min_npu_time_us": 116.0,
+        "avg_cycles": 7776.0,
+        "min_cycles": 7776,
+        "max_cycles": 7776,
+        "num_invocations": 25,
+        "status": "pass"
+      },
+      "error_message": null,
+      "execution_time_seconds": 8.641526222229004
+    },
+    {
+      "kernel_name": "sin_bfloat16",
+      "success": true,
+      "metrics": {
+        "avg_npu_time_us": 760.7,
+        "min_npu_time_us": 737.0,
+        "avg_cycles": 71031.0,
+        "min_cycles": 71031,
+        "max_cycles": 71031,
+        "num_invocations": 25,
+        "status": "pass"
+      },
+      "error_message": null,
+      "execution_time_seconds": 8.687692403793335
+    },
+    {
+      "kernel_name": "sqrt_bfloat16",
+      "success": true,
+      "metrics": {
+        "avg_npu_time_us": 983.05,
+        "min_npu_time_us": 459.0,
+        "avg_cycles": 162449.0,
+        "min_cycles": 162449,
+        "max_cycles": 162449,
+        "num_invocations": 25,
+        "status": "pass"
+      },
+      "error_message": null,
+      "execution_time_seconds": 8.79200005531311
+    },
+    {
+      "kernel_name": "tanh_bfloat16",
+      "success": true,
+      "metrics": {
+        "avg_npu_time_us": 1256.7,
+        "min_npu_time_us": 988.0,
+        "avg_cycles": 582023.0,
+        "min_cycles": 582023,
+        "max_cycles": 582023,
+        "num_invocations": 25,
+        "status": "pass"
+      },
+      "error_message": null,
+      "execution_time_seconds": 8.831609725952148
+    },
+    {
+      "kernel_name": "vectoradd_bfloat16",
+      "success": true,
+      "metrics": {
+        "avg_npu_time_us": 131.7,
+        "min_npu_time_us": 120.0,
+        "avg_cycles": 3079.0,
+        "min_cycles": 3079,
+        "max_cycles": 3079,
+        "num_invocations": 25,
+        "status": "pass"
+      },
+      "error_message": null,
+      "execution_time_seconds": 8.692333221435547
+    },
+    {
+      "kernel_name": "vectoradd_int16",
+      "success": true,
+      "metrics": {
+        "avg_npu_time_us": 121.85,
+        "min_npu_time_us": 108.0,
+        "avg_cycles": 2631.0,
+        "min_cycles": 2631,
+        "max_cycles": 2631,
+        "num_invocations": 25,
+        "status": "pass"
+      },
+      "error_message": null,
+      "execution_time_seconds": 8.63963508605957
+    },
+    {
+      "kernel_name": "vectoradd_relu_bfloat16",
+      "success": true,
+      "metrics": {
+        "avg_npu_time_us": 129.65,
+        "min_npu_time_us": 115.0,
+        "avg_cycles": 6983.0,
+        "min_cycles": 6983,
+        "max_cycles": 6983,
+        "num_invocations": 25,
+        "status": "pass"
+      },
+      "error_message": null,
+      "execution_time_seconds": 9.044898271560669
+    },
+    {
+      "kernel_name": "vectormatrix_mult_int32",
+      "success": true,
+      "metrics": {
+        "avg_npu_time_us": 136.25,
+        "min_npu_time_us": 112.0,
+        "avg_cycles": 3141.0,
+        "min_cycles": 3141,
+        "max_cycles": 3141,
+        "num_invocations": 25,
+        "status": "pass"
+      },
+      "error_message": null,
+      "execution_time_seconds": 8.647819995880127
+    },
+    {
+      "kernel_name": "vectorsubtract_bfloat16",
+      "success": true,
+      "metrics": {
+        "avg_npu_time_us": 150.3,
+        "min_npu_time_us": 116.0,
+        "avg_cycles": 3079.0,
+        "min_cycles": 3079,
+        "max_cycles": 3079,
+        "num_invocations": 25,
+        "status": "pass"
+      },
+      "error_message": null,
+      "execution_time_seconds": 8.722327947616577
+    },
+    {
+      "kernel_name": "vectorsubtract_int8",
+      "success": true,
+      "metrics": {
+        "avg_npu_time_us": 151.95,
+        "min_npu_time_us": 114.0,
+        "avg_cycles": 5510.0,
+        "min_cycles": 5510,
+        "max_cycles": 5510,
+        "num_invocations": 25,
+        "status": "pass"
+      },
+      "error_message": null,
+      "execution_time_seconds": 8.63305926322937
+    }
+  ]
+}

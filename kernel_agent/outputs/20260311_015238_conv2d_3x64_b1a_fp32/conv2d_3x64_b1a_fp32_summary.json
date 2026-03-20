@@ -1,0 +1,35 @@
+{
+  "kernel_name": "conv2d_3x64_b1a_fp32",
+  "kernel_path": "/home/qz425/decomposition_workspace/kernel_agent/kernel/conv2d_3x64_b1a_fp32/conv2d_3x64_b1a_fp32.cc",
+  "test_path": "/home/qz425/decomposition_workspace/kernel_agent/kernel/conv2d_3x64_b1a_fp32/conv2d_3x64_b1a_fp32_test.py",
+  "output_dir": "/home/qz425/decomposition_workspace/kernel_agent/outputs/20260311_015238_conv2d_3x64_b1a_fp32",
+  "status": {
+    "compilation_success": true,
+    "execution_success": true,
+    "verification_success": false,
+    "skipped": false
+  },
+  "performance_analysis": {
+    "vector_time_us": 5741.6,
+    "min_time_us": 5709.0,
+    "vector_time_cycles": 107991.0,
+    "min_cycles": 104807.0,
+    "avg_cycles": 107991.0,
+    "max_cycles": 111175.0,
+    "trace_analysis_message": "Trace analysis completed."
+  },
+  "command_details": {
+    "command": [
+      "/home/qz425/.conda/envs/allo/bin/python",
+      "/home/qz425/decomposition_workspace/kernel_agent/kernel/conv2d_3x64_b1a_fp32/conv2d_3x64_b1a_fp32_test.py",
+      "--kernel_path",
+      "/home/qz425/decomposition_workspace/kernel_agent/kernel/conv2d_3x64_b1a_fp32/conv2d_3x64_b1a_fp32.cc"
+    ],
+    "working_directory": "/home/qz425/decomposition_workspace/kernel_agent/kernel/conv2d_3x64_b1a_fp32",
+    "return_code": 0
+  },
+  "raw_output_lengths": {
+    "stdout_length": 2527,
+    "stderr_length": 7038
+  }
+}
