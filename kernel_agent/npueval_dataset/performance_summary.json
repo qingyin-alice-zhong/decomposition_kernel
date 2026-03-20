@@ -1,0 +1,56 @@
+{
+  "benchmark_summary": {
+    "timestamp": "2025-09-03 21:38:15",
+    "total_kernels": 55,
+    "successful_kernels": 49,
+    "success_rate": "89.1%",
+    "total_execution_time": "564.7 seconds"
+  },
+  "performance_metrics": {
+    "avg_cycles_all": 37601.3,
+    "min_cycles": 72.0,
+    "max_cycles": 284097.0,
+    "median_cycles": 3430.5
+  },
+  "top_10_fastest_kernels": [
+    {"name": "dotproduct_bias_relu_int8", "cycles": 72.0},
+    {"name": "reduce_add_relu_int8", "cycles": 392.0},
+    {"name": "reducemin_bfloat16", "cycles": 448.0},
+    {"name": "conv1d_k2_s2_bias_int16", "cycles": 920.0},
+    {"name": "matrixvector_mult_int8", "cycles": 977.0},
+    {"name": "argmax_int32", "cycles": 1792.0},
+    {"name": "maxpool2d_relu_int8", "cycles": 1807.0},
+    {"name": "elementwise_min_bfloat16", "cycles": 1991.0},
+    {"name": "cast_bfloat16_to_float32", "cycles": 2183.0},
+    {"name": "cast_int8_to_int32", "cycles": 2311.0}
+  ],
+  "category_performance": {
+    "Convolution": {"count": 5, "avg_cycles": 122694.2},
+    "Pooling": {"count": 4, "avg_cycles": 84200.8},
+    "Mathematical": {"count": 4, "avg_cycles": 148136.0},
+    "Elementwise": {"count": 8, "avg_cycles": 3791.9},
+    "Reduction": {"count": 7, "avg_cycles": 1550.7},
+    "Matrix Operations": {"count": 3, "avg_cycles": 9709.0},
+    "Type Casting": {"count": 3, "avg_cycles": 2524.3},
+    "Comparison": {"count": 4, "avg_cycles": 3142.5}
+  },
+  "data_type_performance": {
+    "int8": {"count": 17, "note": "Various cycle counts"},
+    "bfloat16": {"count": 19, "avg_cycles": 70222.1},
+    "int32": {"count": 9, "avg_cycles": 12482.7},
+    "int16": {"count": 4, "avg_cycles": 12512.2}
+  },
+  "failed_kernels": [
+    "avgpool2d_relu_bfloat16",
+    "cast_bfloat16_to_int8", 
+    "complexabs_bfloat16",
+    "conv1d_k4_s1_bias_relu_bfloat16",
+    "sin_bfloat16",
+    "tanh_bfloat16"
+  ],
+  "file_locations": {
+    "detailed_results": "kernel_benchmark_results.json",
+    "performance_csv": "kernel_performance_details.csv",
+    "summary": "performance_summary.json"
+  }
+}

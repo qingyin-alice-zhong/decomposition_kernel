@@ -1,0 +1,96 @@
+kernel_name,success,status,avg_cycles,min_cycles,max_cycles,avg_npu_time_us,min_npu_time_us,num_invocations,execution_time_seconds,error_message
+abs_int8,True,pass,9990.0,9990.0,9990.0,122.86,110.0,333.0,9.761178493499756,
+add_offset_int8,True,pass,2566.0,2566.0,2566.0,123.134,107.0,297.0,9.691170930862427,
+argmax_bfloat16,True,pass,2472.0,2472.0,2472.0,113.741,99.0,115.0,10.435767889022827,
+argmax_int32,True,pass,1792.0,1792.0,1792.0,113.668,100.0,359.0,9.576965570449829,
+argmin_bfloat16,True,pass,2472.0,2472.0,2472.0,113.303,99.0,115.0,10.410952091217041,
+avgpool1d_bfloat16,True,pass,55895.0,55895.0,55895.0,433.057,417.0,66.0,13.431032180786133,
+avgpool1d_relu_bfloat16,True,pass,51238.0,51238.0,51238.0,165.255,150.0,333.0,10.204716920852661,
+avgpool2d_bfloat16,True,pass,227863.37293729372,192626.0,317355.0,308.419,291.0,303.0,12.00295376777649,
+avgpool2d_relu_bfloat16,False,error,,,,,,,9.953662872314453,"Traceback (most recent call last):
+  File ""/home/jl4257/llm_codegen/npueval_dataset/avgpool2d_relu_bfloat16/test.py"", line 101, in <module>
+    _test_avgpool2d_relu_bfloat16(args.kernel_path)
+  File ""/home/jl4257/llm_codegen/npueval_dataset/avgpool2d_relu_bfloat16/test.py"", line 76, in _test_avgpool2d_relu_bfloat16
+    mod(input_tensor, output_allo)
+  File ""/home/jl4257/allo/allo/backend/aie/__init__.py"", line 715, in __call__
+    raise RuntimeError(""Failed to execute AIE code."")
+RuntimeError: Failed to execute AIE code.
+"
+bitcount_int16,True,pass,42075.0,42075.0,42075.0,155.658,141.0,333.0,10.050936937332153,
+cast_bfloat16_to_float32,True,pass,2183.0,2183.0,2183.0,112.956,99.0,341.0,9.562142372131348,
+cast_bfloat16_to_int8,False,error,,,,,,,10.62812852859497,"Traceback (most recent call last):
+  File ""/home/jl4257/llm_codegen/npueval_dataset/cast_bfloat16_to_int8/test.py"", line 108, in <module>
+    _test_cast_bfloat16_to_int8(args.kernel_path)
+  File ""/home/jl4257/llm_codegen/npueval_dataset/cast_bfloat16_to_int8/test.py"", line 84, in _test_cast_bfloat16_to_int8
+    mod(input_tensor, output_allo)
+  File ""/home/jl4257/allo/allo/backend/aie/__init__.py"", line 715, in __call__
+    raise RuntimeError(""Failed to execute AIE code."")
+RuntimeError: Failed to execute AIE code.
+"
+cast_float32_to_bfloat16,True,pass,3079.0,3079.0,3079.0,114.423,101.0,341.0,9.580344915390015,
+cast_int8_to_int32,True,pass,2311.0,2311.0,2311.0,113.514,91.0,342.0,9.490690469741821,
+ceil_bfloat16,True,pass,52200.0,52200.0,52200.0,166.027,152.0,50.0,10.079354763031006,
+compare_equal_bfloat16,True,pass,4167.0,4167.0,4167.0,123.88,108.0,82.0,10.211931467056274,
+compare_equal_int32,True,pass,2887.0,2887.0,2887.0,122.485,107.0,299.0,9.724021911621094,
+compare_gt_int8,True,pass,2758.0,2758.0,2758.0,124.716,107.0,299.0,9.69566559791565,
+compare_lt_int8,True,pass,2758.0,2758.0,2758.0,123.932,107.0,299.0,9.665191411972046,
+complexabs_bfloat16,False,error,,,,,,,15.206192016601562,"Traceback (most recent call last):
+  File ""/home/jl4257/llm_codegen/npueval_dataset/complexabs_bfloat16/test.py"", line 92, in <module>
+    _test_complexabs_bfloat16(args.kernel_path)
+  File ""/home/jl4257/llm_codegen/npueval_dataset/complexabs_bfloat16/test.py"", line 67, in _test_complexabs_bfloat16
+    mod(real_vector, imag_vector, output_allo)
+  File ""/home/jl4257/allo/allo/backend/aie/__init__.py"", line 715, in __call__
+    raise RuntimeError(""Failed to execute AIE code."")
+RuntimeError: Failed to execute AIE code.
+"
+conv1d_bfloat16,True,pass,131645.0,131645.0,131645.0,253.415,234.0,101.0,11.256197214126587,
+conv1d_bias_relu_bfloat16,True,pass,284097.0,284097.0,284097.0,403.658,384.0,47.0,9.285946369171143,
+conv1d_int32,True,pass,6155.0,6155.0,6155.0,123.966,108.0,313.0,9.701708793640137,
+conv1d_k2_s1_bias_relu_bfloat16,True,pass,190654.0,190654.0,190654.0,311.028,290.0,2.0,11.897088527679443,
+conv1d_k2_s2_bias_int16,True,pass,920.0,920.0,920.0,117.066,103.0,122.0,9.594100713729858,
+conv1d_k4_s1_bias_relu_bfloat16,False,fail,77066.0,77066.0,77066.0,455.239,435.0,239.0,13.737035751342773,
+cumsum_int16,True,pass,4423.0,4423.0,4423.0,114.413,99.0,342.0,9.574057579040527,
+dotproduct_bias_relu_int8,True,pass,72.0,72.0,72.0,120.06,110.0,120.0,8.175951719284058,
+dotproduct_int32,True,pass,3207.0,3207.0,3207.0,124.601,105.0,8.0,9.745349407196045,
+elementwise_max_int8,True,pass,3270.0,3270.0,3270.0,123.623,108.0,299.0,10.08162546157837,
+elementwise_min_bfloat16,True,pass,1991.0,1991.0,1991.0,124.309,108.0,151.0,10.373654842376709,
+elementwise_min_int8,True,pass,,,,124.872,108.0,,9.394196271896362,
+gather_bfloat16_int32idx,True,pass,3591.0,3591.0,3591.0,123.918,109.0,313.0,9.888575315475464,
+hardsigmoid_int8,True,pass,229670.0,229670.0,229670.0,344.038,326.0,119.0,12.446995735168457,
+matmul_16x16_int8,True,pass,25009.0,25009.0,25009.0,146.822,129.0,84.0,10.030439853668213,
+matrixvector_mult_int8,True,pass,977.0,977.0,977.0,118.32,109.0,120.0,9.259992361068726,
+maxpool2d_relu_int8,True,pass,1807.0,1807.0,1807.0,115.554,100.0,341.0,9.764358282089233,
+negate_int8,True,pass,2503.0,2503.0,2503.0,114.939,100.0,341.0,9.94937014579773,
+pad1d_int32,True,pass,70623.14646464646,4807.0,467802.0,124.215,108.0,198.0,9.865824699401855,
+pad2d_int32,True,pass,5560.0,5560.0,5560.0,124.611,109.0,310.0,9.735957145690918,
+reduce_add_relu_int8,True,pass,392.0,392.0,392.0,114.545,97.0,89.0,9.512604236602783,
+reducemin_bfloat16,True,pass,448.0,448.0,448.0,115.077,99.0,256.0,10.011316299438477,
+relu_int8,True,pass,11015.0,11015.0,11015.0,127.885,110.0,334.0,10.150853395462036,
+shuffle_int32,True,pass,15388.0,15388.0,15388.0,136.269,119.0,97.0,9.85697865486145,
+sigmoid_bfloat16,True,pass,160344.9719626168,110134.0,233630.0,1063.35,1030.0,107.0,9.215110778808594,
+sign_int8,True,pass,7640.0,7640.0,7640.0,122.436,106.0,333.0,9.687329292297363,
+sin_bfloat16,False,error,,,,,,,10.979154586791992,"Traceback (most recent call last):
+  File ""/home/jl4257/llm_codegen/npueval_dataset/sin_bfloat16/test.py"", line 88, in <module>
+    _test_sin_bfloat16(args.kernel_path)
+  File ""/home/jl4257/llm_codegen/npueval_dataset/sin_bfloat16/test.py"", line 62, in _test_sin_bfloat16
+    mod(input_tensor, output_allo)
+  File ""/home/jl4257/allo/allo/backend/aie/__init__.py"", line 715, in __call__
+    raise RuntimeError(""Failed to execute AIE code."")
+RuntimeError: Failed to execute AIE code.
+"
+sqrt_bfloat16,True,pass,150329.0,150329.0,150329.0,275.083,254.0,59.0,11.83545970916748,
+tanh_bfloat16,False,error,,,,,,,10.345869779586792,"Traceback (most recent call last):
+  File ""/home/jl4257/llm_codegen/npueval_dataset/tanh_bfloat16/test.py"", line 88, in <module>
+    _test_tanh_bfloat16(args.kernel_path)
+  File ""/home/jl4257/llm_codegen/npueval_dataset/tanh_bfloat16/test.py"", line 62, in _test_tanh_bfloat16
+    mod(input_tensor, output_allo)
+  File ""/home/jl4257/allo/allo/backend/aie/__init__.py"", line 715, in __call__
+    raise RuntimeError(""Failed to execute AIE code."")
+RuntimeError: Failed to execute AIE code.
+"
+vectoradd_bfloat16,True,pass,3079.0,3079.0,3079.0,125.285,109.0,100.0,10.077589988708496,
+vectoradd_int16,True,pass,2631.0,2631.0,2631.0,124.79,109.0,299.0,9.75300121307373,
+vectoradd_relu_bfloat16,True,pass,6983.0,6983.0,6983.0,127.98,113.0,72.0,10.835705041885376,
+vectormatrix_mult_int32,True,pass,3141.0,3141.0,3141.0,122.406,108.0,319.0,9.692350387573242,
+vectorsubtract_bfloat16,True,pass,3079.0,3079.0,3079.0,124.793,109.0,101.0,10.0150146484375,
+vectorsubtract_int8,True,pass,5510.0,5510.0,5510.0,123.695,109.0,134.0,9.614621639251709,

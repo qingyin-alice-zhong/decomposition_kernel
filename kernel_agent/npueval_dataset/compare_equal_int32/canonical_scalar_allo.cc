@@ -1,0 +1,24 @@
+// Copyright (C) 2025 Advanced Micro Devices, Inc. All rights reserved.
+// SPDX-License-Identifier: MIT
+
+#define NOCPP
+
+#include <stdint.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <type_traits>
+
+#include <aie_api/aie.hpp>
+
+extern "C" {
+
+void compare_equal_int32(std::int32_t a[256], std::int32_t b[256], std::int32_t out[256]) {
+    event0();
+    constexpr std::int32_t VECTOR_SIZE = 256;
+    for (int i = 0; i < VECTOR_SIZE; i++) {
+        out[i] = (a[i] == b[i]) ? 1 : 0;
+    }
+    event1();
+}
+
+} // extern "C"
