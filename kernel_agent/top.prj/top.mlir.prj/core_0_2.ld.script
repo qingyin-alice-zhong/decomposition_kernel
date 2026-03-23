@@ -2,7 +2,7 @@
 MEMORY
 {
    program (RX) : ORIGIN = 0, LENGTH = 0x0020000
-   data (!RX) : ORIGIN = 0x76960, LENGTH = 0x96A0
+   data (!RX) : ORIGIN = 0x72460, LENGTH = 0xDBA0
 }
 ENTRY(__start)
 SECTIONS
@@ -46,24 +46,42 @@ _sp_start_value_DM_stack = .;
 /* No tile with memory exists to the west. */
 . = 0x50000;
 . += 0x10000;
+. = 0x60400;
+fifo_10_buff_0 = .;
+. += 0x800;
+. = 0x60C00;
+fifo_10_buff_1 = .;
+. += 0x800;
+. = 0x61D60;
+fifo_8_cons_buff_0 = .;
+. += 0x380;
+. = 0x620E0;
+fifo_8_cons_buff_1 = .;
+. += 0x380;
+. = 0x61400;
+fifo_6_cons_buff_0 = .;
+. += 0x4B0;
+. = 0x618B0;
+fifo_6_cons_buff_1 = .;
+. += 0x4B0;
 . = 0x70400;
 fifo_4_buff_0 = .;
-. += 0x2000;
-. = 0x72400;
+. += 0x800;
+. = 0x70C00;
 fifo_4_buff_1 = .;
-. += 0x2000;
-. = 0x76260;
+. += 0x800;
+. = 0x71D60;
 fifo_2_cons_buff_0 = .;
 . += 0x380;
-. = 0x765E0;
+. = 0x720E0;
 fifo_2_cons_buff_1 = .;
 . += 0x380;
-. = 0x74400;
+. = 0x71400;
 fifo_0_cons_buff_0 = .;
-. += 0xF30;
-. = 0x75330;
+. += 0x4B0;
+. = 0x718B0;
 fifo_0_cons_buff_1 = .;
-. += 0xF30;
+. += 0x4B0;
   .bss : { *(.bss*) } > data
 }
 INPUT(external0.o)

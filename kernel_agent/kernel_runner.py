@@ -138,6 +138,7 @@ def _extract_metrics(stdout: str) -> dict:
 
 
 def _write_combined_output(output_path: Path, command: list[str], working_directory: Path, return_code: int, stdout: str, stderr: str):
+    output_path.parent.mkdir(parents=True, exist_ok=True)
     with open(output_path, "w") as f:
         f.write("COMMAND:\n")
         f.write(" ".join(command))
@@ -149,6 +150,14 @@ def _write_combined_output(output_path: Path, command: list[str], working_direct
         f.write(stdout)
         f.write("\n\nSTDERR:\n")
         f.write(stderr)
+
+
+def _normalize_process_output(value) -> str:
+    if value is None:
+        return ""
+    if isinstance(value, bytes):
+        return value.decode("utf-8", errors="replace")
+    return str(value)
 
 
 def run_kernel_test(kernel_path: Path, test_path: Path, output_dir: Path, timeout: int = 1800) -> KernelRunResult:
@@ -175,11 +184,11 @@ def run_kernel_test(kernel_path: Path, test_path: Path, output_dir: Path, timeou
             timeout=timeout,
         )
         return_code = process.returncode
-        stdout = process.stdout or ""
-        stderr = process.stderr or ""
+        stdout = _normalize_process_output(process.stdout)
+        stderr = _normalize_process_output(process.stderr)
     except subprocess.TimeoutExpired as exc:
-        stdout = exc.stdout or ""
-        stderr = (exc.stderr or "") + f"\nTimed out after {timeout} seconds."
+        stdout = _normalize_process_output(exc.stdout)
+        stderr = _normalize_process_output(exc.stderr) + f"\nTimed out after {timeout} seconds."
     metrics = _extract_metrics(stdout)
 
     compilation_success = return_code == 0 and not metrics["skipped"]
@@ -187,6 +196,8 @@ def run_kernel_test(kernel_path: Path, test_path: Path, output_dir: Path, timeou
 
     compile_output_path = output_dir / f"{kernel_name}_compile_output.txt"
     execution_output_path = output_dir / f"{kernel_name}_execution_output.txt"
+
+    output_dir.mkdir(parents=True, exist_ok=True)
 
     _write_combined_output(
         compile_output_path,
