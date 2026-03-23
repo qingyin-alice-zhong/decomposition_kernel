@@ -1,0 +1,108 @@
+{
+  "timestamp": "2026-03-05T01:39:53.700708",
+  "original_file": "decompose-workspace\\iteration-1\\eval-2-inception-module\\with_skill\\outputs\\steps\\step_1_model_to_branches\\original.py",
+  "refactored_file": "decompose-workspace\\iteration-1\\eval-2-inception-module\\with_skill\\outputs\\steps\\step_1_model_to_branches\\refactored.py",
+  "status": "PASS",
+  "anticheat": {
+    "status": "PASS",
+    "violations": [],
+    "source_violations": [],
+    "parameter_violations": []
+  },
+  "weight_transfer": {
+    "status": "OK",
+    "mapped_count": 12,
+    "unmapped_original": [],
+    "unmapped_refactored": [],
+    "weight_map": {
+      "branch1x1.weight": "branch1x1.conv.weight",
+      "branch1x1.bias": "branch1x1.conv.bias",
+      "branch3x3.0.weight": "branch3x3.reduce.weight",
+      "branch3x3.0.bias": "branch3x3.reduce.bias",
+      "branch3x3.1.weight": "branch3x3.conv.weight",
+      "branch3x3.1.bias": "branch3x3.conv.bias",
+      "branch5x5.0.weight": "branch5x5.reduce.weight",
+      "branch5x5.0.bias": "branch5x5.reduce.bias",
+      "branch5x5.1.weight": "branch5x5.conv.weight",
+      "branch5x5.1.bias": "branch5x5.conv.bias",
+      "branch_pool.1.weight": "branch_pool.proj.weight",
+      "branch_pool.1.bias": "branch_pool.proj.bias"
+    }
+  },
+  "numerical_comparison": {
+    "status": "PASS",
+    "rtol": 1e-05,
+    "atol": 1e-06,
+    "input_dtype": "torch.float32",
+    "num_trials": 3,
+    "max_diff_across_trials": 0.0,
+    "trials": [
+      {
+        "trial": 0,
+        "seed": 42,
+        "max_diff": 0.0,
+        "pass": true,
+        "output_details": [
+          {
+            "output_idx": 0,
+            "shape_match": true,
+            "shape": [
+              10,
+              512,
+              224,
+              224
+            ],
+            "dtype": "torch.float32",
+            "max_diff": 0.0,
+            "mean_diff": 0.0,
+            "matches": true
+          }
+        ]
+      },
+      {
+        "trial": 1,
+        "seed": 43,
+        "max_diff": 0.0,
+        "pass": true,
+        "output_details": [
+          {
+            "output_idx": 0,
+            "shape_match": true,
+            "shape": [
+              10,
+              512,
+              224,
+              224
+            ],
+            "dtype": "torch.float32",
+            "max_diff": 0.0,
+            "mean_diff": 0.0,
+            "matches": true
+          }
+        ]
+      },
+      {
+        "trial": 2,
+        "seed": 44,
+        "max_diff": 0.0,
+        "pass": true,
+        "output_details": [
+          {
+            "output_idx": 0,
+            "shape_match": true,
+            "shape": [
+              10,
+              512,
+              224,
+              224
+            ],
+            "dtype": "torch.float32",
+            "max_diff": 0.0,
+            "mean_diff": 0.0,
+            "matches": true
+          }
+        ]
+      }
+    ]
+  }
+}

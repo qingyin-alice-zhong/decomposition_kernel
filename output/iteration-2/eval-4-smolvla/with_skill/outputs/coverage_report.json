@@ -1,0 +1,158 @@
+{
+  "timestamp": "2026-03-05T02:58:01.459171",
+  "model_file": "decompose-workspace\\iteration-2\\eval-4-smolvla\\with_skill\\outputs\\level_3_model\\smolvla.py",
+  "status": "LOW_COVERAGE",
+  "extraction_method": "torch.compile",
+  "extraction_warnings": [],
+  "extraction_errors": [
+    "torch.fx: symbolic_trace failed: int() argument must be a string, a bytes-like object or a real number, not 'Proxy'"
+  ],
+  "decomposed_ops_count": 23,
+  "coverage": {
+    "total_original_ops": 483,
+    "total_decomposed_ops": 23,
+    "covered_op_count": 23,
+    "missing_op_types": [
+      "gelu",
+      "layer_norm",
+      "linear",
+      "matmul",
+      "silu",
+      "softmax"
+    ],
+    "extra_op_types": [],
+    "coverage_pct": 4.8,
+    "op_details": [
+      {
+        "op_type": "conv2d",
+        "original_count": 1,
+        "decomposed_count": 1,
+        "status": "covered"
+      },
+      {
+        "op_type": "embedding",
+        "original_count": 2,
+        "decomposed_count": 2,
+        "status": "covered"
+      },
+      {
+        "op_type": "gelu",
+        "original_count": 12,
+        "decomposed_count": 0,
+        "status": "missing"
+      },
+      {
+        "op_type": "layer_norm",
+        "original_count": 25,
+        "decomposed_count": 1,
+        "status": "partial"
+      },
+      {
+        "op_type": "linear",
+        "original_count": 302,
+        "decomposed_count": 19,
+        "status": "partial"
+      },
+      {
+        "op_type": "matmul",
+        "original_count": 72,
+        "decomposed_count": 0,
+        "status": "missing"
+      },
+      {
+        "op_type": "silu",
+        "original_count": 33,
+        "decomposed_count": 0,
+        "status": "missing"
+      },
+      {
+        "op_type": "softmax",
+        "original_count": 36,
+        "decomposed_count": 0,
+        "status": "missing"
+      }
+    ],
+    "data_plumbing_excluded": {
+      "getitem": 339,
+      "mul": 385,
+      "sub": 51,
+      "add": 196,
+      "flatten": 1,
+      "transpose": 133,
+      "view": 150,
+      "reshape": 85,
+      "permute": 49,
+      "tensor": 2,
+      "ones": 4,
+      "cat": 30,
+      "expand": 49,
+      "linspace": 1,
+      "pow": 107,
+      "truediv": 41,
+      "to": 438,
+      "sin": 41,
+      "cos": 41,
+      "type": 1,
+      "expand_as": 1,
+      "cumsum": 2,
+      "le": 1,
+      "and_": 1,
+      "mean": 66,
+      "rsqrt": 66,
+      "arange": 40,
+      "split": 40,
+      "empty_like": 40,
+      "setitem": 80,
+      "imul": 24,
+      "where": 24,
+      "clone": 32,
+      "min": 8
+    }
+  },
+  "original_compute_ops": {
+    "conv2d": 1,
+    "embedding": 2,
+    "layer_norm": 25,
+    "linear": 302,
+    "matmul": 72,
+    "softmax": 36,
+    "gelu": 12,
+    "silu": 33
+  },
+  "original_plumbing_ops": {
+    "getitem": 339,
+    "mul": 385,
+    "sub": 51,
+    "add": 196,
+    "flatten": 1,
+    "transpose": 133,
+    "view": 150,
+    "reshape": 85,
+    "permute": 49,
+    "tensor": 2,
+    "ones": 4,
+    "cat": 30,
+    "expand": 49,
+    "linspace": 1,
+    "pow": 107,
+    "truediv": 41,
+    "to": 438,
+    "sin": 41,
+    "cos": 41,
+    "type": 1,
+    "expand_as": 1,
+    "cumsum": 2,
+    "le": 1,
+    "and_": 1,
+    "mean": 66,
+    "rsqrt": 66,
+    "arange": 40,
+    "split": 40,
+    "empty_like": 40,
+    "setitem": 80,
+    "imul": 24,
+    "where": 24,
+    "clone": 32,
+    "min": 8
+  }
+}

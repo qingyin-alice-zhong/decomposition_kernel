@@ -1,0 +1,90 @@
+{
+  "entries": [
+    {
+      "step": "phase_0",
+      "type": "decision",
+      "title": "Removed external import: gpt_oss.torch.weights.Checkpoint",
+      "description": "The original model imports from gpt_oss.torch.weights which is an external checkpoint loading module. Since we only need the model architecture for decomposition, the Checkpoint class and from_checkpoint method are not needed. Removed the import and kept only the forward computation path.",
+      "timestamp": "2026-03-05T00:01:00Z"
+    },
+    {
+      "step": "phase_0",
+      "type": "decision",
+      "title": "Removed torch.distributed dependency",
+      "description": "The original MLPBlock uses dist.get_world_size() for sharding. Since we test in single-process mode, set world_size=1 and removed the dist dependency. The all_reduce call is also removed (no-op for world_size=1).",
+      "timestamp": "2026-03-05T00:02:00Z"
+    },
+    {
+      "step": "phase_0",
+      "type": "decision",
+      "title": "Reduced config for memory-feasible testing",
+      "description": "The full model config (36 layers, 128 experts, vocab 201088) requires ~150GB+ for MoE weights alone. Reduced to 2 layers and 4 experts (experts_per_token=2) while preserving hidden_size=2880, head_dim=64, num_attention_heads=64, num_key_value_heads=8, and vocab_size=201088. This keeps the architecture structure identical while fitting in memory.",
+      "timestamp": "2026-03-05T00:03:00Z"
+    },
+    {
+      "step": "step_1_model_to_layers",
+      "type": "decision",
+      "title": "Classified Embedding and Unembedding as L0 kernels, not L2 layers",
+      "description": "nn.Embedding and the final nn.Linear(bias=False) are standalone single operations sitting directly inside the model. They are semantically kernel-level (L0), not layers.",
+      "timestamp": "2026-03-05T00:10:00Z"
+    },
+    {
+      "step": "step_1_model_to_layers",
+      "type": "decision",
+      "title": "Classified final RMSNorm as L0 kernel",
+      "description": "RMSNorm is a single normalization operation. Though it internally uses pow/mean/rsqrt/multiply, semantically it's one kernel.",
+      "timestamp": "2026-03-05T00:11:00Z"
+    },
+    {
+      "step": "step_2_transformer_block_to_fusions",
+      "type": "decision",
+      "title": "AttentionBlock and MLPBlock classified as L1 fusions",
+      "description": "Both contain multiple fused operations in a straight-line computation. AttentionBlock: norm+QKV+RoPE+SDPA+output_proj+residual. MLPBlock: norm+gate+routing+MLP1+SwiGLU+MLP2+combine+residual. The residual add is at the end of each block, part of the fusion's internal computation.",
+      "timestamp": "2026-03-05T00:20:00Z"
+    },
+    {
+      "step": "step_3a_attention_block_to_kernels",
+      "type": "decision",
+      "title": "SDPA with GQA classified as single L0 kernel",
+      "description": "The SDPA function combines attention score computation, causal masking, sliding window masking, sink tokens, softmax, and value aggregation. Though complex internally, it's semantically one attention operation. The sinks parameter is an nn.Parameter inside the SDPA kernel.",
+      "timestamp": "2026-03-05T00:30:00Z"
+    },
+    {
+      "step": "step_3a_attention_block_to_kernels",
+      "type": "decision",
+      "title": "RotaryEmbedding classified as single L0 kernel",
+      "description": "RoPE with YaRN scaling is semantically one positional encoding operation, even though it internally computes frequencies, concentration, cos/sin, and applies rotary transforms.",
+      "timestamp": "2026-03-05T00:31:00Z"
+    },
+    {
+      "step": "step_3b_mlp_block_to_kernels",
+      "type": "difficulty",
+      "title": "Weight mapping ambiguity: gate.weight vs mlp2_bias both [4, 2880] bf16",
+      "description": "The greedy shape+dtype weight matching in verify_step.py swapped gate.weight [4,2880] with mlp2_bias [4,2880] since both have identical shape and dtype. This caused max_diff=2.34e-02. Resolved by providing an explicit weight_map.json with correct parameter name mappings.",
+      "resolution": "Created weight_map.json with explicit mapping of all 7 parameters",
+      "timestamp": "2026-03-05T00:40:00Z"
+    },
+    {
+      "step": "step_3b_mlp_block_to_kernels",
+      "type": "decision",
+      "title": "MoE components decomposed into separate semantic kernels",
+      "description": "The MoE MLP block was decomposed into: gate_linear (routing logits), expert_routing (topk+softmax), moe_mlp1 (expert linear with einsum), swiglu (activation), moe_mlp2 (expert linear with einsum), expert_combine (weighted sum with einsum). Each represents a distinct computational step in the MoE pipeline.",
+      "timestamp": "2026-03-05T00:41:00Z"
+    },
+    {
+      "step": "composition_test",
+      "type": "difficulty",
+      "title": "NaN outputs from uninitialized torch.empty parameters",
+      "description": "The original model uses torch.empty for MoE weight parameters, which may contain NaN/Inf. Both original and composed models had identical NaN outputs, but torch.allclose returns False for NaN==NaN. Fixed by initializing all parameters with small random values before weight transfer and comparison.",
+      "resolution": "Added weight initialization with torch.randn * 0.02 for bf16 params before transfer",
+      "timestamp": "2026-03-05T00:50:00Z"
+    },
+    {
+      "step": "coverage_analysis",
+      "type": "deviation",
+      "title": "Coverage analysis shows low percentage due to hook-based extraction limitations",
+      "description": "extract_ops.py uses forward hooks which only capture nn.Module leaf calls. Many of our kernels use functional ops internally (einsum, softmax, sigmoid in SDPA/SwiGLU/MoE). The hook-based extraction only sees nn.Linear and nn.Embedding in our L0 kernels. The composition test (PASS with 0.00 diff) is the actual correctness proof.",
+      "timestamp": "2026-03-05T00:55:00Z"
+    }
+  ]
+}

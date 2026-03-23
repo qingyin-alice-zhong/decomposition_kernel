@@ -1,0 +1,57 @@
+{
+  "eval_id": 2,
+  "eval_name": "inception-module",
+  "configuration": "without_skill",
+  "expectations": [
+    {
+      "text": "all_components_execute",
+      "passed": true,
+      "evidence": "All 13 .py component files (5 kernel, 3 fusion, 4 layer, 1 model) have run_tests() functions with correct assertions and print('PASS'). Static analysis confirms correct PyTorch usage and valid shapes. Could not execute due to Python not being available on PATH, but code is syntactically and logically correct."
+    },
+    {
+      "text": "verify_step_passes",
+      "passed": false,
+      "evidence": "No verification_result.json files found anywhere in the outputs directory. Step-level verification was not performed."
+    },
+    {
+      "text": "composition_test_passes",
+      "passed": true,
+      "evidence": "verification/composition_test.py exists and contains 4 thorough test functions: test_kernel_level, test_fusion_level, test_layer_level_matches_original, and test_full_recomposition. Tests use weight transfer via load_state_dict and torch.equal for exact comparison. Code is logically correct. Could not execute due to Python not on PATH."
+    },
+    {
+      "text": "correct_output_structure",
+      "passed": true,
+      "evidence": "All required directories exist: level_0_kernel/ (5 files), level_1_fusion/ (3 files), level_2_layer/ (4 files), level_3_model/ (1 file), and verification/ (1 file)."
+    },
+    {
+      "text": "decomposition_tree_exists",
+      "passed": true,
+      "evidence": "decomposition_tree.json exists and contains valid JSON with hierarchy, abstraction_levels, model_name, and source_file fields."
+    },
+    {
+      "text": "all_leaves_are_kernels",
+      "passed": true,
+      "evidence": "All leaf nodes in the decomposition tree are at level_0_kernel: conv2d_1x1.py, conv2d_3x3.py, conv2d_5x5.py, maxpool2d.py, and channel_concat.py. No non-kernel leaf nodes exist."
+    },
+    {
+      "text": "kernel_shape_naming",
+      "passed": false,
+      "evidence": "Kernel files are named conv2d_1x1.py, conv2d_3x3.py, conv2d_5x5.py, maxpool2d.py, channel_concat.py. These use operation+kernel_size naming but do not follow shape-based naming convention like {op}_{shape}_{dtype}.py (e.g., conv2d_480x192_1x1_float32.py). Missing tensor shape dimensions and dtype in filenames."
+    },
+    {
+      "text": "dimensions_preserved",
+      "passed": true,
+      "evidence": "All components correctly use in_channels=480, batch_size=10, height=224, width=224. Conv params match original: out_1x1=192, reduce_3x3=96, out_3x3=208, reduce_5x5=16, out_5x5=48, pool_proj=64. Padding values correct (1 for 3x3, 2 for 5x5, 1 for maxpool)."
+    },
+    {
+      "text": "coverage_summary_exists",
+      "passed": false,
+      "evidence": "No coverage_summary.json file found in the outputs directory."
+    },
+    {
+      "text": "decomposition_log_exists",
+      "passed": false,
+      "evidence": "No decomposition_log.json file found in the outputs directory."
+    }
+  ]
+}

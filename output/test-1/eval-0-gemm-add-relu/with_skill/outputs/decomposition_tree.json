@@ -1,0 +1,89 @@
+{
+  "metadata": {
+    "source_file": "data/kernelbench/level2/76_Gemm_Add_ReLU.py",
+    "source_level": "level2",
+    "model_name": "76_Gemm_Add_ReLU",
+    "timestamp": "2026-03-05T00:00:00Z",
+    "total_components": 4,
+    "by_level": {
+      "model": 0,
+      "layer": 0,
+      "fusion": 1,
+      "kernel": 3
+    },
+    "unique_kernels": 3,
+    "verification_status": "PASSED"
+  },
+  "nodes": {
+    "root": {
+      "id": "root",
+      "name": "Gemm_Add_ReLU",
+      "level": "fusion",
+      "path": "level_1_fusion/gemm_add_relu.py",
+      "children": ["linear_nobias", "bias_add", "relu"],
+      "input_shapes": {"x": [1024, 8192]},
+      "output_shapes": {"output": [1024, 8192]},
+      "input_dtypes": {"x": "float32"},
+      "output_dtypes": {"output": "float32"}
+    },
+    "linear_nobias": {
+      "id": "linear_nobias",
+      "name": "Linear (no bias) 8192x8192",
+      "level": "kernel",
+      "path": "level_0_kernel/linear_8192x8192_nobias_fp32.py",
+      "instance_count": 1,
+      "children": [],
+      "input_shapes": {"x": [1024, 8192]},
+      "output_shapes": {"output": [1024, 8192]},
+      "input_dtypes": {"x": "float32"},
+      "output_dtypes": {"output": "float32"}
+    },
+    "bias_add": {
+      "id": "bias_add",
+      "name": "Bias Add 8192",
+      "level": "kernel",
+      "path": "level_0_kernel/bias_add_8192_fp32.py",
+      "instance_count": 1,
+      "children": [],
+      "input_shapes": {"x": [1024, 8192]},
+      "output_shapes": {"output": [1024, 8192]},
+      "input_dtypes": {"x": "float32"},
+      "output_dtypes": {"output": "float32"}
+    },
+    "relu": {
+      "id": "relu",
+      "name": "ReLU",
+      "level": "kernel",
+      "path": "level_0_kernel/relu_fp32.py",
+      "instance_count": 1,
+      "children": [],
+      "input_shapes": {"x": [1024, 8192]},
+      "output_shapes": {"output": [1024, 8192]},
+      "input_dtypes": {"x": "float32"},
+      "output_dtypes": {"output": "float32"}
+    }
+  },
+  "data_flow": [
+    {
+      "from": "root",
+      "to": "linear_nobias",
+      "tensor_name": "x",
+      "shape": [1024, 8192],
+      "dtype": "float32"
+    },
+    {
+      "from": "linear_nobias",
+      "to": "bias_add",
+      "tensor_name": "x",
+      "shape": [1024, 8192],
+      "dtype": "float32"
+    },
+    {
+      "from": "bias_add",
+      "to": "relu",
+      "tensor_name": "x",
+      "shape": [1024, 8192],
+      "dtype": "float32"
+    }
+  ]
+}

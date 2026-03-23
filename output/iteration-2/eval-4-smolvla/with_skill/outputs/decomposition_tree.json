@@ -1,0 +1,109 @@
+{
+  "model_name": "SmolVLA",
+  "source": "repo:data/lerobot/src/lerobot/policies/smolvla/",
+  "total_parameters": 402737376,
+  "levels": {
+    "L3_model": {
+      "smolvla": {
+        "file": "level_3_model/smolvla.py",
+        "params": 402737376,
+        "children": [
+          "vision_encoder",
+          "connector",
+          "text_embed",
+          "state_proj",
+          "action_in_proj",
+          "action_out_proj",
+          "action_time_mlp",
+          "vlm_layers_x16",
+          "expert_layers_x16",
+          "vlm_norm",
+          "expert_norm"
+        ]
+      }
+    },
+    "L2_layer": {
+      "vision_encoder": {
+        "file": "level_2_layer/vision_encoder.py",
+        "params": 86433024,
+        "children": ["vision_embeddings", "vision_encoder_layer_x12", "post_layernorm"]
+      },
+      "vlm_transformer_block": {
+        "file": "level_2_layer/vlm_transformer_block.py",
+        "params": 9832320,
+        "children": ["rms_norm_960_x2", "q_proj_960x960", "k_proj_960x320", "v_proj_960x320", "o_proj_960x960", "vlm_mlp"],
+        "notes": "Instantiated 16 times. Attention arithmetic (RoPE, GQA, matmul, softmax) is data plumbing."
+      },
+      "expert_transformer_block": {
+        "file": "level_2_layer/expert_transformer_block.py",
+        "params": 6268320,
+        "children": ["rms_norm_720_x2", "q_proj_720x960", "k_proj_720x320_or_320x320", "v_proj_720x320_or_320x320", "o_proj_960x720", "expert_mlp"],
+        "notes": "Instantiated 16 times (8 self-attn + 8 cross-attn). Even layers use self-attn (720->320 KV), odd layers use cross-attn (320->320 KV)."
+      }
+    },
+    "L1_fusion": {
+      "connector": {
+        "file": "level_1_fusion/connector.py",
+        "params": 11796480,
+        "children": ["linear_12288x960"],
+        "notes": "Pixel shuffle reshape is parameterless data plumbing."
+      },
+      "action_time_mlp": {
+        "file": "level_1_fusion/action_time_mlp.py",
+        "params": 1556640,
+        "children": ["linear_1440x720", "silu", "linear_720x720"]
+      },
+      "vision_embeddings": {
+        "file": "level_1_fusion/vision_embeddings.py",
+        "params": 1377024,
+        "children": ["conv2d_3x768_16x16", "embedding_1024x768"]
+      },
+      "vision_encoder_layer": {
+        "file": "level_1_fusion/vision_encoder_layer.py",
+        "params": 7087872,
+        "children": ["layer_norm_768_x2", "linear_768x768_x4", "softmax", "gelu_tanh", "linear_768x3072", "linear_3072x768"],
+        "notes": "Instantiated 12 times inside vision encoder."
+      },
+      "vlm_mlp": {
+        "file": "level_1_fusion/vlm_mlp.py",
+        "params": 7372800,
+        "children": ["linear_960x2560_x2", "silu", "linear_2560x960"]
+      },
+      "expert_mlp": {
+        "file": "level_1_fusion/expert_mlp.py",
+        "params": 4423680,
+        "children": ["linear_720x2048_x2", "silu", "linear_2048x720"]
+      }
+    },
+    "L0_kernel": {
+      "conv2d_3x768_16x16_fp32": {"file": "level_0_kernel/conv2d_3x768_16x16_fp32.py", "op": "Conv2d", "shape": "(3,768,16,16)"},
+      "embedding_1024x768_fp32": {"file": "level_0_kernel/embedding_1024x768_fp32.py", "op": "Embedding", "shape": "(1024,768)"},
+      "embedding_49280x960_fp32": {"file": "level_0_kernel/embedding_49280x960_fp32.py", "op": "Embedding", "shape": "(49280,960)"},
+      "layer_norm_768_fp32": {"file": "level_0_kernel/layer_norm_768_fp32.py", "op": "LayerNorm", "shape": "(768,)"},
+      "rms_norm_960_fp32": {"file": "level_0_kernel/rms_norm_960_fp32.py", "op": "RMSNorm", "shape": "(960,)"},
+      "rms_norm_720_fp32": {"file": "level_0_kernel/rms_norm_720_fp32.py", "op": "RMSNorm", "shape": "(720,)"},
+      "linear_768x768_fp32": {"file": "level_0_kernel/linear_768x768_fp32.py", "op": "Linear(bias=True)", "shape": "(768,768)"},
+      "linear_768x3072_fp32": {"file": "level_0_kernel/linear_768x3072_fp32.py", "op": "Linear(bias=True)", "shape": "(768,3072)"},
+      "linear_3072x768_fp32": {"file": "level_0_kernel/linear_3072x768_fp32.py", "op": "Linear(bias=True)", "shape": "(3072,768)"},
+      "linear_12288x960_fp32": {"file": "level_0_kernel/linear_12288x960_fp32.py", "op": "Linear(no bias)", "shape": "(12288,960)"},
+      "linear_960x960_fp32": {"file": "level_0_kernel/linear_960x960_fp32.py", "op": "Linear(no bias)", "shape": "(960,960)"},
+      "linear_960x320_fp32": {"file": "level_0_kernel/linear_960x320_fp32.py", "op": "Linear(no bias)", "shape": "(960,320)"},
+      "linear_960x2560_fp32": {"file": "level_0_kernel/linear_960x2560_fp32.py", "op": "Linear(no bias)", "shape": "(960,2560)"},
+      "linear_2560x960_fp32": {"file": "level_0_kernel/linear_2560x960_fp32.py", "op": "Linear(no bias)", "shape": "(2560,960)"},
+      "linear_720x960_fp32": {"file": "level_0_kernel/linear_720x960_fp32.py", "op": "Linear(no bias)", "shape": "(720,960)"},
+      "linear_720x320_fp32": {"file": "level_0_kernel/linear_720x320_fp32.py", "op": "Linear(no bias)", "shape": "(720,320)"},
+      "linear_320x320_fp32": {"file": "level_0_kernel/linear_320x320_fp32.py", "op": "Linear(no bias)", "shape": "(320,320)"},
+      "linear_960x720_fp32": {"file": "level_0_kernel/linear_960x720_fp32.py", "op": "Linear(no bias)", "shape": "(960,720)"},
+      "linear_720x2048_fp32": {"file": "level_0_kernel/linear_720x2048_fp32.py", "op": "Linear(no bias)", "shape": "(720,2048)"},
+      "linear_2048x720_fp32": {"file": "level_0_kernel/linear_2048x720_fp32.py", "op": "Linear(no bias)", "shape": "(2048,720)"},
+      "linear_32x960_fp32": {"file": "level_0_kernel/linear_32x960_fp32.py", "op": "Linear(bias=True)", "shape": "(32,960)"},
+      "linear_32x720_fp32": {"file": "level_0_kernel/linear_32x720_fp32.py", "op": "Linear(bias=True)", "shape": "(32,720)"},
+      "linear_720x32_fp32": {"file": "level_0_kernel/linear_720x32_fp32.py", "op": "Linear(bias=True)", "shape": "(720,32)"},
+      "linear_1440x720_fp32": {"file": "level_0_kernel/linear_1440x720_fp32.py", "op": "Linear(bias=True)", "shape": "(1440,720)"},
+      "linear_720x720_fp32": {"file": "level_0_kernel/linear_720x720_fp32.py", "op": "Linear(bias=True)", "shape": "(720,720)"},
+      "gelu_tanh_fp32": {"file": "level_0_kernel/gelu_tanh_fp32.py", "op": "GELU(tanh)", "shape": "elementwise"},
+      "silu_fp32": {"file": "level_0_kernel/silu_fp32.py", "op": "SiLU", "shape": "elementwise"},
+      "softmax_fp32": {"file": "level_0_kernel/softmax_fp32.py", "op": "Softmax", "shape": "elementwise"}
+    }
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "entries": [
+    {
+      "step": "step_1_model_to_fusions",
+      "type": "decision",
+      "title": "Classified original model as Layer (L2), not Model (L3)",
+      "description": "The original 8_ResNetBasicBlock.py defines a single ResNet BasicBlock, which is a building block (Layer, L2), not a full model (L3). The decomposition starts at L2 and goes to L1 fusions and L0 kernels.",
+      "timestamp": "2026-03-05T00:00:00Z"
+    },
+    {
+      "step": "step_1_model_to_fusions",
+      "type": "decision",
+      "title": "Decomposed into 3 fusions + 1 standalone kernel",
+      "description": "The BasicBlock decomposes into: (1) conv_bn_relu fusion (conv1+bn1+relu, straight-line computation), (2) conv_bn fusion (conv2+bn2, straight-line), (3) downsample fusion (conv1x1+bn, straight-line). The final ReLU after residual add is a standalone kernel (L0) because it is isolated by the residual add operation.",
+      "timestamp": "2026-03-05T00:01:00Z"
+    },
+    {
+      "step": "step_1_model_to_fusions",
+      "type": "decision",
+      "title": "ReLU in conv_bn_relu fusion vs standalone final ReLU",
+      "description": "The first ReLU is part of the conv_bn_relu fusion because it is adjacent to conv1+bn1 with no data flow break. The second ReLU (after residual add) is standalone because the residual add breaks the fusion opportunity. It is classified as L0 kernel.",
+      "timestamp": "2026-03-05T00:02:00Z"
+    },
+    {
+      "step": "step_2_fusions_to_kernels",
+      "type": "decision",
+      "title": "Kernel deduplication: batchnorm2d_64_fp32 shared by 3 instances",
+      "description": "All three BatchNorm2d operations (bn1, bn2, downsample.1) have identical shape (64 channels). They share a single kernel file batchnorm2d_64_fp32.py with instance_count=3.",
+      "timestamp": "2026-03-05T00:03:00Z"
+    },
+    {
+      "step": "step_2_fusions_to_kernels",
+      "type": "decision",
+      "title": "Kernel deduplication: relu_fp32 shared by 2 instances",
+      "description": "ReLU is shape-independent (elementwise). Two instances exist: one inside conv_bn_relu fusion and one standalone after residual add. Both share relu_fp32.py with instance_count=2.",
+      "timestamp": "2026-03-05T00:04:00Z"
+    },
+    {
+      "step": "step_2_fusions_to_kernels",
+      "type": "decision",
+      "title": "Three distinct Conv2d kernels due to different shapes",
+      "description": "conv1 (3->64, 3x3), conv2 (64->64, 3x3), and downsample conv (3->64, 1x1) are different workloads due to different parameter shapes. They get separate kernel files: conv2d_3x64_3x3_fp32.py, conv2d_64x64_3x3_fp32.py, conv2d_3x64_1x1_fp32.py.",
+      "timestamp": "2026-03-05T00:05:00Z"
+    }
+  ]
+}

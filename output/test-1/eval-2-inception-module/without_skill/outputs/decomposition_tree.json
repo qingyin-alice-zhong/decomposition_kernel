@@ -1,0 +1,139 @@
+{
+  "model_name": "GoogleNet Inception Module",
+  "source_file": "data/kernelbench/level3/6_GoogleNetInceptionModule.py",
+  "hierarchy": {
+    "level_3_model": {
+      "inception_module": {
+        "file": "level_3_model/inception_module.py",
+        "description": "Full Inception module: 4 parallel branches concatenated along channel dim",
+        "children": {
+          "level_2_layer": {
+            "branch_1x1": {
+              "file": "level_2_layer/branch_1x1.py",
+              "description": "1x1 convolution branch for cross-channel correlations",
+              "children": {
+                "level_0_kernel": {
+                  "conv2d_1x1": {
+                    "file": "level_0_kernel/conv2d_1x1.py",
+                    "description": "1x1 pointwise convolution kernel"
+                  }
+                }
+              }
+            },
+            "branch_3x3": {
+              "file": "level_2_layer/branch_3x3.py",
+              "description": "1x1 reduction + 3x3 convolution branch for medium-scale spatial patterns",
+              "children": {
+                "level_1_fusion": {
+                  "reduce_conv3x3": {
+                    "file": "level_1_fusion/reduce_conv3x3.py",
+                    "description": "Fused 1x1 reduction + 3x3 convolution",
+                    "children": {
+                      "level_0_kernel": {
+                        "conv2d_1x1": {
+                          "file": "level_0_kernel/conv2d_1x1.py",
+                          "description": "1x1 reduction convolution"
+                        },
+                        "conv2d_3x3": {
+                          "file": "level_0_kernel/conv2d_3x3.py",
+                          "description": "3x3 convolution with padding=1"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "branch_5x5": {
+              "file": "level_2_layer/branch_5x5.py",
+              "description": "1x1 reduction + 5x5 convolution branch for large-scale spatial patterns",
+              "children": {
+                "level_1_fusion": {
+                  "reduce_conv5x5": {
+                    "file": "level_1_fusion/reduce_conv5x5.py",
+                    "description": "Fused 1x1 reduction + 5x5 convolution",
+                    "children": {
+                      "level_0_kernel": {
+                        "conv2d_1x1": {
+                          "file": "level_0_kernel/conv2d_1x1.py",
+                          "description": "1x1 reduction convolution"
+                        },
+                        "conv2d_5x5": {
+                          "file": "level_0_kernel/conv2d_5x5.py",
+                          "description": "5x5 convolution with padding=2"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "branch_pool": {
+              "file": "level_2_layer/branch_pool.py",
+              "description": "Max pooling + 1x1 projection branch for pooled feature extraction",
+              "children": {
+                "level_1_fusion": {
+                  "pool_proj": {
+                    "file": "level_1_fusion/pool_proj.py",
+                    "description": "Fused max pooling + 1x1 projection",
+                    "children": {
+                      "level_0_kernel": {
+                        "maxpool2d": {
+                          "file": "level_0_kernel/maxpool2d.py",
+                          "description": "3x3 max pooling with stride=1, padding=1"
+                        },
+                        "conv2d_1x1": {
+                          "file": "level_0_kernel/conv2d_1x1.py",
+                          "description": "1x1 projection convolution"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "channel_concat": {
+              "file": "level_0_kernel/channel_concat.py",
+              "description": "Concatenation of all branch outputs along channel dimension"
+            }
+          }
+        }
+      }
+    }
+  },
+  "abstraction_levels": {
+    "level_0_kernel": {
+      "description": "Individual computational kernels (conv2d, maxpool, concat)",
+      "components": [
+        "conv2d_1x1.py",
+        "conv2d_3x3.py",
+        "conv2d_5x5.py",
+        "maxpool2d.py",
+        "channel_concat.py"
+      ]
+    },
+    "level_1_fusion": {
+      "description": "Fused operation pairs (reduction+conv, pool+proj)",
+      "components": [
+        "reduce_conv3x3.py",
+        "reduce_conv5x5.py",
+        "pool_proj.py"
+      ]
+    },
+    "level_2_layer": {
+      "description": "Complete branch layers of the Inception module",
+      "components": [
+        "branch_1x1.py",
+        "branch_3x3.py",
+        "branch_5x5.py",
+        "branch_pool.py"
+      ]
+    },
+    "level_3_model": {
+      "description": "Full Inception module with all branches and concatenation",
+      "components": [
+        "inception_module.py"
+      ]
+    }
+  }
+}

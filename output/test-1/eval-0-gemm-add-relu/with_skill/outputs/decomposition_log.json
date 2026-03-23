@@ -1,0 +1,46 @@
+{
+  "entries": [
+    {
+      "step": "analysis",
+      "type": "decision",
+      "title": "Classified model as L1 Fusion",
+      "description": "The model performs Linear (no bias) + BiasAdd + ReLU in a straight-line computation with no data flow breaks. This is a classic fusion pattern (3 adjacent ops that can be fused). Classified at Level 1 (Fusion), not Level 2 (Layer), since there are no residual connections or repeated blocks.",
+      "timestamp": "2026-03-05T00:00:00Z"
+    },
+    {
+      "step": "analysis",
+      "type": "decision",
+      "title": "BiasAdd extracted as separate kernel from Linear",
+      "description": "The original model uses nn.Linear(bias=False) plus a separate nn.Parameter for the bias. This is intentionally separated (not using nn.Linear's built-in bias). The bias add is extracted as its own L0 kernel (bias_add_8192_fp32.py) with a learnable nn.Parameter, rather than merging it into the Linear kernel.",
+      "timestamp": "2026-03-05T00:00:00Z"
+    },
+    {
+      "step": "analysis",
+      "type": "decision",
+      "title": "ReLU classified as shape-independent elementwise kernel",
+      "description": "ReLU is an elementwise activation with no learnable parameters and no shape-dependent behavior. Named relu_fp32.py without shape suffix per the kernel naming convention for shape-independent ops.",
+      "timestamp": "2026-03-05T00:00:00Z"
+    },
+    {
+      "step": "analysis",
+      "type": "decision",
+      "title": "Linear kernel named with _nobias suffix",
+      "description": "The Linear operation uses bias=False, which is distinct from a standard Linear with bias. Named linear_8192x8192_nobias_fp32.py to clearly indicate this is a bias-free linear projection, differentiating it from a standard linear_8192x8192_fp32.py workload.",
+      "timestamp": "2026-03-05T00:00:00Z"
+    },
+    {
+      "step": "step_1_gemm_add_relu_to_kernels",
+      "type": "decision",
+      "title": "Single decomposition step (L1 -> L0)",
+      "description": "Since the model is already at L1 (Fusion), only one decomposition step is needed: directly to L0 kernels. No intermediate L2 or L3 levels exist for this simple model.",
+      "timestamp": "2026-03-05T00:00:00Z"
+    },
+    {
+      "step": "step_1_gemm_add_relu_to_kernels",
+      "type": "decision",
+      "title": "Verification passed with zero numerical difference",
+      "description": "verify_step.py confirmed exact numerical equivalence (max_diff=0.00e+00 across all 3 trials). Anti-cheat checks passed. The refactored model uses only child module calls in forward().",
+      "timestamp": "2026-03-05T00:00:00Z"
+    }
+  ]
+}

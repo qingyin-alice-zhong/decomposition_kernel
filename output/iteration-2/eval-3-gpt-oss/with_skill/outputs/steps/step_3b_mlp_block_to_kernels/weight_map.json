@@ -1,0 +1,9 @@
+{
+    "norm.scale": "norm.scale",
+    "gate.weight": "gate.linear.weight",
+    "gate.bias": "gate.linear.bias",
+    "mlp1_weight": "mlp1.mlp1_weight",
+    "mlp1_bias": "mlp1.mlp1_bias",
+    "mlp2_weight": "mlp2.mlp2_weight",
+    "mlp2_bias": "mlp2.mlp2_bias"
+}

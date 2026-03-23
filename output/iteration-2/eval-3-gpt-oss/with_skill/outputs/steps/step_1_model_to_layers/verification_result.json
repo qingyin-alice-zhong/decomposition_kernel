@@ -1,0 +1,119 @@
+{
+  "timestamp": "2026-03-05T02:30:11.936951",
+  "original_file": "decompose-workspace\\iteration-2\\eval-3-gpt-oss\\with_skill\\outputs\\steps\\step_1_model_to_layers\\original.py",
+  "refactored_file": "decompose-workspace\\iteration-2\\eval-3-gpt-oss\\with_skill\\outputs\\steps\\step_1_model_to_layers\\refactored.py",
+  "status": "PASS",
+  "anticheat": {
+    "status": "PASS",
+    "violations": [],
+    "source_violations": [],
+    "parameter_violations": []
+  },
+  "weight_transfer": {
+    "status": "OK",
+    "mapped_count": 29,
+    "unmapped_original": [],
+    "unmapped_refactored": [],
+    "weight_map": {
+      "model.embedding.weight": "embedding.embedding.weight",
+      "model.block.0.attn.sinks": "block_0.attn.sinks",
+      "model.block.0.attn.norm.scale": "block_0.attn.norm.scale",
+      "model.block.0.attn.qkv.weight": "block_0.attn.qkv.weight",
+      "model.block.0.attn.qkv.bias": "block_0.attn.qkv.bias",
+      "model.block.0.attn.out.weight": "block_0.attn.out.weight",
+      "model.block.0.attn.out.bias": "block_0.attn.out.bias",
+      "model.block.0.mlp.mlp1_weight": "block_0.mlp.mlp1_weight",
+      "model.block.0.mlp.mlp1_bias": "block_0.mlp.mlp1_bias",
+      "model.block.0.mlp.mlp2_weight": "block_0.mlp.mlp2_weight",
+      "model.block.0.mlp.mlp2_bias": "block_0.mlp.mlp2_bias",
+      "model.block.0.mlp.norm.scale": "block_0.mlp.norm.scale",
+      "model.block.0.mlp.gate.weight": "block_0.mlp.gate.weight",
+      "model.block.0.mlp.gate.bias": "block_0.mlp.gate.bias",
+      "model.block.1.attn.sinks": "block_1.attn.sinks",
+      "model.block.1.attn.norm.scale": "block_1.attn.norm.scale",
+      "model.block.1.attn.qkv.weight": "block_1.attn.qkv.weight",
+      "model.block.1.attn.qkv.bias": "block_1.attn.qkv.bias",
+      "model.block.1.attn.out.weight": "block_1.attn.out.weight",
+      "model.block.1.attn.out.bias": "block_1.attn.out.bias",
+      "model.block.1.mlp.mlp1_weight": "block_1.mlp.mlp1_weight",
+      "model.block.1.mlp.mlp1_bias": "block_1.mlp.mlp1_bias",
+      "model.block.1.mlp.mlp2_weight": "block_1.mlp.mlp2_weight",
+      "model.block.1.mlp.mlp2_bias": "block_1.mlp.mlp2_bias",
+      "model.block.1.mlp.norm.scale": "block_1.mlp.norm.scale",
+      "model.block.1.mlp.gate.weight": "block_1.mlp.gate.weight",
+      "model.block.1.mlp.gate.bias": "block_1.mlp.gate.bias",
+      "model.norm.scale": "norm.scale",
+      "model.unembedding.weight": "unembedding.linear.weight"
+    }
+  },
+  "numerical_comparison": {
+    "status": "PASS",
+    "rtol": 1e-05,
+    "atol": 1e-06,
+    "input_dtype": "torch.float32",
+    "num_trials": 3,
+    "max_diff_across_trials": 0.0,
+    "trials": [
+      {
+        "trial": 0,
+        "seed": 42,
+        "max_diff": 0.0,
+        "pass": true,
+        "output_details": [
+          {
+            "output_idx": 0,
+            "shape_match": true,
+            "shape": [
+              32,
+              201088
+            ],
+            "dtype": "torch.bfloat16",
+            "max_diff": 0.0,
+            "mean_diff": 0.0,
+            "matches": true
+          }
+        ]
+      },
+      {
+        "trial": 1,
+        "seed": 43,
+        "max_diff": 0.0,
+        "pass": true,
+        "output_details": [
+          {
+            "output_idx": 0,
+            "shape_match": true,
+            "shape": [
+              32,
+              201088
+            ],
+            "dtype": "torch.bfloat16",
+            "max_diff": 0.0,
+            "mean_diff": 0.0,
+            "matches": true
+          }
+        ]
+      },
+      {
+        "trial": 2,
+        "seed": 44,
+        "max_diff": 0.0,
+        "pass": true,
+        "output_details": [
+          {
+            "output_idx": 0,
+            "shape_match": true,
+            "shape": [
+              32,
+              201088
+            ],
+            "dtype": "torch.bfloat16",
+            "max_diff": 0.0,
+            "mean_diff": 0.0,
+            "matches": true
+          }
+        ]
+      }
+    ]
+  }
+}

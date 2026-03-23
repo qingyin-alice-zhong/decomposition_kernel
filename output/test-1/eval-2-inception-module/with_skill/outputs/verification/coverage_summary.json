@@ -1,0 +1,41 @@
+{
+  "timestamp": "2026-03-05T01:42:32.452188",
+  "model_file": "data\\kernelbench\\level3\\6_GoogleNetInceptionModule.py",
+  "status": "FULL_COVERAGE",
+  "extraction_method": "torch.fx.symbolic_trace",
+  "extraction_warnings": [],
+  "extraction_errors": [],
+  "decomposed_ops_count": 7,
+  "coverage": {
+    "total_original_ops": 7,
+    "total_decomposed_ops": 7,
+    "covered_op_count": 7,
+    "missing_op_types": [],
+    "extra_op_types": [],
+    "coverage_pct": 100.0,
+    "op_details": [
+      {
+        "op_type": "conv2d",
+        "original_count": 6,
+        "decomposed_count": 6,
+        "status": "covered"
+      },
+      {
+        "op_type": "max_pool2d",
+        "original_count": 1,
+        "decomposed_count": 1,
+        "status": "covered"
+      }
+    ],
+    "data_plumbing_excluded": {
+      "cat": 1
+    }
+  },
+  "original_compute_ops": {
+    "conv2d": 6,
+    "max_pool2d": 1
+  },
+  "original_plumbing_ops": {
+    "cat": 1
+  }
+}

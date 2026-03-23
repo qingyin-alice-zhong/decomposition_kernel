@@ -1,0 +1,51 @@
+{
+  "model_name": "76_Gemm_Add_ReLU",
+  "source_file": "data/kernelbench/level2/76_Gemm_Add_ReLU.py",
+  "description": "Simple model that performs matrix multiplication, adds a bias term, and applies ReLU.",
+  "hierarchy": {
+    "level_2_model": {
+      "gemm_add_relu_model": {
+        "file": "level_2_model/gemm_add_relu_model.py",
+        "description": "Complete Gemm+Add+ReLU model (top-level, matches original)",
+        "children": ["level_1_fusion/gemm_bias_relu"]
+      }
+    },
+    "level_1_fusion": {
+      "gemm_bias_relu": {
+        "file": "level_1_fusion/gemm_bias_relu.py",
+        "description": "Fused GEMM + BiasAdd + ReLU operation",
+        "children": [
+          "level_0_kernel/linear_no_bias",
+          "level_0_kernel/bias_add",
+          "level_0_kernel/relu"
+        ]
+      }
+    },
+    "level_0_kernel": {
+      "linear_no_bias": {
+        "file": "level_0_kernel/linear_no_bias.py",
+        "description": "Matrix multiplication via nn.Linear(bias=False): y = x @ W^T",
+        "operation": "GEMM",
+        "children": []
+      },
+      "bias_add": {
+        "file": "level_0_kernel/bias_add.py",
+        "description": "Element-wise bias addition: y = x + bias",
+        "operation": "Add",
+        "children": []
+      },
+      "relu": {
+        "file": "level_0_kernel/relu.py",
+        "description": "Element-wise ReLU activation: y = max(0, x)",
+        "operation": "ReLU",
+        "children": []
+      }
+    }
+  },
+  "composition_order": [
+    "level_0_kernel/linear_no_bias",
+    "level_0_kernel/bias_add",
+    "level_0_kernel/relu"
+  ],
+  "verification": "verification/composition_test.py"
+}

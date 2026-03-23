@@ -1,0 +1,57 @@
+{
+  "eval_id": 0,
+  "eval_name": "gemm-add-relu",
+  "configuration": "without_skill",
+  "expectations": [
+    {
+      "text": "all_components_execute",
+      "passed": true,
+      "evidence": "All 5 component .py files (linear_no_bias.py, bias_add.py, relu.py, gemm_bias_relu.py, gemm_add_relu_model.py) executed successfully and printed PASS."
+    },
+    {
+      "text": "verify_step_passes",
+      "passed": false,
+      "evidence": "No verification_result.json files found anywhere in the outputs directory. No step-level verification was performed."
+    },
+    {
+      "text": "composition_test_passes",
+      "passed": true,
+      "evidence": "verification/composition_test.py ran successfully with ALL TESTS PASSED: kernel composition matches original model, fusion-level matches original model, individual kernels correct, shapes and dtypes correct."
+    },
+    {
+      "text": "correct_output_structure",
+      "passed": true,
+      "evidence": "Output contains level_0_kernel/ (kernel level), level_1_fusion/ (fusion level), level_2_model/ (model level), and verification/ directories."
+    },
+    {
+      "text": "decomposition_tree_exists",
+      "passed": true,
+      "evidence": "decomposition_tree.json exists and contains valid JSON with hierarchy, composition_order, and verification fields."
+    },
+    {
+      "text": "all_leaves_are_kernels",
+      "passed": true,
+      "evidence": "All leaf nodes (linear_no_bias, bias_add, relu) have empty children arrays and reside in level_0_kernel, which is the kernel level."
+    },
+    {
+      "text": "kernel_shape_naming",
+      "passed": false,
+      "evidence": "Kernel files are named linear_no_bias.py, bias_add.py, relu.py. They do not follow shape-based naming convention like {op}_{shape}_{dtype}.py (e.g., gemm_1024x8192x8192_float32.py)."
+    },
+    {
+      "text": "dimensions_preserved",
+      "passed": true,
+      "evidence": "All component files use batch_size=1024, in_features=8192, out_features=8192, matching the original model dimensions exactly."
+    },
+    {
+      "text": "coverage_summary_exists",
+      "passed": false,
+      "evidence": "No coverage_summary.json file found in the outputs directory."
+    },
+    {
+      "text": "decomposition_log_exists",
+      "passed": false,
+      "evidence": "No decomposition_log.json file found in the outputs directory."
+    }
+  ]
+}

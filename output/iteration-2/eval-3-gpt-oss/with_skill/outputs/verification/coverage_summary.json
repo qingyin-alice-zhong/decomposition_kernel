@@ -1,0 +1,151 @@
+{
+  "timestamp": "2026-03-05T02:46:19.992947",
+  "model_file": "decompose-workspace\\iteration-2\\eval-3-gpt-oss\\with_skill\\outputs\\level_3_model\\gpt_oss.py",
+  "status": "LOW_COVERAGE",
+  "extraction_method": "torch.compile",
+  "extraction_warnings": [],
+  "extraction_errors": [
+    "torch.fx: symbolic_trace failed: symbolically traced variables cannot be used as inputs to control flow"
+  ],
+  "decomposed_ops_count": 5,
+  "coverage": {
+    "total_original_ops": 40,
+    "total_decomposed_ops": 5,
+    "covered_op_count": 5,
+    "missing_op_types": [
+      "clamp",
+      "einsum",
+      "linear",
+      "new_full",
+      "sigmoid",
+      "softmax",
+      "topk",
+      "tril",
+      "triu"
+    ],
+    "extra_op_types": [],
+    "coverage_pct": 12.5,
+    "op_details": [
+      {
+        "op_type": "clamp",
+        "original_count": 6,
+        "decomposed_count": 0,
+        "status": "missing"
+      },
+      {
+        "op_type": "einsum",
+        "original_count": 12,
+        "decomposed_count": 0,
+        "status": "missing"
+      },
+      {
+        "op_type": "embedding",
+        "original_count": 1,
+        "decomposed_count": 1,
+        "status": "covered"
+      },
+      {
+        "op_type": "linear",
+        "original_count": 7,
+        "decomposed_count": 4,
+        "status": "partial"
+      },
+      {
+        "op_type": "new_full",
+        "original_count": 3,
+        "decomposed_count": 0,
+        "status": "missing"
+      },
+      {
+        "op_type": "sigmoid",
+        "original_count": 2,
+        "decomposed_count": 0,
+        "status": "missing"
+      },
+      {
+        "op_type": "softmax",
+        "original_count": 4,
+        "decomposed_count": 0,
+        "status": "missing"
+      },
+      {
+        "op_type": "topk",
+        "original_count": 2,
+        "decomposed_count": 0,
+        "status": "missing"
+      },
+      {
+        "op_type": "tril",
+        "original_count": 1,
+        "decomposed_count": 0,
+        "status": "missing"
+      },
+      {
+        "op_type": "triu",
+        "original_count": 2,
+        "decomposed_count": 0,
+        "status": "missing"
+      }
+    ],
+    "data_plumbing_excluded": {
+      "float": 5,
+      "pow": 7,
+      "mean": 5,
+      "add": 19,
+      "rsqrt": 5,
+      "mul": 42,
+      "to": 13,
+      "getitem": 38,
+      "contiguous": 6,
+      "view": 10,
+      "arange": 6,
+      "truediv": 8,
+      "sub": 10,
+      "cos": 2,
+      "sin": 2,
+      "unsqueeze": 8,
+      "chunk": 4,
+      "cat": 6,
+      "reshape": 8,
+      "expand": 6,
+      "iadd": 5,
+      "imul": 2
+    }
+  },
+  "original_compute_ops": {
+    "embedding": 1,
+    "linear": 7,
+    "clamp": 6,
+    "einsum": 12,
+    "new_full": 3,
+    "triu": 2,
+    "tril": 1,
+    "softmax": 4,
+    "topk": 2,
+    "sigmoid": 2
+  },
+  "original_plumbing_ops": {
+    "float": 5,
+    "pow": 7,
+    "mean": 5,
+    "add": 19,
+    "rsqrt": 5,
+    "mul": 42,
+    "to": 13,
+    "getitem": 38,
+    "contiguous": 6,
+    "view": 10,
+    "arange": 6,
+    "truediv": 8,
+    "sub": 10,
+    "cos": 2,
+    "sin": 2,
+    "unsqueeze": 8,
+    "chunk": 4,
+    "cat": 6,
+    "reshape": 8,
+    "expand": 6,
+    "iadd": 5,
+    "imul": 2
+  }
+}

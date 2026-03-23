@@ -1,0 +1,46 @@
+{
+  "entries": [
+    {
+      "step": "analysis",
+      "type": "decision",
+      "title": "Classified ResNet BasicBlock as Layer (L2), not Model (L3)",
+      "description": "The source file is in level3/ directory, but semantically the ResNet BasicBlock is a single building block (layer), not a complete model. Classified as L2 and decomposed directly to L1 fusions and L0 kernels.",
+      "timestamp": "2026-03-05T02:10:00Z"
+    },
+    {
+      "step": "step_1_model_to_layers",
+      "type": "decision",
+      "title": "Decomposed BasicBlock into 3 fusions + 1 standalone kernel",
+      "description": "Identified 3 fusion groups: conv_bn_relu (conv1+bn1+relu), conv_bn (conv2+bn2), downsample_conv_bn (downsample.0+downsample.1). The final ReLU after the residual add is a standalone kernel since it cannot be fused with the preceding residual addition (data flow break).",
+      "timestamp": "2026-03-05T02:11:00Z"
+    },
+    {
+      "step": "step_1_model_to_layers",
+      "type": "decision",
+      "title": "ReLU sharing: original uses self.relu for two calls",
+      "description": "The original model uses a single self.relu = nn.ReLU(inplace=True) for both the post-bn1 relu and the post-residual relu. In the decomposition, the conv_bn_relu fusion has its own relu, and the standalone final_relu is a separate kernel instance. Both reference the same relu_fp32.py kernel file (kernel deduplication).",
+      "timestamp": "2026-03-05T02:12:00Z"
+    },
+    {
+      "step": "step_1_model_to_layers",
+      "type": "decision",
+      "title": "Downsample always present in this model",
+      "description": "The original model always creates the downsample Sequential. The forward() has 'if self.downsample is not None' but downsample is always set in __init__. In the refactored code, the downsample path is always executed.",
+      "timestamp": "2026-03-05T02:12:30Z"
+    },
+    {
+      "step": "step_2_conv_bn_relu_to_kernels",
+      "type": "decision",
+      "title": "Each fusion decomposed into individual kernel ops",
+      "description": "conv_bn_relu -> conv2d + batchnorm2d + relu. conv_bn -> conv2d + batchnorm2d. downsample -> conv2d + batchnorm2d. All three batchnorms share the same kernel file (batchnorm2d_64_fp32.py) since they have identical shapes.",
+      "timestamp": "2026-03-05T02:14:00Z"
+    },
+    {
+      "step": "coverage",
+      "type": "decision",
+      "title": "Coverage tool reports 62.5% due to kernel deduplication",
+      "description": "extract_ops.py counts 1 batchnorm and 1 relu in kernel files vs 3 and 2 in original. This is expected since batchnorm2d_64_fp32.py and relu_fp32.py are deduplicated kernel files used by multiple instances. The composition_test.py PASSES with 0 max_diff, confirming full functional coverage.",
+      "timestamp": "2026-03-05T02:17:00Z"
+    }
+  ]
+}

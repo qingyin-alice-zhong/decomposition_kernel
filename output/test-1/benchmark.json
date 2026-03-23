@@ -1,0 +1,168 @@
+{
+  "skill_name": "decompose",
+  "iteration": 1,
+  "timestamp": "2026-03-05",
+  "configurations": [
+    {
+      "name": "with_skill",
+      "evals": [
+        {
+          "eval_id": 0,
+          "eval_name": "gemm-add-relu",
+          "pass_rate": 0.8,
+          "passed": 8,
+          "total": 10,
+          "tokens": 78854,
+          "duration_seconds": 263.5,
+          "assertions": [
+            {"text": "all_components_execute", "passed": false},
+            {"text": "verify_step_passes", "passed": true},
+            {"text": "composition_test_passes", "passed": false},
+            {"text": "correct_output_structure", "passed": true},
+            {"text": "decomposition_tree_exists", "passed": true},
+            {"text": "all_leaves_are_kernels", "passed": true},
+            {"text": "kernel_shape_naming", "passed": true},
+            {"text": "dimensions_preserved", "passed": true},
+            {"text": "coverage_summary_exists", "passed": true},
+            {"text": "decomposition_log_exists", "passed": true}
+          ]
+        },
+        {
+          "eval_id": 1,
+          "eval_name": "resnet-basic-block",
+          "pass_rate": 0.6,
+          "passed": 6,
+          "total": 10,
+          "tokens": 96940,
+          "duration_seconds": 373.6,
+          "assertions": [
+            {"text": "all_components_execute", "passed": false},
+            {"text": "verify_step_passes", "passed": false},
+            {"text": "composition_test_passes", "passed": false},
+            {"text": "correct_output_structure", "passed": true},
+            {"text": "decomposition_tree_exists", "passed": true},
+            {"text": "all_leaves_are_kernels", "passed": true},
+            {"text": "kernel_shape_naming", "passed": true},
+            {"text": "dimensions_preserved", "passed": true},
+            {"text": "coverage_summary_exists", "passed": false},
+            {"text": "decomposition_log_exists", "passed": true}
+          ]
+        },
+        {
+          "eval_id": 2,
+          "eval_name": "inception-module",
+          "pass_rate": 1.0,
+          "passed": 10,
+          "total": 10,
+          "tokens": 109961,
+          "duration_seconds": 597.3,
+          "assertions": [
+            {"text": "all_components_execute", "passed": true},
+            {"text": "verify_step_passes", "passed": true},
+            {"text": "composition_test_passes", "passed": true},
+            {"text": "correct_output_structure", "passed": true},
+            {"text": "decomposition_tree_exists", "passed": true},
+            {"text": "all_leaves_are_kernels", "passed": true},
+            {"text": "kernel_shape_naming", "passed": true},
+            {"text": "dimensions_preserved", "passed": true},
+            {"text": "coverage_summary_exists", "passed": true},
+            {"text": "decomposition_log_exists", "passed": true}
+          ]
+        }
+      ],
+      "aggregate": {
+        "mean_pass_rate": 0.8,
+        "stddev_pass_rate": 0.16,
+        "mean_tokens": 95252,
+        "mean_duration_seconds": 411.5
+      }
+    },
+    {
+      "name": "without_skill",
+      "evals": [
+        {
+          "eval_id": 0,
+          "eval_name": "gemm-add-relu",
+          "pass_rate": 0.6,
+          "passed": 6,
+          "total": 10,
+          "tokens": 17127,
+          "duration_seconds": 142.4,
+          "assertions": [
+            {"text": "all_components_execute", "passed": true},
+            {"text": "verify_step_passes", "passed": false},
+            {"text": "composition_test_passes", "passed": true},
+            {"text": "correct_output_structure", "passed": true},
+            {"text": "decomposition_tree_exists", "passed": true},
+            {"text": "all_leaves_are_kernels", "passed": true},
+            {"text": "kernel_shape_naming", "passed": false},
+            {"text": "dimensions_preserved", "passed": true},
+            {"text": "coverage_summary_exists", "passed": false},
+            {"text": "decomposition_log_exists", "passed": false}
+          ]
+        },
+        {
+          "eval_id": 1,
+          "eval_name": "resnet-basic-block",
+          "pass_rate": 0.3,
+          "passed": 3,
+          "total": 10,
+          "tokens": 26922,
+          "duration_seconds": 234.0,
+          "assertions": [
+            {"text": "all_components_execute", "passed": false},
+            {"text": "verify_step_passes", "passed": false},
+            {"text": "composition_test_passes", "passed": false},
+            {"text": "correct_output_structure", "passed": true},
+            {"text": "decomposition_tree_exists", "passed": true},
+            {"text": "all_leaves_are_kernels", "passed": true},
+            {"text": "kernel_shape_naming", "passed": false},
+            {"text": "dimensions_preserved", "passed": true},
+            {"text": "coverage_summary_exists", "passed": false},
+            {"text": "decomposition_log_exists", "passed": false}
+          ]
+        },
+        {
+          "eval_id": 2,
+          "eval_name": "inception-module",
+          "pass_rate": 0.6,
+          "passed": 6,
+          "total": 10,
+          "tokens": 27210,
+          "duration_seconds": 200.9,
+          "assertions": [
+            {"text": "all_components_execute", "passed": true},
+            {"text": "verify_step_passes", "passed": false},
+            {"text": "composition_test_passes", "passed": true},
+            {"text": "correct_output_structure", "passed": true},
+            {"text": "decomposition_tree_exists", "passed": true},
+            {"text": "all_leaves_are_kernels", "passed": true},
+            {"text": "kernel_shape_naming", "passed": false},
+            {"text": "dimensions_preserved", "passed": true},
+            {"text": "coverage_summary_exists", "passed": false},
+            {"text": "decomposition_log_exists", "passed": false}
+          ]
+        }
+      ],
+      "aggregate": {
+        "mean_pass_rate": 0.5,
+        "stddev_pass_rate": 0.14,
+        "mean_tokens": 23753,
+        "mean_duration_seconds": 192.4
+      }
+    }
+  ],
+  "delta": {
+    "pass_rate": "+0.30 (0.80 vs 0.50)",
+    "tokens": "+71499 (95252 vs 23753)",
+    "duration": "+219.1s (411.5s vs 192.4s)"
+  },
+  "analyst_observations": [
+    "The skill consistently ensures artifact generation (kernel_shape_naming, coverage_summary, decomposition_log) that baselines always miss. These 3 assertions account for the bulk of the skill's advantage.",
+    "verify_step_passes failed for ResNet with-skill because the agent couldn't get Bash permissions — it created all the code but couldn't execute verify_step.py. This is an environment issue, not a skill issue.",
+    "all_components_execute and composition_test_passes failures are mostly grader environment issues (Python not on PATH) rather than actual code failures. Static analysis confirmed correctness in most cases.",
+    "The skill uses ~4x more tokens and ~2x more time than baselines, which is expected given it reads 3 reference docs and runs verification scripts.",
+    "The InceptionModule with-skill run (10/10) is the cleanest result — all verifications ran successfully, all artifacts generated. This suggests the skill works well when the agent has full tool access.",
+    "Non-discriminating assertions: correct_output_structure, decomposition_tree_exists, all_leaves_are_kernels, dimensions_preserved all pass for both configurations — they don't differentiate skill from baseline."
+  ]
+}

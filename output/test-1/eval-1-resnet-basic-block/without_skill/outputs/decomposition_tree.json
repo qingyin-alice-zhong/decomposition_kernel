@@ -1,0 +1,81 @@
+{
+  "model_name": "ResNet BasicBlock",
+  "source_file": "data/kernelbench/level3/8_ResNetBasicBlock.py",
+  "decomposition": {
+    "level_3_model": {
+      "resnet_basic_block": {
+        "file": "level_3_model/resnet_basic_block.py",
+        "description": "Complete ResNet BasicBlock with two conv-bn paths, downsample, and residual connection",
+        "children": ["conv_bn_relu", "conv_bn", "downsample", "residual_add_relu"]
+      }
+    },
+    "level_2_layer": {
+      "conv_bn_relu": {
+        "file": "level_2_layer/conv_bn_relu.py",
+        "description": "First main path layer: 3x3 Conv2d -> BatchNorm2d -> ReLU",
+        "parent": "resnet_basic_block",
+        "children": ["conv_bn_fused", "relu"]
+      },
+      "conv_bn": {
+        "file": "level_2_layer/conv_bn.py",
+        "description": "Second main path layer: 3x3 Conv2d -> BatchNorm2d (no ReLU)",
+        "parent": "resnet_basic_block",
+        "children": ["conv_bn_fused"]
+      },
+      "downsample": {
+        "file": "level_2_layer/downsample.py",
+        "description": "Skip connection path: 1x1 Conv2d -> BatchNorm2d for dimension matching",
+        "parent": "resnet_basic_block",
+        "children": ["conv2d_1x1", "batch_norm2d"]
+      },
+      "residual_add_relu": {
+        "file": "level_2_layer/residual_add_relu.py",
+        "description": "Residual addition of main path and identity, followed by ReLU",
+        "parent": "resnet_basic_block",
+        "children": ["add_relu_fused"]
+      }
+    },
+    "level_1_fusion": {
+      "conv_bn_fused": {
+        "file": "level_1_fusion/conv_bn_fused.py",
+        "description": "Fused Conv2d + BatchNorm2d (BN folding for inference optimization)",
+        "parents": ["conv_bn_relu", "conv_bn"],
+        "children": ["conv2d_3x3", "batch_norm2d"]
+      },
+      "add_relu_fused": {
+        "file": "level_1_fusion/add_relu_fused.py",
+        "description": "Fused element-wise Add + ReLU activation",
+        "parent": "residual_add_relu",
+        "children": ["add", "relu"]
+      }
+    },
+    "level_0_kernel": {
+      "conv2d_3x3": {
+        "file": "level_0_kernel/conv2d_3x3.py",
+        "description": "Atomic 3x3 convolution kernel"
+      },
+      "conv2d_1x1": {
+        "file": "level_0_kernel/conv2d_1x1.py",
+        "description": "Atomic 1x1 convolution kernel (pointwise)"
+      },
+      "batch_norm2d": {
+        "file": "level_0_kernel/batch_norm2d.py",
+        "description": "Atomic 2D batch normalization kernel"
+      },
+      "relu": {
+        "file": "level_0_kernel/relu.py",
+        "description": "Atomic ReLU activation kernel"
+      },
+      "add": {
+        "file": "level_0_kernel/add.py",
+        "description": "Atomic element-wise addition kernel"
+      }
+    }
+  },
+  "dataflow": {
+    "description": "Input -> [conv_bn_relu] -> [conv_bn] -> ADD([result], [downsample(input)]) -> ReLU -> Output",
+    "main_path": ["conv2d_3x3", "batch_norm2d", "relu", "conv2d_3x3", "batch_norm2d"],
+    "skip_path": ["conv2d_1x1", "batch_norm2d"],
+    "merge": ["add", "relu"]
+  }
+}

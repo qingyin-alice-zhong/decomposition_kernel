@@ -1,0 +1,59 @@
+{
+  "skill_name": "decompose",
+  "evals": [
+    {
+      "id": 0,
+      "prompt": "/decompose data/kernelbench/level2/76_Gemm_Add_ReLU.py",
+      "expected_output": "Full hierarchical decomposition of Gemm+Add+ReLU fusion into kernel-level components with all verification passing",
+      "files": ["data/kernelbench/level2/76_Gemm_Add_ReLU.py"],
+      "assertions": [
+        {"text": "all_components_execute"},
+        {"text": "verify_step_passes"},
+        {"text": "composition_test_passes"},
+        {"text": "correct_output_structure"},
+        {"text": "decomposition_tree_exists"},
+        {"text": "all_leaves_are_kernels"},
+        {"text": "kernel_shape_naming"},
+        {"text": "dimensions_preserved"},
+        {"text": "coverage_summary_exists"},
+        {"text": "decomposition_log_exists"}
+      ]
+    },
+    {
+      "id": 1,
+      "prompt": "/decompose data/kernelbench/level3/8_ResNetBasicBlock.py",
+      "expected_output": "Full hierarchical decomposition of ResNet BasicBlock with residual connections and downsample branch, all verification passing",
+      "files": ["data/kernelbench/level3/8_ResNetBasicBlock.py"],
+      "assertions": [
+        {"text": "all_components_execute"},
+        {"text": "verify_step_passes"},
+        {"text": "composition_test_passes"},
+        {"text": "correct_output_structure"},
+        {"text": "decomposition_tree_exists"},
+        {"text": "all_leaves_are_kernels"},
+        {"text": "kernel_shape_naming"},
+        {"text": "dimensions_preserved"},
+        {"text": "coverage_summary_exists"},
+        {"text": "decomposition_log_exists"}
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "/decompose data/kernelbench/level3/6_GoogleNetInceptionModule.py",
+      "expected_output": "Full hierarchical decomposition of GoogleNet Inception module with parallel branches and channel concatenation, all verification passing",
+      "files": ["data/kernelbench/level3/6_GoogleNetInceptionModule.py"],
+      "assertions": [
+        {"text": "all_components_execute"},
+        {"text": "verify_step_passes"},
+        {"text": "composition_test_passes"},
+        {"text": "correct_output_structure"},
+        {"text": "decomposition_tree_exists"},
+        {"text": "all_leaves_are_kernels"},
+        {"text": "kernel_shape_naming"},
+        {"text": "dimensions_preserved"},
+        {"text": "coverage_summary_exists"},
+        {"text": "decomposition_log_exists"}
+      ]
+    }
+  ]
+}

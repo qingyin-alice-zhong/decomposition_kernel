@@ -1,0 +1,57 @@
+{
+  "eval_id": 1,
+  "eval_name": "resnet-basic-block",
+  "configuration": "with_skill",
+  "expectations": [
+    {
+      "text": "all_components_execute",
+      "passed": false,
+      "evidence": "Python not found on system PATH ('Python was not found' error). Could not execute any .py files. Code inspection shows all 9 component files (5 kernels, 3 fusions, 1 layer) have well-formed run_tests() functions with correct shape assertions, but execution could not be confirmed."
+    },
+    {
+      "text": "verify_step_passes",
+      "passed": false,
+      "evidence": "No verification_result.json files found anywhere under steps/. Glob search for **/verification_result.json returned no results. Verification was not run."
+    },
+    {
+      "text": "composition_test_passes",
+      "passed": false,
+      "evidence": "Python not found on system PATH. Could not execute verification/composition_test.py. Code inspection shows a well-structured test with explicit weight mapping between original and composed models, but execution could not be confirmed."
+    },
+    {
+      "text": "correct_output_structure",
+      "passed": true,
+      "evidence": "All required directories exist: level_0_kernel/ (5 files), level_1_fusion/ (3 files), level_2_layer/ (1 file), steps/ (4 step subdirectories), verification/ (composition_test.py)."
+    },
+    {
+      "text": "decomposition_tree_exists",
+      "passed": true,
+      "evidence": "decomposition_tree.json exists and contains valid JSON with metadata (12 total components: 1 layer, 3 fusions, 5 kernels), nodes dict with 12 entries, and data_flow array with 6 edges."
+    },
+    {
+      "text": "all_leaves_are_kernels",
+      "passed": true,
+      "evidence": "All leaf nodes (nodes with empty children arrays) have level='kernel': conv2d_3x64_3x3, conv2d_64x64_3x3, conv2d_3x64_1x1, batchnorm2d_64_a, batchnorm2d_64_b, batchnorm2d_64_c, relu_a, final_relu. Non-leaf nodes (root=layer, conv_bn_relu/conv_bn/downsample=fusion) have children."
+    },
+    {
+      "text": "kernel_shape_naming",
+      "passed": true,
+      "evidence": "All kernel files use shape-based naming with dtype: conv2d_3x64_3x3_fp32.py, conv2d_64x64_3x3_fp32.py, conv2d_3x64_1x1_fp32.py, batchnorm2d_64_fp32.py, relu_fp32.py. Format follows {op}_{shape}_{dtype}.py convention."
+    },
+    {
+      "text": "dimensions_preserved",
+      "passed": true,
+      "evidence": "Original model uses in_channels=3, out_channels=64, stride=1, batch_size=10, 224x224 input. All component files preserve these: root input (10,3,224,224), conv1 path 3->64, conv2 path 64->64, downsample 3->64, all outputs (10,64,224,224). get_inputs() in layer file uses torch.rand(10, 3, 224, 224)."
+    },
+    {
+      "text": "coverage_summary_exists",
+      "passed": false,
+      "evidence": "No coverage_summary.json found. Glob search for **/coverage_summary.json returned no results. The verification/ directory only contains composition_test.py."
+    },
+    {
+      "text": "decomposition_log_exists",
+      "passed": true,
+      "evidence": "decomposition_log.json exists with 6 decision entries covering step_1_model_to_fusions (3 decisions about classification, fusion grouping, ReLU placement) and step_2_fusions_to_kernels (3 decisions about BatchNorm dedup, ReLU dedup, Conv2d shape differentiation)."
+    }
+  ]
+}

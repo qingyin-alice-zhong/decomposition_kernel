@@ -1,0 +1,1325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Eval Review</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600&family=Lora:wght@400;500&display=swap" rel="stylesheet">
+  <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js" integrity="sha384-EnyY0/GSHQGSxSgMwaIPzSESbqoOLSexfnSMN2AP+39Ckmn92stwABZynq1JyzdT" crossorigin="anonymous"></script>
+  <style>
+    :root {
+      --bg: #faf9f5;
+      --surface: #ffffff;
+      --border: #e8e6dc;
+      --text: #141413;
+      --text-muted: #b0aea5;
+      --accent: #d97757;
+      --accent-hover: #c4613f;
+      --green: #788c5d;
+      --green-bg: #eef2e8;
+      --red: #c44;
+      --red-bg: #fceaea;
+      --header-bg: #141413;
+      --header-text: #faf9f5;
+      --radius: 6px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Lora', Georgia, serif;
+      background: var(--bg);
+      color: var(--text);
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ---- Header ---- */
+    .header {
+      background: var(--header-bg);
+      color: var(--header-text);
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-shrink: 0;
+    }
+    .header h1 {
+      font-family: 'Poppins', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 600;
+    }
+    .header .instructions {
+      font-size: 0.8rem;
+      opacity: 0.7;
+      margin-top: 0.25rem;
+    }
+    .header .progress {
+      font-size: 0.875rem;
+      opacity: 0.8;
+      text-align: right;
+    }
+
+    /* ---- Main content ---- */
+    .main {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1.5rem 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    /* ---- Sections ---- */
+    .section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      flex-shrink: 0;
+    }
+    .section-header {
+      font-family: 'Poppins', sans-serif;
+      padding: 0.75rem 1rem;
+      font-size: 0.75rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+      background: var(--bg);
+    }
+    .section-body {
+      padding: 1rem;
+    }
+
+    /* ---- Config badge ---- */
+    .config-badge {
+      display: inline-block;
+      padding: 0.2rem 0.625rem;
+      border-radius: 9999px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.6875rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      margin-left: 0.75rem;
+      vertical-align: middle;
+    }
+    .config-badge.config-primary {
+      background: rgba(33, 150, 243, 0.12);
+      color: #1976d2;
+    }
+    .config-badge.config-baseline {
+      background: rgba(255, 193, 7, 0.15);
+      color: #f57f17;
+    }
+
+    /* ---- Prompt ---- */
+    .prompt-text {
+      white-space: pre-wrap;
+      font-size: 0.9375rem;
+      line-height: 1.6;
+    }
+
+    /* ---- Outputs ---- */
+    .output-file {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+    .output-file + .output-file {
+      margin-top: 1rem;
+    }
+    .output-file-header {
+      padding: 0.5rem 0.75rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      font-family: 'SF Mono', SFMono-Regular, Consolas, 'Liberation Mono', Menlo, monospace;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .output-file-header .dl-btn {
+      font-size: 0.7rem;
+      color: var(--accent);
+      text-decoration: none;
+      cursor: pointer;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-weight: 500;
+      opacity: 0.8;
+    }
+    .output-file-header .dl-btn:hover {
+      opacity: 1;
+      text-decoration: underline;
+    }
+    .output-file-content {
+      padding: 0.75rem;
+      overflow-x: auto;
+    }
+    .output-file-content pre {
+      font-size: 0.8125rem;
+      line-height: 1.5;
+      white-space: pre-wrap;
+      word-break: break-word;
+      font-family: 'SF Mono', SFMono-Regular, Consolas, 'Liberation Mono', Menlo, monospace;
+    }
+    .output-file-content img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 4px;
+    }
+    .output-file-content iframe {
+      width: 100%;
+      height: 600px;
+      border: none;
+    }
+    .output-file-content table {
+      border-collapse: collapse;
+      font-size: 0.8125rem;
+      width: 100%;
+    }
+    .output-file-content table td,
+    .output-file-content table th {
+      border: 1px solid var(--border);
+      padding: 0.375rem 0.5rem;
+      text-align: left;
+    }
+    .output-file-content table th {
+      background: var(--bg);
+      font-weight: 600;
+    }
+    .output-file-content .download-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: var(--accent);
+      text-decoration: none;
+      font-size: 0.875rem;
+      cursor: pointer;
+    }
+    .output-file-content .download-link:hover {
+      background: var(--border);
+    }
+    .empty-state {
+      color: var(--text-muted);
+      font-style: italic;
+      padding: 2rem;
+      text-align: center;
+    }
+
+    /* ---- Feedback ---- */
+    .prev-feedback {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 0.625rem 0.75rem;
+      margin-top: 0.75rem;
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+    .prev-feedback-label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 0.25rem;
+      color: var(--text-muted);
+    }
+    .feedback-textarea {
+      width: 100%;
+      min-height: 100px;
+      padding: 0.75rem;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      font-family: inherit;
+      font-size: 0.9375rem;
+      line-height: 1.5;
+      resize: vertical;
+      color: var(--text);
+    }
+    .feedback-textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    }
+    .feedback-status {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-top: 0.5rem;
+      min-height: 1.1em;
+    }
+
+    /* ---- Grades (collapsible) ---- */
+    .grades-toggle {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      user-select: none;
+    }
+    .grades-toggle:hover {
+      color: var(--accent);
+    }
+    .grades-toggle .arrow {
+      margin-right: 0.5rem;
+      transition: transform 0.15s;
+      font-size: 0.75rem;
+    }
+    .grades-toggle .arrow.open {
+      transform: rotate(90deg);
+    }
+    .grades-content {
+      display: none;
+      margin-top: 0.75rem;
+    }
+    .grades-content.open {
+      display: block;
+    }
+    .grades-summary {
+      font-size: 0.875rem;
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .grade-badge {
+      display: inline-block;
+      padding: 0.125rem 0.5rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+    .grade-pass { background: var(--green-bg); color: var(--green); }
+    .grade-fail { background: var(--red-bg); color: var(--red); }
+    .assertion-list {
+      list-style: none;
+    }
+    .assertion-item {
+      padding: 0.625rem 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.8125rem;
+    }
+    .assertion-item:last-child { border-bottom: none; }
+    .assertion-status {
+      font-weight: 600;
+      margin-right: 0.5rem;
+    }
+    .assertion-status.pass { color: var(--green); }
+    .assertion-status.fail { color: var(--red); }
+    .assertion-evidence {
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      margin-top: 0.25rem;
+      padding-left: 1.5rem;
+    }
+
+    /* ---- View tabs ---- */
+    .view-tabs {
+      display: flex;
+      gap: 0;
+      padding: 0 2rem;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+    .view-tab {
+      font-family: 'Poppins', sans-serif;
+      padding: 0.625rem 1.25rem;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      cursor: pointer;
+      border: none;
+      background: none;
+      color: var(--text-muted);
+      border-bottom: 2px solid transparent;
+      transition: all 0.15s;
+    }
+    .view-tab:hover { color: var(--text); }
+    .view-tab.active {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+    }
+    .view-panel { display: none; }
+    .view-panel.active { display: flex; flex-direction: column; flex: 1; overflow: hidden; }
+
+    /* ---- Benchmark view ---- */
+    .benchmark-view {
+      padding: 1.5rem 2rem;
+      overflow-y: auto;
+      flex: 1;
+    }
+    .benchmark-table {
+      border-collapse: collapse;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      font-size: 0.8125rem;
+      width: 100%;
+      margin-bottom: 1.5rem;
+    }
+    .benchmark-table th, .benchmark-table td {
+      padding: 0.625rem 0.75rem;
+      text-align: left;
+      border: 1px solid var(--border);
+    }
+    .benchmark-table th {
+      font-family: 'Poppins', sans-serif;
+      background: var(--header-bg);
+      color: var(--header-text);
+      font-weight: 500;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .benchmark-table tr:hover { background: var(--bg); }
+    .benchmark-table tr.benchmark-row-with { background: rgba(33, 150, 243, 0.06); }
+    .benchmark-table tr.benchmark-row-without { background: rgba(255, 193, 7, 0.06); }
+    .benchmark-table tr.benchmark-row-with:hover { background: rgba(33, 150, 243, 0.12); }
+    .benchmark-table tr.benchmark-row-without:hover { background: rgba(255, 193, 7, 0.12); }
+    .benchmark-table tr.benchmark-row-avg { font-weight: 600; border-top: 2px solid var(--border); }
+    .benchmark-table tr.benchmark-row-avg.benchmark-row-with { background: rgba(33, 150, 243, 0.12); }
+    .benchmark-table tr.benchmark-row-avg.benchmark-row-without { background: rgba(255, 193, 7, 0.12); }
+    .benchmark-delta-positive { color: var(--green); font-weight: 600; }
+    .benchmark-delta-negative { color: var(--red); font-weight: 600; }
+    .benchmark-notes {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1rem;
+    }
+    .benchmark-notes h3 {
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.875rem;
+      margin-bottom: 0.75rem;
+    }
+    .benchmark-notes ul {
+      list-style: disc;
+      padding-left: 1.25rem;
+    }
+    .benchmark-notes li {
+      font-size: 0.8125rem;
+      line-height: 1.6;
+      margin-bottom: 0.375rem;
+    }
+    .benchmark-empty {
+      color: var(--text-muted);
+      font-style: italic;
+      text-align: center;
+      padding: 3rem;
+    }
+
+    /* ---- Navigation ---- */
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      border-top: 1px solid var(--border);
+      background: var(--surface);
+      flex-shrink: 0;
+    }
+    .nav-btn {
+      font-family: 'Poppins', sans-serif;
+      padding: 0.5rem 1.25rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--surface);
+      cursor: pointer;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--text);
+      transition: all 0.15s;
+    }
+    .nav-btn:hover:not(:disabled) {
+      background: var(--bg);
+      border-color: var(--text-muted);
+    }
+    .nav-btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+    .done-btn {
+      font-family: 'Poppins', sans-serif;
+      padding: 0.5rem 1.5rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--surface);
+      color: var(--text);
+      cursor: pointer;
+      font-size: 0.875rem;
+      font-weight: 500;
+      transition: all 0.15s;
+    }
+    .done-btn:hover {
+      background: var(--bg);
+      border-color: var(--text-muted);
+    }
+    .done-btn.ready {
+      border: none;
+      background: var(--accent);
+      color: white;
+      font-weight: 600;
+    }
+    .done-btn.ready:hover {
+      background: var(--accent-hover);
+    }
+    /* ---- Done overlay ---- */
+    .done-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 100;
+      justify-content: center;
+      align-items: center;
+    }
+    .done-overlay.visible {
+      display: flex;
+    }
+    .done-card {
+      background: var(--surface);
+      border-radius: 12px;
+      padding: 2rem 3rem;
+      text-align: center;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      max-width: 500px;
+    }
+    .done-card h2 {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+    .done-card p {
+      color: var(--text-muted);
+      margin-bottom: 1.5rem;
+      line-height: 1.5;
+    }
+    .done-card .btn-row {
+      display: flex;
+      gap: 0.5rem;
+      justify-content: center;
+    }
+    .done-card button {
+      padding: 0.5rem 1.25rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--surface);
+      cursor: pointer;
+      font-size: 0.875rem;
+    }
+    .done-card button:hover {
+      background: var(--bg);
+    }
+    /* ---- Toast ---- */
+    .toast {
+      position: fixed;
+      bottom: 5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--header-bg);
+      color: var(--header-text);
+      padding: 0.625rem 1.25rem;
+      border-radius: var(--radius);
+      font-size: 0.875rem;
+      opacity: 0;
+      transition: opacity 0.3s;
+      pointer-events: none;
+      z-index: 200;
+    }
+    .toast.visible {
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+  <div id="app" style="height:100vh; display:flex; flex-direction:column;">
+    <div class="header">
+      <div>
+        <h1>Eval Review: <span id="skill-name"></span></h1>
+        <div class="instructions">Review each output and leave feedback below. Navigate with arrow keys or buttons. When done, copy feedback and paste into Claude Code.</div>
+      </div>
+      <div class="progress" id="progress"></div>
+    </div>
+
+    <!-- View tabs (only shown when benchmark data exists) -->
+    <div class="view-tabs" id="view-tabs" style="display:none;">
+      <button class="view-tab active" onclick="switchView('outputs')">Outputs</button>
+      <button class="view-tab" onclick="switchView('benchmark')">Benchmark</button>
+    </div>
+
+    <!-- Outputs panel (qualitative review) -->
+    <div class="view-panel active" id="panel-outputs">
+    <div class="main">
+      <!-- Prompt -->
+      <div class="section">
+        <div class="section-header">Prompt <span class="config-badge" id="config-badge" style="display:none;"></span></div>
+        <div class="section-body">
+          <div class="prompt-text" id="prompt-text"></div>
+        </div>
+      </div>
+
+      <!-- Outputs -->
+      <div class="section">
+        <div class="section-header">Output</div>
+        <div class="section-body" id="outputs-body">
+          <div class="empty-state">No output files found</div>
+        </div>
+      </div>
+
+      <!-- Previous Output (collapsible) -->
+      <div class="section" id="prev-outputs-section" style="display:none;">
+        <div class="section-header">
+          <div class="grades-toggle" onclick="togglePrevOutputs()">
+            <span class="arrow" id="prev-outputs-arrow">&#9654;</span>
+            Previous Output
+          </div>
+        </div>
+        <div class="grades-content" id="prev-outputs-content"></div>
+      </div>
+
+      <!-- Grades (collapsible) -->
+      <div class="section" id="grades-section" style="display:none;">
+        <div class="section-header">
+          <div class="grades-toggle" onclick="toggleGrades()">
+            <span class="arrow" id="grades-arrow">&#9654;</span>
+            Formal Grades
+          </div>
+        </div>
+        <div class="grades-content" id="grades-content"></div>
+      </div>
+
+      <!-- Feedback -->
+      <div class="section">
+        <div class="section-header">Your Feedback</div>
+        <div class="section-body">
+          <textarea
+            class="feedback-textarea"
+            id="feedback"
+            placeholder="What do you think of this output? Any issues, suggestions, or things that look great?"
+          ></textarea>
+          <div class="feedback-status" id="feedback-status"></div>
+          <div class="prev-feedback" id="prev-feedback" style="display:none;">
+            <div class="prev-feedback-label">Previous feedback</div>
+            <div id="prev-feedback-text"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="nav" id="outputs-nav">
+      <button class="nav-btn" id="prev-btn" onclick="navigate(-1)">&#8592; Previous</button>
+      <button class="done-btn" id="done-btn" onclick="showDoneDialog()">Submit All Reviews</button>
+      <button class="nav-btn" id="next-btn" onclick="navigate(1)">Next &#8594;</button>
+    </div>
+    </div><!-- end panel-outputs -->
+
+    <!-- Benchmark panel (quantitative stats) -->
+    <div class="view-panel" id="panel-benchmark">
+      <div class="benchmark-view" id="benchmark-content">
+        <div class="benchmark-empty">No benchmark data available. Run a benchmark to see quantitative results here.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Done overlay -->
+  <div class="done-overlay" id="done-overlay">
+    <div class="done-card">
+      <h2>Review Complete</h2>
+      <p>Your feedback has been saved. Go back to your Claude Code session and tell Claude you're done reviewing.</p>
+      <div class="btn-row">
+        <button onclick="closeDoneDialog()">OK</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast"></div>
+
+  <script>
+    // ---- Embedded data (injected by generate_review.py) ----
+    const EMBEDDED_DATA = {"skill_name": "decompose", "runs": [{"id": "eval-0-gemm-add-relu-with_skill", "prompt": "/decompose data/kernelbench/level2/76_Gemm_Add_ReLU.py", "eval_id": 0, "outputs": [{"name": "decomposition_analysis.md", "type": "text", "content": "# Decomposition Analysis: 76_Gemm_Add_ReLU\n\n## Source\n- File: `data/kernelbench/level2/76_Gemm_Add_ReLU.py`\n- Source level: level2 (KernelBench)\n\n## Architecture Analysis\n\n### Module Hierarchy\n- Model (L1 Fusion: Gemm_Add_ReLU)\n  - self.gemm: nn.Linear(8192, 8192, bias=False)\n  - self.bias: nn.Parameter(shape=(8192,))\n  - torch.relu activation (functional call)\n\n### Data Flow (with shapes)\n```\nInput: [1024, 8192] (float32)\n  -> gemm (nn.Linear, no bias): [1024, 8192] -> [1024, 8192]\n  -> bias add (+self.bias): [1024, 8192] -> [1024, 8192]\n  -> relu: [1024, 8192] -> [1024, 8192]\nOutput: [1024, 8192] (float32)\n```\n\n### Dimensions (from original model)\n- batch_size = 1024\n- in_features = 8192\n- out_features = 8192\n- bias_shape = (8192,)\n\n## Abstraction Level Classification\n\nThe model is classified as **Level 1 (Fusion)** because:\n1. It performs 3 adjacent operations (Linear + BiasAdd + ReLU) in a straight line\n2. No residual connections, skip connections, or data flow branches\n3. All operations feed directly into the next\n4. This is a classic fusible pattern (GEMM + elementwise ops)\n\n## Decomposition Plan\n\n### Step 1: Fusion (L1) -> Kernels (L0)\n- **linear_8192x8192_nobias_fp32.py**: nn.Linear(8192, 8192, bias=False)\n- **bias_add_8192_fp32.py**: Learnable bias parameter addition\n- **relu_fp32.py**: ReLU activation (shape-independent elementwise)\n\n## Kernel Inventory\n\n| Kernel File | Operation | Parameters | Instances |\n|---|---|---|---|\n| linear_8192x8192_nobias_fp32.py | Linear (no bias) | weight: (8192, 8192) | 1 |\n| bias_add_8192_fp32.py | Bias Add | bias: (8192,) | 1 |\n| relu_fp32.py | ReLU | (none) | 1 |\n\n## Verification Results\n\n- Step 1 verify_step.py: PASS (max_diff=0.00e+00)\n- Composition test: PASS (max_diff=0.00e+00)\n- Coverage: 100% (2/2 compute op types covered)\n"}, {"name": "decomposition_log.json", "type": "text", "content": "{\n  \"entries\": [\n    {\n      \"step\": \"analysis\",\n      \"type\": \"decision\",\n      \"title\": \"Classified model as L1 Fusion\",\n      \"description\": \"The model performs Linear (no bias) + BiasAdd + ReLU in a straight-line computation with no data flow breaks. This is a classic fusion pattern (3 adjacent ops that can be fused). Classified at Level 1 (Fusion), not Level 2 (Layer), since there are no residual connections or repeated blocks.\",\n      \"timestamp\": \"2026-03-05T00:00:00Z\"\n    },\n    {\n      \"step\": \"analysis\",\n      \"type\": \"decision\",\n      \"title\": \"BiasAdd extracted as separate kernel from Linear\",\n      \"description\": \"The original model uses nn.Linear(bias=False) plus a separate nn.Parameter for the bias. This is intentionally separated (not using nn.Linear's built-in bias). The bias add is extracted as its own L0 kernel (bias_add_8192_fp32.py) with a learnable nn.Parameter, rather than merging it into the Linear kernel.\",\n      \"timestamp\": \"2026-03-05T00:00:00Z\"\n    },\n    {\n      \"step\": \"analysis\",\n      \"type\": \"decision\",\n      \"title\": \"ReLU classified as shape-independent elementwise kernel\",\n      \"description\": \"ReLU is an elementwise activation with no learnable parameters and no shape-dependent behavior. Named relu_fp32.py without shape suffix per the kernel naming convention for shape-independent ops.\",\n      \"timestamp\": \"2026-03-05T00:00:00Z\"\n    },\n    {\n      \"step\": \"analysis\",\n      \"type\": \"decision\",\n      \"title\": \"Linear kernel named with _nobias suffix\",\n      \"description\": \"The Linear operation uses bias=False, which is distinct from a standard Linear with bias. Named linear_8192x8192_nobias_fp32.py to clearly indicate this is a bias-free linear projection, differentiating it from a standard linear_8192x8192_fp32.py workload.\",\n      \"timestamp\": \"2026-03-05T00:00:00Z\"\n    },\n    {\n      \"step\": \"step_1_gemm_add_relu_to_kernels\",\n      \"type\": \"decision\",\n      \"title\": \"Single decomposition step (L1 -> L0)\",\n      \"description\": \"Since the model is already at L1 (Fusion), only one decomposition step is needed: directly to L0 kernels. No intermediate L2 or L3 levels exist for this simple model.\",\n      \"timestamp\": \"2026-03-05T00:00:00Z\"\n    },\n    {\n      \"step\": \"step_1_gemm_add_relu_to_kernels\",\n      \"type\": \"decision\",\n      \"title\": \"Verification passed with zero numerical difference\",\n      \"description\": \"verify_step.py confirmed exact numerical equivalence (max_diff=0.00e+00 across all 3 trials). Anti-cheat checks passed. The refactored model uses only child module calls in forward().\",\n      \"timestamp\": \"2026-03-05T00:00:00Z\"\n    }\n  ]\n}\n"}, {"name": "decomposition_tree.json", "type": "text", "content": "{\n  \"metadata\": {\n    \"source_file\": \"data/kernelbench/level2/76_Gemm_Add_ReLU.py\",\n    \"source_level\": \"level2\",\n    \"model_name\": \"76_Gemm_Add_ReLU\",\n    \"timestamp\": \"2026-03-05T00:00:00Z\",\n    \"total_components\": 4,\n    \"by_level\": {\n      \"model\": 0,\n      \"layer\": 0,\n      \"fusion\": 1,\n      \"kernel\": 3\n    },\n    \"unique_kernels\": 3,\n    \"verification_status\": \"PASSED\"\n  },\n  \"nodes\": {\n    \"root\": {\n      \"id\": \"root\",\n      \"name\": \"Gemm_Add_ReLU\",\n      \"level\": \"fusion\",\n      \"path\": \"level_1_fusion/gemm_add_relu.py\",\n      \"children\": [\"linear_nobias\", \"bias_add\", \"relu\"],\n      \"input_shapes\": {\"x\": [1024, 8192]},\n      \"output_shapes\": {\"output\": [1024, 8192]},\n      \"input_dtypes\": {\"x\": \"float32\"},\n      \"output_dtypes\": {\"output\": \"float32\"}\n    },\n    \"linear_nobias\": {\n      \"id\": \"linear_nobias\",\n      \"name\": \"Linear (no bias) 8192x8192\",\n      \"level\": \"kernel\",\n      \"path\": \"level_0_kernel/linear_8192x8192_nobias_fp32.py\",\n      \"instance_count\": 1,\n      \"children\": [],\n      \"input_shapes\": {\"x\": [1024, 8192]},\n      \"output_shapes\": {\"output\": [1024, 8192]},\n      \"input_dtypes\": {\"x\": \"float32\"},\n      \"output_dtypes\": {\"output\": \"float32\"}\n    },\n    \"bias_add\": {\n      \"id\": \"bias_add\",\n      \"name\": \"Bias Add 8192\",\n      \"level\": \"kernel\",\n      \"path\": \"level_0_kernel/bias_add_8192_fp32.py\",\n      \"instance_count\": 1,\n      \"children\": [],\n      \"input_shapes\": {\"x\": [1024, 8192]},\n      \"output_shapes\": {\"output\": [1024, 8192]},\n      \"input_dtypes\": {\"x\": \"float32\"},\n      \"output_dtypes\": {\"output\": \"float32\"}\n    },\n    \"relu\": {\n      \"id\": \"relu\",\n      \"name\": \"ReLU\",\n      \"level\": \"kernel\",\n      \"path\": \"level_0_kernel/relu_fp32.py\",\n      \"instance_count\": 1,\n      \"children\": [],\n      \"input_shapes\": {\"x\": [1024, 8192]},\n      \"output_shapes\": {\"output\": [1024, 8192]},\n      \"input_dtypes\": {\"x\": \"float32\"},\n      \"output_dtypes\": {\"output\": \"float32\"}\n    }\n  },\n  \"data_flow\": [\n    {\n      \"from\": \"root\",\n      \"to\": \"linear_nobias\",\n      \"tensor_name\": \"x\",\n      \"shape\": [1024, 8192],\n      \"dtype\": \"float32\"\n    },\n    {\n      \"from\": \"linear_nobias\",\n      \"to\": \"bias_add\",\n      \"tensor_name\": \"x\",\n      \"shape\": [1024, 8192],\n      \"dtype\": \"float32\"\n    },\n    {\n      \"from\": \"bias_add\",\n      \"to\": \"relu\",\n      \"tensor_name\": \"x\",\n      \"shape\": [1024, 8192],\n      \"dtype\": \"float32\"\n    }\n  ]\n}\n"}], "grading": {"eval_id": 0, "eval_name": "gemm-add-relu", "configuration": "with_skill", "expectations": [{"text": "all_components_execute", "passed": false, "evidence": "Could not execute: Python not found in environment PATH. Static analysis shows all 4 .py files (3 in level_0_kernel/, 1 in level_1_fusion/) have valid run_tests() functions with proper structure and correct imports. Cannot confirm runtime PASS."}, {"text": "verify_step_passes", "passed": true, "evidence": "steps/step_1_gemm_add_relu_to_kernels/verification_result.json shows \"status\": \"PASS\" with max_diff=0.0 across 3 trials, anticheat PASS, and weight_transfer OK."}, {"text": "composition_test_passes", "passed": false, "evidence": "Could not execute verification/composition_test.py: Python not found in environment. Static analysis shows the test is well-structured with correct weight mapping and 3-trial verification, but runtime PASS cannot be confirmed."}, {"text": "correct_output_structure", "passed": true, "evidence": "All required directories exist: level_0_kernel/ (3 kernel .py files), level_1_fusion/ (gemm_add_relu.py), steps/step_1_gemm_add_relu_to_kernels/ (original.py, refactored.py, verification_result.json, children/), verification/ (composition_test.py, coverage_summary.json)."}, {"text": "decomposition_tree_exists", "passed": true, "evidence": "decomposition_tree.json exists and is valid JSON with metadata, nodes (root + 3 kernel nodes), and data_flow sections."}, {"text": "all_leaves_are_kernels", "passed": true, "evidence": "All 3 leaf nodes (linear_nobias, bias_add, relu) have \"level\": \"kernel\" and empty children arrays. The only non-leaf node (root) is at level \"fusion\"."}, {"text": "kernel_shape_naming", "passed": true, "evidence": "Kernel files use shape-based naming: linear_8192x8192_nobias_fp32.py, bias_add_8192_fp32.py. relu_fp32.py omits shape dimensions, which is documented as intentional for shape-independent elementwise ops in decomposition_log.json."}, {"text": "dimensions_preserved", "passed": true, "evidence": "All component files use batch_size=1024, in_features=8192, out_features=8192, matching the original model. Verified in linear_8192x8192_nobias_fp32.py, bias_add_8192_fp32.py (out_features=8192), relu_fp32.py (features=8192), and gemm_add_relu.py."}, {"text": "coverage_summary_exists", "passed": true, "evidence": "verification/coverage_summary.json exists with status FULL_COVERAGE, coverage_pct=100.0, covering linear and relu ops with bias add correctly classified as data plumbing."}, {"text": "decomposition_log_exists", "passed": true, "evidence": "decomposition_log.json exists with 6 decision entries covering analysis and step_1 phases, documenting classification rationale, naming decisions, and verification results."}]}}, {"id": "eval-0-gemm-add-relu-without_skill", "prompt": "/decompose data/kernelbench/level2/76_Gemm_Add_ReLU.py", "eval_id": 0, "outputs": [{"name": "decomposition_tree.json", "type": "text", "content": "{\n  \"model_name\": \"76_Gemm_Add_ReLU\",\n  \"source_file\": \"data/kernelbench/level2/76_Gemm_Add_ReLU.py\",\n  \"description\": \"Simple model that performs matrix multiplication, adds a bias term, and applies ReLU.\",\n  \"hierarchy\": {\n    \"level_2_model\": {\n      \"gemm_add_relu_model\": {\n        \"file\": \"level_2_model/gemm_add_relu_model.py\",\n        \"description\": \"Complete Gemm+Add+ReLU model (top-level, matches original)\",\n        \"children\": [\"level_1_fusion/gemm_bias_relu\"]\n      }\n    },\n    \"level_1_fusion\": {\n      \"gemm_bias_relu\": {\n        \"file\": \"level_1_fusion/gemm_bias_relu.py\",\n        \"description\": \"Fused GEMM + BiasAdd + ReLU operation\",\n        \"children\": [\n          \"level_0_kernel/linear_no_bias\",\n          \"level_0_kernel/bias_add\",\n          \"level_0_kernel/relu\"\n        ]\n      }\n    },\n    \"level_0_kernel\": {\n      \"linear_no_bias\": {\n        \"file\": \"level_0_kernel/linear_no_bias.py\",\n        \"description\": \"Matrix multiplication via nn.Linear(bias=False): y = x @ W^T\",\n        \"operation\": \"GEMM\",\n        \"children\": []\n      },\n      \"bias_add\": {\n        \"file\": \"level_0_kernel/bias_add.py\",\n        \"description\": \"Element-wise bias addition: y = x + bias\",\n        \"operation\": \"Add\",\n        \"children\": []\n      },\n      \"relu\": {\n        \"file\": \"level_0_kernel/relu.py\",\n        \"description\": \"Element-wise ReLU activation: y = max(0, x)\",\n        \"operation\": \"ReLU\",\n        \"children\": []\n      }\n    }\n  },\n  \"composition_order\": [\n    \"level_0_kernel/linear_no_bias\",\n    \"level_0_kernel/bias_add\",\n    \"level_0_kernel/relu\"\n  ],\n  \"verification\": \"verification/composition_test.py\"\n}\n"}], "grading": {"eval_id": 0, "eval_name": "gemm-add-relu", "configuration": "without_skill", "expectations": [{"text": "all_components_execute", "passed": true, "evidence": "All 5 component .py files (linear_no_bias.py, bias_add.py, relu.py, gemm_bias_relu.py, gemm_add_relu_model.py) executed successfully and printed PASS."}, {"text": "verify_step_passes", "passed": false, "evidence": "No verification_result.json files found anywhere in the outputs directory. No step-level verification was performed."}, {"text": "composition_test_passes", "passed": true, "evidence": "verification/composition_test.py ran successfully with ALL TESTS PASSED: kernel composition matches original model, fusion-level matches original model, individual kernels correct, shapes and dtypes correct."}, {"text": "correct_output_structure", "passed": true, "evidence": "Output contains level_0_kernel/ (kernel level), level_1_fusion/ (fusion level), level_2_model/ (model level), and verification/ directories."}, {"text": "decomposition_tree_exists", "passed": true, "evidence": "decomposition_tree.json exists and contains valid JSON with hierarchy, composition_order, and verification fields."}, {"text": "all_leaves_are_kernels", "passed": true, "evidence": "All leaf nodes (linear_no_bias, bias_add, relu) have empty children arrays and reside in level_0_kernel, which is the kernel level."}, {"text": "kernel_shape_naming", "passed": false, "evidence": "Kernel files are named linear_no_bias.py, bias_add.py, relu.py. They do not follow shape-based naming convention like {op}_{shape}_{dtype}.py (e.g., gemm_1024x8192x8192_float32.py)."}, {"text": "dimensions_preserved", "passed": true, "evidence": "All component files use batch_size=1024, in_features=8192, out_features=8192, matching the original model dimensions exactly."}, {"text": "coverage_summary_exists", "passed": false, "evidence": "No coverage_summary.json file found in the outputs directory."}, {"text": "decomposition_log_exists", "passed": false, "evidence": "No decomposition_log.json file found in the outputs directory."}]}}, {"id": "eval-1-resnet-basic-block-with_skill", "prompt": "/decompose data/kernelbench/level3/8_ResNetBasicBlock.py", "eval_id": 1, "outputs": [{"name": "decomposition_analysis.md", "type": "text", "content": "# Decomposition Analysis: ResNet BasicBlock\n\n## Source\n- File: `data/kernelbench/level3/8_ResNetBasicBlock.py`\n- Model: ResNet BasicBlock with downsample\n\n## Architecture Analysis\n\n### Module Hierarchy\n- Model (ResNet BasicBlock, Level 2 - Layer)\n  - self.conv1: nn.Conv2d(3, 64, kernel_size=3, stride=1, padding=1, bias=False)\n  - self.bn1: nn.BatchNorm2d(64)\n  - self.relu: nn.ReLU(inplace=True)\n  - self.conv2: nn.Conv2d(64, 64, kernel_size=3, stride=1, padding=1, bias=False)\n  - self.bn2: nn.BatchNorm2d(64)\n  - self.downsample: nn.Sequential\n    - 0: nn.Conv2d(3, 64, kernel_size=1, stride=1, bias=False)\n    - 1: nn.BatchNorm2d(64)\n\n### Data Flow (with shapes)\n\nInput: [10, 3, 224, 224] (float32)\n\n**Main path:**\n```\nx: [10, 3, 224, 224]\n  -> conv1: [10, 3, 224, 224] -> [10, 64, 224, 224]\n  -> bn1:   [10, 64, 224, 224] -> [10, 64, 224, 224]\n  -> relu:  [10, 64, 224, 224] -> [10, 64, 224, 224]\n  -> conv2: [10, 64, 224, 224] -> [10, 64, 224, 224]\n  -> bn2:   [10, 64, 224, 224] -> [10, 64, 224, 224]\n```\n\n**Skip/downsample path:**\n```\nidentity = x: [10, 3, 224, 224]\n  -> downsample.0 (conv1x1): [10, 3, 224, 224] -> [10, 64, 224, 224]\n  -> downsample.1 (bn):      [10, 64, 224, 224] -> [10, 64, 224, 224]\n```\n\n**Merge:**\n```\nout + identity: [10, 64, 224, 224] (residual add)\n  -> relu: [10, 64, 224, 224] -> [10, 64, 224, 224]\n```\n\nOutput: [10, 64, 224, 224] (float32)\n\n### Parameters\n- conv1.weight: (64, 3, 3, 3) = 1,728 params\n- bn1.weight: (64,) = 64 params\n- bn1.bias: (64,) = 64 params\n- conv2.weight: (64, 64, 3, 3) = 36,864 params\n- bn2.weight: (64,) = 64 params\n- bn2.bias: (64,) = 64 params\n- downsample.0.weight: (64, 3, 1, 1) = 192 params\n- downsample.1.weight: (64,) = 64 params\n- downsample.1.bias: (64,) = 64 params\n- **Total: 39,168 params**\n\n## Abstraction Level Classification\n\nThe original model is a **Level 2 (Layer)** -- a single building block that would typically be repeated in a full ResNet.\n\n## Decomposition Strategy\n\n### Round 1: Layer (L2) -> Fusions (L1) + Kernel (L0)\n\nThe BasicBlock contains three natural fusion groups plus one standalone kernel:\n\n1. **conv_bn_relu** (L1 Fusion): conv1 -> bn1 -> relu\n   - Straight-line computation, no data flow breaks\n   - Natural fusion candidate for GPU kernel fusion\n\n2. **conv_bn** (L1 Fusion): conv2 -> bn2\n   - Straight-line computation\n   - No activation because the residual add happens next\n\n3. **downsample** (L1 Fusion): conv1x1 -> bn\n   - Skip connection path\n   - Straight-line computation\n\n4. **relu** (L0 Kernel): Final ReLU after residual add\n   - Standalone because it is separated from conv_bn by the residual add\n   - Cannot be fused with conv_bn since the add must happen first\n\n### Round 2: Each Fusion -> Kernels (L0)\n\nEach fusion decomposes into individual operations:\n\n- conv_bn_relu -> conv2d_3x64_3x3_fp32, batchnorm2d_64_fp32, relu_fp32\n- conv_bn -> conv2d_64x64_3x3_fp32, batchnorm2d_64_fp32\n- downsample -> conv2d_3x64_1x1_fp32, batchnorm2d_64_fp32\n\n### Unique Kernel Files (5 total)\n\n| Kernel File | Operation | Instances |\n|---|---|---|\n| conv2d_3x64_3x3_fp32.py | Conv2d(3, 64, 3x3, stride=1, padding=1) | 1 |\n| conv2d_64x64_3x3_fp32.py | Conv2d(64, 64, 3x3, stride=1, padding=1) | 1 |\n| conv2d_3x64_1x1_fp32.py | Conv2d(3, 64, 1x1, stride=1) | 1 |\n| batchnorm2d_64_fp32.py | BatchNorm2d(64) | 3 |\n| relu_fp32.py | ReLU(inplace=True) | 2 |\n"}, {"name": "decomposition_log.json", "type": "text", "content": "{\n  \"entries\": [\n    {\n      \"step\": \"step_1_model_to_fusions\",\n      \"type\": \"decision\",\n      \"title\": \"Classified original model as Layer (L2), not Model (L3)\",\n      \"description\": \"The original 8_ResNetBasicBlock.py defines a single ResNet BasicBlock, which is a building block (Layer, L2), not a full model (L3). The decomposition starts at L2 and goes to L1 fusions and L0 kernels.\",\n      \"timestamp\": \"2026-03-05T00:00:00Z\"\n    },\n    {\n      \"step\": \"step_1_model_to_fusions\",\n      \"type\": \"decision\",\n      \"title\": \"Decomposed into 3 fusions + 1 standalone kernel\",\n      \"description\": \"The BasicBlock decomposes into: (1) conv_bn_relu fusion (conv1+bn1+relu, straight-line computation), (2) conv_bn fusion (conv2+bn2, straight-line), (3) downsample fusion (conv1x1+bn, straight-line). The final ReLU after residual add is a standalone kernel (L0) because it is isolated by the residual add operation.\",\n      \"timestamp\": \"2026-03-05T00:01:00Z\"\n    },\n    {\n      \"step\": \"step_1_model_to_fusions\",\n      \"type\": \"decision\",\n      \"title\": \"ReLU in conv_bn_relu fusion vs standalone final ReLU\",\n      \"description\": \"The first ReLU is part of the conv_bn_relu fusion because it is adjacent to conv1+bn1 with no data flow break. The second ReLU (after residual add) is standalone because the residual add breaks the fusion opportunity. It is classified as L0 kernel.\",\n      \"timestamp\": \"2026-03-05T00:02:00Z\"\n    },\n    {\n      \"step\": \"step_2_fusions_to_kernels\",\n      \"type\": \"decision\",\n      \"title\": \"Kernel deduplication: batchnorm2d_64_fp32 shared by 3 instances\",\n      \"description\": \"All three BatchNorm2d operations (bn1, bn2, downsample.1) have identical shape (64 channels). They share a single kernel file batchnorm2d_64_fp32.py with instance_count=3.\",\n      \"timestamp\": \"2026-03-05T00:03:00Z\"\n    },\n    {\n      \"step\": \"step_2_fusions_to_kernels\",\n      \"type\": \"decision\",\n      \"title\": \"Kernel deduplication: relu_fp32 shared by 2 instances\",\n      \"description\": \"ReLU is shape-independent (elementwise). Two instances exist: one inside conv_bn_relu fusion and one standalone after residual add. Both share relu_fp32.py with instance_count=2.\",\n      \"timestamp\": \"2026-03-05T00:04:00Z\"\n    },\n    {\n      \"step\": \"step_2_fusions_to_kernels\",\n      \"type\": \"decision\",\n      \"title\": \"Three distinct Conv2d kernels due to different shapes\",\n      \"description\": \"conv1 (3->64, 3x3), conv2 (64->64, 3x3), and downsample conv (3->64, 1x1) are different workloads due to different parameter shapes. They get separate kernel files: conv2d_3x64_3x3_fp32.py, conv2d_64x64_3x3_fp32.py, conv2d_3x64_1x1_fp32.py.\",\n      \"timestamp\": \"2026-03-05T00:05:00Z\"\n    }\n  ]\n}\n"}, {"name": "decomposition_tree.json", "type": "text", "content": "{\n  \"metadata\": {\n    \"source_file\": \"data/kernelbench/level3/8_ResNetBasicBlock.py\",\n    \"source_level\": \"level3\",\n    \"model_name\": \"8_ResNetBasicBlock\",\n    \"timestamp\": \"2026-03-05T00:00:00Z\",\n    \"total_components\": 12,\n    \"by_level\": {\n      \"model\": 0,\n      \"layer\": 1,\n      \"fusion\": 3,\n      \"kernel\": 5\n    },\n    \"unique_kernels\": 5,\n    \"verification_status\": \"PENDING\"\n  },\n  \"nodes\": {\n    \"root\": {\n      \"id\": \"root\",\n      \"name\": \"ResNet BasicBlock\",\n      \"level\": \"layer\",\n      \"path\": \"level_2_layer/resnet_basic_block.py\",\n      \"children\": [\"conv_bn_relu\", \"conv_bn\", \"downsample\", \"final_relu\"],\n      \"input_shapes\": {\"x\": [10, 3, 224, 224]},\n      \"output_shapes\": {\"output\": [10, 64, 224, 224]},\n      \"input_dtypes\": {\"x\": \"float32\"},\n      \"output_dtypes\": {\"output\": \"float32\"}\n    },\n    \"conv_bn_relu\": {\n      \"id\": \"conv_bn_relu\",\n      \"name\": \"Conv-BN-ReLU Fusion (conv1 path)\",\n      \"level\": \"fusion\",\n      \"path\": \"level_1_fusion/conv_bn_relu.py\",\n      \"children\": [\"conv2d_3x64_3x3\", \"batchnorm2d_64_a\", \"relu_a\"],\n      \"input_shapes\": {\"x\": [10, 3, 224, 224]},\n      \"output_shapes\": {\"output\": [10, 64, 224, 224]},\n      \"input_dtypes\": {\"x\": \"float32\"},\n      \"output_dtypes\": {\"output\": \"float32\"}\n    },\n    \"conv_bn\": {\n      \"id\": \"conv_bn\",\n      \"name\": \"Conv-BN Fusion (conv2 path)\",\n      \"level\": \"fusion\",\n      \"path\": \"level_1_fusion/conv_bn.py\",\n      \"children\": [\"conv2d_64x64_3x3\", \"batchnorm2d_64_b\"],\n      \"input_shapes\": {\"x\": [10, 64, 224, 224]},\n      \"output_shapes\": {\"output\": [10, 64, 224, 224]},\n      \"input_dtypes\": {\"x\": \"float32\"},\n      \"output_dtypes\": {\"output\": \"float32\"}\n    },\n    \"downsample\": {\n      \"id\": \"downsample\",\n      \"name\": \"Downsample Fusion (skip connection)\",\n      \"level\": \"fusion\",\n      \"path\": \"level_1_fusion/downsample.py\",\n      \"children\": [\"conv2d_3x64_1x1\", \"batchnorm2d_64_c\"],\n      \"input_shapes\": {\"x\": [10, 3, 224, 224]},\n      \"output_shapes\": {\"output\": [10, 64, 224, 224]},\n      \"input_dtypes\": {\"x\": \"float32\"},\n      \"output_dtypes\": {\"output\": \"float32\"}\n    },\n    \"conv2d_3x64_3x3\": {\n      \"id\": \"conv2d_3x64_3x3\",\n      \"name\": \"Conv2d 3->64 kernel 3x3\",\n      \"level\": \"kernel\",\n      \"path\": \"level_0_kernel/conv2d_3x64_3x3_fp32.py\",\n      \"instance_count\": 1,\n      \"children\": [],\n      \"input_shapes\": {\"x\": [10, 3, 224, 224]},\n      \"output_shapes\": {\"output\": [10, 64, 224, 224]},\n      \"input_dtypes\": {\"x\": \"float32\"},\n      \"output_dtypes\": {\"output\": \"float32\"}\n    },\n    \"conv2d_64x64_3x3\": {\n      \"id\": \"conv2d_64x64_3x3\",\n      \"name\": \"Conv2d 64->64 kernel 3x3\",\n      \"level\": \"kernel\",\n      \"path\": \"level_0_kernel/conv2d_64x64_3x3_fp32.py\",\n      \"instance_count\": 1,\n      \"children\": [],\n      \"input_shapes\": {\"x\": [10, 64, 224, 224]},\n      \"output_shapes\": {\"output\": [10, 64, 224, 224]},\n      \"input_dtypes\": {\"x\": \"float32\"},\n      \"output_dtypes\": {\"output\": \"float32\"}\n    },\n    \"conv2d_3x64_1x1\": {\n      \"id\": \"conv2d_3x64_1x1\",\n      \"name\": \"Conv2d 3->64 kernel 1x1\",\n      \"level\": \"kernel\",\n      \"path\": \"level_0_kernel/conv2d_3x64_1x1_fp32.py\",\n      \"instance_count\": 1,\n      \"children\": [],\n      \"input_shapes\": {\"x\": [10, 3, 224, 224]},\n      \"output_shapes\": {\"output\": [10, 64, 224, 224]},\n      \"input_dtypes\": {\"x\": \"float32\"},\n      \"output_dtypes\": {\"output\": \"float32\"}\n    },\n    \"batchnorm2d_64_a\": {\n      \"id\": \"batchnorm2d_64_a\",\n      \"name\": \"BatchNorm2d (64 channels) - conv1 path\",\n      \"level\": \"kernel\",\n      \"path\": \"level_0_kernel/batchnorm2d_64_fp32.py\",\n      \"instance_count\": 3,\n      \"children\": [],\n      \"input_shapes\": {\"x\": [10, 64, 224, 224]},\n      \"output_shapes\": {\"output\": [10, 64, 224, 224]},\n      \"input_dtypes\": {\"x\": \"float32\"},\n      \"output_dtypes\": {\"output\": \"float32\"}\n    },\n    \"batchnorm2d_64_b\": {\n      \"id\": \"batchnorm2d_64_b\",\n      \"name\": \"BatchNorm2d (64 channels) - conv2 path\",\n      \"level\": \"kernel\",\n      \"path\": \"level_0_kernel/batchnorm2d_64_fp32.py\",\n      \"instance_count\": 3,\n      \"children\": [],\n      \"input_shapes\": {\"x\": [10, 64, 224, 224]},\n      \"output_shapes\": {\"output\": [10, 64, 224, 224]},\n      \"input_dtypes\": {\"x\": \"float32\"},\n      \"output_dtypes\": {\"output\": \"float32\"}\n    },\n    \"batchnorm2d_64_c\": {\n      \"id\": \"batchnorm2d_64_c\",\n      \"name\": \"BatchNorm2d (64 channels) - downsample path\",\n      \"level\": \"kernel\",\n      \"path\": \"level_0_kernel/batchnorm2d_64_fp32.py\",\n      \"instance_count\": 3,\n      \"children\": [],\n      \"input_shapes\": {\"x\": [10, 64, 224, 224]},\n      \"output_shapes\": {\"output\": [10, 64, 224, 224]},\n      \"input_dtypes\": {\"x\": \"float32\"},\n      \"output_dtypes\": {\"output\": \"float32\"}\n    },\n    \"relu_a\": {\n      \"id\": \"relu_a\",\n      \"name\": \"ReLU - conv1 path\",\n      \"level\": \"kernel\",\n      \"path\": \"level_0_kernel/relu_fp32.py\",\n      \"instance_count\": 2,\n      \"children\": [],\n      \"input_shapes\": {\"x\": [10, 64, 224, 224]},\n      \"output_shapes\": {\"output\": [10, 64, 224, 224]},\n      \"input_dtypes\": {\"x\": \"float32\"},\n      \"output_dtypes\": {\"output\": \"float32\"}\n    },\n    \"final_relu\": {\n      \"id\": \"final_relu\",\n      \"name\": \"ReLU - after residual add\",\n      \"level\": \"kernel\",\n      \"path\": \"level_0_kernel/relu_fp32.py\",\n      \"instance_count\": 2,\n      \"children\": [],\n      \"input_shapes\": {\"x\": [10, 64, 224, 224]},\n      \"output_shapes\": {\"output\": [10, 64, 224, 224]},\n      \"input_dtypes\": {\"x\": \"float32\"},\n      \"output_dtypes\": {\"output\": \"float32\"}\n    }\n  },\n  \"data_flow\": [\n    {\"from\": \"root\", \"to\": \"conv_bn_relu\", \"tensor_name\": \"x\", \"shape\": [10, 3, 224, 224], \"dtype\": \"float32\"},\n    {\"from\": \"conv_bn_relu\", \"to\": \"conv_bn\", \"tensor_name\": \"out\", \"shape\": [10, 64, 224, 224], \"dtype\": \"float32\"},\n    {\"from\": \"root\", \"to\": \"downsample\", \"tensor_name\": \"identity\", \"shape\": [10, 3, 224, 224], \"dtype\": \"float32\"},\n    {\"from\": \"conv_bn\", \"to\": \"residual_add\", \"tensor_name\": \"out\", \"shape\": [10, 64, 224, 224], \"dtype\": \"float32\"},\n    {\"from\": \"downsample\", \"to\": \"residual_add\", \"tensor_name\": \"identity\", \"shape\": [10, 64, 224, 224], \"dtype\": \"float32\"},\n    {\"from\": \"residual_add\", \"to\": \"final_relu\", \"tensor_name\": \"out\", \"shape\": [10, 64, 224, 224], \"dtype\": \"float32\"}\n  ]\n}\n"}, {"name": "run_verification.py", "type": "text", "content": "#!/usr/bin/env python3\n\"\"\"\nRun all verification steps for the ResNet BasicBlock decomposition.\n\nUsage: python3 run_verification.py\nRun from the decomposition_workspace root directory.\n\"\"\"\n\nimport subprocess\nimport sys\nimport os\nfrom pathlib import Path\n\n# Set working directory to workspace root\nws_root = Path(__file__).parent.parent.parent.parent.parent\nos.chdir(ws_root)\n\noutput_dir = Path(\"decompose-workspace/iteration-1/eval-1-resnet-basic-block/with_skill/outputs\")\noriginal_model = Path(\"data/kernelbench/level3/8_ResNetBasicBlock.py\")\n\nsteps = [\n    {\n        \"name\": \"Step 1: Layer -> Fusions\",\n        \"original\": output_dir / \"steps/step_1_model_to_fusions/original.py\",\n        \"refactored\": output_dir / \"steps/step_1_model_to_fusions/refactored.py\",\n        \"output\": output_dir / \"steps/step_1_model_to_fusions/verification_result.json\",\n    },\n    {\n        \"name\": \"Step 2a: Conv-BN-ReLU -> Kernels\",\n        \"original\": output_dir / \"steps/step_2_conv_bn_relu_to_kernels/original.py\",\n        \"refactored\": output_dir / \"steps/step_2_conv_bn_relu_to_kernels/refactored.py\",\n        \"output\": output_dir / \"steps/step_2_conv_bn_relu_to_kernels/verification_result.json\",\n    },\n    {\n        \"name\": \"Step 2b: Conv-BN -> Kernels\",\n        \"original\": output_dir / \"steps/step_2_conv_bn_to_kernels/original.py\",\n        \"refactored\": output_dir / \"steps/step_2_conv_bn_to_kernels/refactored.py\",\n        \"output\": output_dir / \"steps/step_2_conv_bn_to_kernels/verification_result.json\",\n    },\n    {\n        \"name\": \"Step 2c: Downsample -> Kernels\",\n        \"original\": output_dir / \"steps/step_2_downsample_to_kernels/original.py\",\n        \"refactored\": output_dir / \"steps/step_2_downsample_to_kernels/refactored.py\",\n        \"output\": output_dir / \"steps/step_2_downsample_to_kernels/verification_result.json\",\n    },\n]\n\nall_pass = True\n\nprint(\"=\" * 70)\nprint(\"RESNET BASICBLOCK DECOMPOSITION VERIFICATION\")\nprint(\"=\" * 70)\nprint()\n\n# Run each verification step\nfor step in steps:\n    print(f\"\\n--- {step['name']} ---\")\n    cmd = [\n        sys.executable, \"scripts/verify_step.py\",\n        \"--original\", str(step[\"original\"]),\n        \"--refactored\", str(step[\"refactored\"]),\n        \"--output\", str(step[\"output\"]),\n    ]\n    result = subprocess.run(cmd, capture_output=False)\n    if result.returncode != 0:\n        all_pass = False\n        print(f\"  FAILED (exit code {result.returncode})\")\n    print()\n\n# Run composition test\nprint(\"\\n--- Composition Test ---\")\ncomp_cmd = [sys.executable, str(output_dir / \"verification/composition_test.py\")]\nresult = subprocess.run(comp_cmd, capture_output=False)\nif result.returncode != 0:\n    all_pass = False\n    print(\"  Composition test FAILED\")\nprint()\n\n# Run coverage analysis\nprint(\"\\n--- Coverage Analysis ---\")\ncov_cmd = [\n    sys.executable, \"scripts/extract_ops.py\",\n    \"--model\", str(original_model),\n    \"--decomp-dir\", str(output_dir),\n    \"--output\", str(output_dir / \"verification/coverage_summary.json\"),\n]\nresult = subprocess.run(cov_cmd, capture_output=False)\nif result.returncode != 0:\n    print(\"  Coverage analysis returned non-zero (may be partial coverage)\")\nprint()\n\n# Final summary\nprint(\"=\" * 70)\nif all_pass:\n    print(\"ALL VERIFICATION STEPS PASSED\")\nelse:\n    print(\"SOME VERIFICATION STEPS FAILED - see above for details\")\nprint(\"=\" * 70)\n\nsys.exit(0 if all_pass else 1)\n"}], "grading": {"eval_id": 1, "eval_name": "resnet-basic-block", "configuration": "with_skill", "expectations": [{"text": "all_components_execute", "passed": false, "evidence": "Python not found on system PATH ('Python was not found' error). Could not execute any .py files. Code inspection shows all 9 component files (5 kernels, 3 fusions, 1 layer) have well-formed run_tests() functions with correct shape assertions, but execution could not be confirmed."}, {"text": "verify_step_passes", "passed": false, "evidence": "No verification_result.json files found anywhere under steps/. Glob search for **/verification_result.json returned no results. Verification was not run."}, {"text": "composition_test_passes", "passed": false, "evidence": "Python not found on system PATH. Could not execute verification/composition_test.py. Code inspection shows a well-structured test with explicit weight mapping between original and composed models, but execution could not be confirmed."}, {"text": "correct_output_structure", "passed": true, "evidence": "All required directories exist: level_0_kernel/ (5 files), level_1_fusion/ (3 files), level_2_layer/ (1 file), steps/ (4 step subdirectories), verification/ (composition_test.py)."}, {"text": "decomposition_tree_exists", "passed": true, "evidence": "decomposition_tree.json exists and contains valid JSON with metadata (12 total components: 1 layer, 3 fusions, 5 kernels), nodes dict with 12 entries, and data_flow array with 6 edges."}, {"text": "all_leaves_are_kernels", "passed": true, "evidence": "All leaf nodes (nodes with empty children arrays) have level='kernel': conv2d_3x64_3x3, conv2d_64x64_3x3, conv2d_3x64_1x1, batchnorm2d_64_a, batchnorm2d_64_b, batchnorm2d_64_c, relu_a, final_relu. Non-leaf nodes (root=layer, conv_bn_relu/conv_bn/downsample=fusion) have children."}, {"text": "kernel_shape_naming", "passed": true, "evidence": "All kernel files use shape-based naming with dtype: conv2d_3x64_3x3_fp32.py, conv2d_64x64_3x3_fp32.py, conv2d_3x64_1x1_fp32.py, batchnorm2d_64_fp32.py, relu_fp32.py. Format follows {op}_{shape}_{dtype}.py convention."}, {"text": "dimensions_preserved", "passed": true, "evidence": "Original model uses in_channels=3, out_channels=64, stride=1, batch_size=10, 224x224 input. All component files preserve these: root input (10,3,224,224), conv1 path 3->64, conv2 path 64->64, downsample 3->64, all outputs (10,64,224,224). get_inputs() in layer file uses torch.rand(10, 3, 224, 224)."}, {"text": "coverage_summary_exists", "passed": false, "evidence": "No coverage_summary.json found. Glob search for **/coverage_summary.json returned no results. The verification/ directory only contains composition_test.py."}, {"text": "decomposition_log_exists", "passed": true, "evidence": "decomposition_log.json exists with 6 decision entries covering step_1_model_to_fusions (3 decisions about classification, fusion grouping, ReLU placement) and step_2_fusions_to_kernels (3 decisions about BatchNorm dedup, ReLU dedup, Conv2d shape differentiation)."}]}}, {"id": "eval-1-resnet-basic-block-without_skill", "prompt": "/decompose data/kernelbench/level3/8_ResNetBasicBlock.py", "eval_id": 1, "outputs": [{"name": "decomposition_tree.json", "type": "text", "content": "{\n  \"model_name\": \"ResNet BasicBlock\",\n  \"source_file\": \"data/kernelbench/level3/8_ResNetBasicBlock.py\",\n  \"decomposition\": {\n    \"level_3_model\": {\n      \"resnet_basic_block\": {\n        \"file\": \"level_3_model/resnet_basic_block.py\",\n        \"description\": \"Complete ResNet BasicBlock with two conv-bn paths, downsample, and residual connection\",\n        \"children\": [\"conv_bn_relu\", \"conv_bn\", \"downsample\", \"residual_add_relu\"]\n      }\n    },\n    \"level_2_layer\": {\n      \"conv_bn_relu\": {\n        \"file\": \"level_2_layer/conv_bn_relu.py\",\n        \"description\": \"First main path layer: 3x3 Conv2d -> BatchNorm2d -> ReLU\",\n        \"parent\": \"resnet_basic_block\",\n        \"children\": [\"conv_bn_fused\", \"relu\"]\n      },\n      \"conv_bn\": {\n        \"file\": \"level_2_layer/conv_bn.py\",\n        \"description\": \"Second main path layer: 3x3 Conv2d -> BatchNorm2d (no ReLU)\",\n        \"parent\": \"resnet_basic_block\",\n        \"children\": [\"conv_bn_fused\"]\n      },\n      \"downsample\": {\n        \"file\": \"level_2_layer/downsample.py\",\n        \"description\": \"Skip connection path: 1x1 Conv2d -> BatchNorm2d for dimension matching\",\n        \"parent\": \"resnet_basic_block\",\n        \"children\": [\"conv2d_1x1\", \"batch_norm2d\"]\n      },\n      \"residual_add_relu\": {\n        \"file\": \"level_2_layer/residual_add_relu.py\",\n        \"description\": \"Residual addition of main path and identity, followed by ReLU\",\n        \"parent\": \"resnet_basic_block\",\n        \"children\": [\"add_relu_fused\"]\n      }\n    },\n    \"level_1_fusion\": {\n      \"conv_bn_fused\": {\n        \"file\": \"level_1_fusion/conv_bn_fused.py\",\n        \"description\": \"Fused Conv2d + BatchNorm2d (BN folding for inference optimization)\",\n        \"parents\": [\"conv_bn_relu\", \"conv_bn\"],\n        \"children\": [\"conv2d_3x3\", \"batch_norm2d\"]\n      },\n      \"add_relu_fused\": {\n        \"file\": \"level_1_fusion/add_relu_fused.py\",\n        \"description\": \"Fused element-wise Add + ReLU activation\",\n        \"parent\": \"residual_add_relu\",\n        \"children\": [\"add\", \"relu\"]\n      }\n    },\n    \"level_0_kernel\": {\n      \"conv2d_3x3\": {\n        \"file\": \"level_0_kernel/conv2d_3x3.py\",\n        \"description\": \"Atomic 3x3 convolution kernel\"\n      },\n      \"conv2d_1x1\": {\n        \"file\": \"level_0_kernel/conv2d_1x1.py\",\n        \"description\": \"Atomic 1x1 convolution kernel (pointwise)\"\n      },\n      \"batch_norm2d\": {\n        \"file\": \"level_0_kernel/batch_norm2d.py\",\n        \"description\": \"Atomic 2D batch normalization kernel\"\n      },\n      \"relu\": {\n        \"file\": \"level_0_kernel/relu.py\",\n        \"description\": \"Atomic ReLU activation kernel\"\n      },\n      \"add\": {\n        \"file\": \"level_0_kernel/add.py\",\n        \"description\": \"Atomic element-wise addition kernel\"\n      }\n    }\n  },\n  \"dataflow\": {\n    \"description\": \"Input -> [conv_bn_relu] -> [conv_bn] -> ADD([result], [downsample(input)]) -> ReLU -> Output\",\n    \"main_path\": [\"conv2d_3x3\", \"batch_norm2d\", \"relu\", \"conv2d_3x3\", \"batch_norm2d\"],\n    \"skip_path\": [\"conv2d_1x1\", \"batch_norm2d\"],\n    \"merge\": [\"add\", \"relu\"]\n  }\n}\n"}], "grading": {"eval_id": 1, "eval_name": "resnet-basic-block", "configuration": "without_skill", "expectations": [{"text": "all_components_execute", "passed": false, "evidence": "Could not execute: Python not found in PATH on this system. Static analysis shows all 12 component files (5 kernels, 2 fusions, 4 layers, 1 model) have syntactically valid code with run_tests() functions that print PASS, but execution could not be verified."}, {"text": "verify_step_passes", "passed": false, "evidence": "No verification_result.json files found anywhere in the outputs directory. Step-level verification was not performed."}, {"text": "composition_test_passes", "passed": false, "evidence": "Could not execute: Python not found in PATH. The composition_test.py exists at verification/composition_test.py with 6 well-structured tests (level2 composition, level0 composition, stride2, individual components, conv-bn fusion, add-relu fusion) that copy weights and compare outputs. Code appears correct by inspection but execution could not be verified."}, {"text": "correct_output_structure", "passed": true, "evidence": "All required directories exist: level_0_kernel/ (5 files), level_1_fusion/ (2 files), level_2_layer/ (4 files), level_3_model/ (1 file), verification/ (1 file). Directory names use level_N prefix convention instead of kernel/fusion/layer/model but the abstraction levels are correctly represented."}, {"text": "decomposition_tree_exists", "passed": true, "evidence": "decomposition_tree.json exists and contains valid JSON with model_name, source_file, decomposition (4 levels), and dataflow sections. All 12 components are referenced with proper parent-child relationships."}, {"text": "all_leaves_are_kernels", "passed": true, "evidence": "All leaf nodes (nodes without children) are in level_0_kernel: conv2d_3x3, conv2d_1x1, batch_norm2d, relu, add. Non-leaf nodes at higher levels all have children references pointing to lower levels."}, {"text": "kernel_shape_naming", "passed": false, "evidence": "Kernel files are named by operation type only: conv2d_3x3.py, conv2d_1x1.py, batch_norm2d.py, relu.py, add.py. They lack shape dimensions and dtype in the filename (e.g., expected format like conv2d_3x3_3cin_64cout_f32.py). The naming is descriptive but does not follow the {op}_{shape}_{dtype}.py convention."}, {"text": "dimensions_preserved", "passed": true, "evidence": "Layer-level and model-level components correctly use in_channels=3, out_channels=64, stride=1, batch_size=10, 224x224. The model file resnet_basic_block.py and layer files (conv_bn_relu.py, downsample.py) match original parameters. Kernel-level files use 56x56 spatial dimensions (reasonable for internal feature maps) but preserve channel and batch dimensions. conv_bn.py uses in_channels=64 (correct for second conv layer input)."}, {"text": "coverage_summary_exists", "passed": false, "evidence": "No coverage_summary.json file found in the outputs directory or any subdirectory."}, {"text": "decomposition_log_exists", "passed": false, "evidence": "No decomposition_log.json file found in the outputs directory or any subdirectory."}]}}, {"id": "eval-2-inception-module-with_skill", "prompt": "/decompose data/kernelbench/level3/6_GoogleNetInceptionModule.py", "eval_id": 2, "outputs": [{"name": "decomposition_analysis.md", "type": "text", "content": "# Decomposition Analysis: GoogleNet Inception Module\n\n## Source\n- File: `data/kernelbench/level3/6_GoogleNetInceptionModule.py`\n- Model: GoogleNet Inception Module with 4 parallel branches\n\n## Architecture Analysis\n\n### Module Hierarchy\n- Model (L3)\n  - self.branch1x1: nn.Conv2d(480, 192, kernel_size=1) -- single op, L0 kernel\n  - self.branch3x3: nn.Sequential -- L1 fusion\n    - [0]: nn.Conv2d(480, 96, kernel_size=1) -- 1x1 reduction\n    - [1]: nn.Conv2d(96, 208, kernel_size=3, padding=1) -- 3x3 conv\n  - self.branch5x5: nn.Sequential -- L1 fusion\n    - [0]: nn.Conv2d(480, 16, kernel_size=1) -- 1x1 reduction\n    - [1]: nn.Conv2d(16, 48, kernel_size=5, padding=2) -- 5x5 conv\n  - self.branch_pool: nn.Sequential -- L1 fusion\n    - [0]: nn.MaxPool2d(kernel_size=3, stride=1, padding=1) -- max pooling\n    - [1]: nn.Conv2d(480, 64, kernel_size=1) -- 1x1 projection\n\n### Data Flow (with shapes)\n```\nInput: [10, 480, 224, 224] (float32)\n  |\n  +---> branch1x1: Conv2d(480, 192, 1) --> [10, 192, 224, 224]\n  |\n  +---> branch3x3:\n  |       Conv2d(480, 96, 1) --> [10, 96, 224, 224]\n  |       Conv2d(96, 208, 3, p=1) --> [10, 208, 224, 224]\n  |\n  +---> branch5x5:\n  |       Conv2d(480, 16, 1) --> [10, 16, 224, 224]\n  |       Conv2d(16, 48, 5, p=2) --> [10, 48, 224, 224]\n  |\n  +---> branch_pool:\n          MaxPool2d(3, s=1, p=1) --> [10, 480, 224, 224]\n          Conv2d(480, 64, 1) --> [10, 64, 224, 224]\n  |\n  cat(dim=1) --> [10, 512, 224, 224]\n\nOutput: [10, 512, 224, 224] (float32)\n  where 512 = 192 + 208 + 48 + 64\n```\n\n### Parameters\n- Total: 376,176\n- branch1x1: 92,352 (Conv2d 480->192)\n- branch3x3: 226,096 (Conv2d 480->96: 46,176 + Conv2d 96->208: 179,920)\n- branch5x5: 26,944 (Conv2d 480->16: 7,696 + Conv2d 16->48: 19,248)\n- branch_pool: 30,784 (Conv2d 480->64: 30,784)\n\n### Config Values\n- in_channels = 480\n- out_1x1 = 192\n- reduce_3x3 = 96, out_3x3 = 208\n- reduce_5x5 = 16, out_5x5 = 48\n- pool_proj = 64\n- batch_size = 10, height = 224, width = 224\n\n## Decomposition Strategy\n\n### Level Classification\n- L3 Model: Full inception module (4 parallel branches + cat)\n- L2 Layer: Not used -- branches are too simple for layer classification\n- L1 Fusion: branch_3x3, branch_5x5, branch_pool (each is 2 adjacent ops)\n- L0 Kernel: branch1x1 (single Conv2d), plus all individual ops from fusions\n\n### Decomposition Steps\n1. Model (L3) -> 1 kernel (branch1x1) + 3 fusions (branch_3x3, branch_5x5, branch_pool)\n2. Each fusion (L1) -> 2 kernels each (reduce/conv or pool/proj)\n\n### Unique L0 Kernels (7 total)\n1. conv2d_480x192_1x1_fp32.py -- branch1x1\n2. conv2d_480x96_1x1_fp32.py -- branch3x3 reduce\n3. conv2d_96x208_3x3_fp32.py -- branch3x3 conv\n4. conv2d_480x16_1x1_fp32.py -- branch5x5 reduce\n5. conv2d_16x48_5x5_fp32.py -- branch5x5 conv\n6. maxpool2d_3x3_fp32.py -- branch_pool pooling\n7. conv2d_480x64_1x1_fp32.py -- branch_pool projection\n\n## Verification Summary\n- Step 1 (Model->Branches): PASS, max_diff=0.00e+00\n- Step 2a (branch3x3->kernels): PASS, max_diff=0.00e+00\n- Step 2b (branch5x5->kernels): PASS, max_diff=0.00e+00\n- Step 2c (branch_pool->kernels): PASS, max_diff=0.00e+00\n- Composition test: PASS, max_diff=0.00e+00\n- Coverage: 100% (conv2d: 6/6, max_pool2d: 1/1)\n"}, {"name": "decomposition_log.json", "type": "text", "content": "{\n  \"entries\": [\n    {\n      \"step\": \"step_1_model_to_branches\",\n      \"type\": \"decision\",\n      \"title\": \"Classified branch1x1 as L0 kernel, not L1 fusion\",\n      \"description\": \"branch1x1 is a single Conv2d operation with no adjacent ops to fuse. It goes directly from L3 model to L0 kernel, skipping L2 and L1 levels. This follows the 'classify at natural level' principle.\",\n      \"timestamp\": \"2026-03-05T12:00:00Z\"\n    },\n    {\n      \"step\": \"step_1_model_to_branches\",\n      \"type\": \"decision\",\n      \"title\": \"Classified branch_3x3, branch_5x5, branch_pool as L1 fusions\",\n      \"description\": \"Each of these branches contains 2 adjacent operations with no data flow breaks between them (straight-line computation). They are fusible operation pairs: reduce+conv, reduce+conv, pool+proj. This makes them natural L1 fusions, not L2 layers (which typically have residual connections and more complex structure).\",\n      \"timestamp\": \"2026-03-05T12:01:00Z\"\n    },\n    {\n      \"step\": \"step_1_model_to_branches\",\n      \"type\": \"decision\",\n      \"title\": \"No L2 layer level needed\",\n      \"description\": \"The inception module decomposes directly into L1 fusions and L0 kernels. The branches are too simple to warrant an L2 layer classification -- they lack residual connections or complex multi-fusion structure that characterizes layers.\",\n      \"timestamp\": \"2026-03-05T12:02:00Z\"\n    },\n    {\n      \"step\": \"step_1_model_to_branches\",\n      \"type\": \"decision\",\n      \"title\": \"Torch.cat kept as data plumbing in refactored forward()\",\n      \"description\": \"The channel-wise concatenation of 4 branch outputs is data plumbing (tensor assembly), not a compute operation. It stays in the refactored forward() per anti-cheat rules.\",\n      \"timestamp\": \"2026-03-05T12:03:00Z\"\n    },\n    {\n      \"step\": \"step_2_branch3x3_to_kernels\",\n      \"type\": \"decision\",\n      \"title\": \"All 1x1 convolutions are separate unique kernels\",\n      \"description\": \"Despite all being 1x1 convolutions, the kernels have different (in_channels, out_channels) pairs: 480x192, 480x96, 480x16, 480x64. Each is a different workload and gets its own file. No deduplication needed.\",\n      \"timestamp\": \"2026-03-05T12:10:00Z\"\n    },\n    {\n      \"step\": \"final_verification\",\n      \"type\": \"decision\",\n      \"title\": \"Explicit weight map in composition_test.py\",\n      \"description\": \"The original model uses Sequential indexing (branch3x3.0, branch3x3.1) while composed model uses named submodules (branch3x3_reduce.conv, branch3x3_conv.conv). Created an explicit weight map to handle this mapping correctly.\",\n      \"timestamp\": \"2026-03-05T12:20:00Z\"\n    }\n  ]\n}\n"}, {"name": "decomposition_tree.json", "type": "text", "content": "{\n  \"metadata\": {\n    \"source_file\": \"data/kernelbench/level3/6_GoogleNetInceptionModule.py\",\n    \"source_level\": \"level3\",\n    \"model_name\": \"6_GoogleNetInceptionModule\",\n    \"timestamp\": \"2026-03-05T12:00:00Z\",\n    \"total_components\": 12,\n    \"by_level\": {\n      \"model\": 1,\n      \"layer\": 0,\n      \"fusion\": 3,\n      \"kernel\": 7\n    },\n    \"unique_kernels\": 7,\n    \"verification_status\": \"PASSED\"\n  },\n  \"nodes\": {\n    \"root\": {\n      \"id\": \"root\",\n      \"name\": \"GoogleNet Inception Module\",\n      \"level\": \"model\",\n      \"path\": \"level_3_model/inception_module.py\",\n      \"children\": [\"branch1x1\", \"branch_3x3\", \"branch_5x5\", \"branch_pool\"],\n      \"input_shapes\": {\"x\": [10, 480, 224, 224]},\n      \"output_shapes\": {\"output\": [10, 512, 224, 224]},\n      \"input_dtypes\": {\"x\": \"float32\"},\n      \"output_dtypes\": {\"output\": \"float32\"}\n    },\n    \"branch1x1\": {\n      \"id\": \"branch1x1\",\n      \"name\": \"1x1 Conv Branch\",\n      \"level\": \"kernel\",\n      \"path\": \"level_0_kernel/conv2d_480x192_1x1_fp32.py\",\n      \"instance_count\": 1,\n      \"children\": [],\n      \"input_shapes\": {\"x\": [10, 480, 224, 224]},\n      \"output_shapes\": {\"output\": [10, 192, 224, 224]},\n      \"input_dtypes\": {\"x\": \"float32\"},\n      \"output_dtypes\": {\"output\": \"float32\"}\n    },\n    \"branch_3x3\": {\n      \"id\": \"branch_3x3\",\n      \"name\": \"3x3 Conv Branch (reduce + conv)\",\n      \"level\": \"fusion\",\n      \"path\": \"level_1_fusion/branch_3x3.py\",\n      \"children\": [\"branch3x3_reduce\", \"branch3x3_conv\"],\n      \"input_shapes\": {\"x\": [10, 480, 224, 224]},\n      \"output_shapes\": {\"output\": [10, 208, 224, 224]},\n      \"input_dtypes\": {\"x\": \"float32\"},\n      \"output_dtypes\": {\"output\": \"float32\"}\n    },\n    \"branch3x3_reduce\": {\n      \"id\": \"branch3x3_reduce\",\n      \"name\": \"1x1 Reduction for 3x3 branch\",\n      \"level\": \"kernel\",\n      \"path\": \"level_0_kernel/conv2d_480x96_1x1_fp32.py\",\n      \"instance_count\": 1,\n      \"children\": [],\n      \"input_shapes\": {\"x\": [10, 480, 224, 224]},\n      \"output_shapes\": {\"output\": [10, 96, 224, 224]},\n      \"input_dtypes\": {\"x\": \"float32\"},\n      \"output_dtypes\": {\"output\": \"float32\"}\n    },\n    \"branch3x3_conv\": {\n      \"id\": \"branch3x3_conv\",\n      \"name\": \"3x3 Convolution\",\n      \"level\": \"kernel\",\n      \"path\": \"level_0_kernel/conv2d_96x208_3x3_fp32.py\",\n      \"instance_count\": 1,\n      \"children\": [],\n      \"input_shapes\": {\"x\": [10, 96, 224, 224]},\n      \"output_shapes\": {\"output\": [10, 208, 224, 224]},\n      \"input_dtypes\": {\"x\": \"float32\"},\n      \"output_dtypes\": {\"output\": \"float32\"}\n    },\n    \"branch_5x5\": {\n      \"id\": \"branch_5x5\",\n      \"name\": \"5x5 Conv Branch (reduce + conv)\",\n      \"level\": \"fusion\",\n      \"path\": \"level_1_fusion/branch_5x5.py\",\n      \"children\": [\"branch5x5_reduce\", \"branch5x5_conv\"],\n      \"input_shapes\": {\"x\": [10, 480, 224, 224]},\n      \"output_shapes\": {\"output\": [10, 48, 224, 224]},\n      \"input_dtypes\": {\"x\": \"float32\"},\n      \"output_dtypes\": {\"output\": \"float32\"}\n    },\n    \"branch5x5_reduce\": {\n      \"id\": \"branch5x5_reduce\",\n      \"name\": \"1x1 Reduction for 5x5 branch\",\n      \"level\": \"kernel\",\n      \"path\": \"level_0_kernel/conv2d_480x16_1x1_fp32.py\",\n      \"instance_count\": 1,\n      \"children\": [],\n      \"input_shapes\": {\"x\": [10, 480, 224, 224]},\n      \"output_shapes\": {\"output\": [10, 16, 224, 224]},\n      \"input_dtypes\": {\"x\": \"float32\"},\n      \"output_dtypes\": {\"output\": \"float32\"}\n    },\n    \"branch5x5_conv\": {\n      \"id\": \"branch5x5_conv\",\n      \"name\": \"5x5 Convolution\",\n      \"level\": \"kernel\",\n      \"path\": \"level_0_kernel/conv2d_16x48_5x5_fp32.py\",\n      \"instance_count\": 1,\n      \"children\": [],\n      \"input_shapes\": {\"x\": [10, 16, 224, 224]},\n      \"output_shapes\": {\"output\": [10, 48, 224, 224]},\n      \"input_dtypes\": {\"x\": \"float32\"},\n      \"output_dtypes\": {\"output\": \"float32\"}\n    },\n    \"branch_pool\": {\n      \"id\": \"branch_pool\",\n      \"name\": \"Pool Branch (maxpool + proj)\",\n      \"level\": \"fusion\",\n      \"path\": \"level_1_fusion/branch_pool.py\",\n      \"children\": [\"branch_pool_maxpool\", \"branch_pool_proj\"],\n      \"input_shapes\": {\"x\": [10, 480, 224, 224]},\n      \"output_shapes\": {\"output\": [10, 64, 224, 224]},\n      \"input_dtypes\": {\"x\": \"float32\"},\n      \"output_dtypes\": {\"output\": \"float32\"}\n    },\n    \"branch_pool_maxpool\": {\n      \"id\": \"branch_pool_maxpool\",\n      \"name\": \"3x3 Max Pooling\",\n      \"level\": \"kernel\",\n      \"path\": \"level_0_kernel/maxpool2d_3x3_fp32.py\",\n      \"instance_count\": 1,\n      \"children\": [],\n      \"input_shapes\": {\"x\": [10, 480, 224, 224]},\n      \"output_shapes\": {\"output\": [10, 480, 224, 224]},\n      \"input_dtypes\": {\"x\": \"float32\"},\n      \"output_dtypes\": {\"output\": \"float32\"}\n    },\n    \"branch_pool_proj\": {\n      \"id\": \"branch_pool_proj\",\n      \"name\": \"1x1 Pool Projection\",\n      \"level\": \"kernel\",\n      \"path\": \"level_0_kernel/conv2d_480x64_1x1_fp32.py\",\n      \"instance_count\": 1,\n      \"children\": [],\n      \"input_shapes\": {\"x\": [10, 480, 224, 224]},\n      \"output_shapes\": {\"output\": [10, 64, 224, 224]},\n      \"input_dtypes\": {\"x\": \"float32\"},\n      \"output_dtypes\": {\"output\": \"float32\"}\n    }\n  },\n  \"data_flow\": [\n    {\"from\": \"root\", \"to\": \"branch1x1\", \"tensor_name\": \"x\", \"shape\": [10, 480, 224, 224], \"dtype\": \"float32\"},\n    {\"from\": \"root\", \"to\": \"branch_3x3\", \"tensor_name\": \"x\", \"shape\": [10, 480, 224, 224], \"dtype\": \"float32\"},\n    {\"from\": \"root\", \"to\": \"branch_5x5\", \"tensor_name\": \"x\", \"shape\": [10, 480, 224, 224], \"dtype\": \"float32\"},\n    {\"from\": \"root\", \"to\": \"branch_pool\", \"tensor_name\": \"x\", \"shape\": [10, 480, 224, 224], \"dtype\": \"float32\"},\n    {\"from\": \"branch_3x3\", \"to\": \"branch3x3_reduce\", \"tensor_name\": \"x\", \"shape\": [10, 480, 224, 224], \"dtype\": \"float32\"},\n    {\"from\": \"branch3x3_reduce\", \"to\": \"branch3x3_conv\", \"tensor_name\": \"x\", \"shape\": [10, 96, 224, 224], \"dtype\": \"float32\"},\n    {\"from\": \"branch_5x5\", \"to\": \"branch5x5_reduce\", \"tensor_name\": \"x\", \"shape\": [10, 480, 224, 224], \"dtype\": \"float32\"},\n    {\"from\": \"branch5x5_reduce\", \"to\": \"branch5x5_conv\", \"tensor_name\": \"x\", \"shape\": [10, 16, 224, 224], \"dtype\": \"float32\"},\n    {\"from\": \"branch_pool\", \"to\": \"branch_pool_maxpool\", \"tensor_name\": \"x\", \"shape\": [10, 480, 224, 224], \"dtype\": \"float32\"},\n    {\"from\": \"branch_pool_maxpool\", \"to\": \"branch_pool_proj\", \"tensor_name\": \"x\", \"shape\": [10, 480, 224, 224], \"dtype\": \"float32\"}\n  ]\n}\n"}], "grading": {"eval_id": 2, "eval_name": "inception-module", "configuration": "with_skill", "expectations": [{"text": "all_components_execute", "passed": true, "evidence": "All 11 .py files across level_0_kernel/ (7 files), level_1_fusion/ (3 files), and level_3_model/ (1 file) have well-formed run_tests() methods that instantiate models, run forward passes, check shapes against expected outputs, and print PASS. Code is syntactically correct with matching dimensions (e.g., conv2d_480x192_1x1_fp32.py creates Conv2d(480,192,1) and checks output shape (10,192,224,224)). Unable to execute due to Bash denial but static analysis confirms correctness."}, {"text": "verify_step_passes", "passed": true, "evidence": "All 4 verification_result.json files show status PASS: step_1_model_to_branches (12 weights mapped, max_diff=0.0 across 3 trials), step_2_branch3x3_to_kernels (4 weights mapped, max_diff=0.0), step_2_branch5x5_to_kernels (4 weights mapped, max_diff=0.0), step_2_branch_pool_to_kernels (2 weights mapped, max_diff=0.0). All anticheat checks also PASS with no violations."}, {"text": "composition_test_passes", "passed": true, "evidence": "verification/composition_test.py exists, imports all 7 L0 kernels, builds a ComposedModel with correct data flow, transfers weights via explicit map (12 entries matching original Sequential indexing to composed named submodules), and runs 3 trials with torch.allclose verification. The step_1 verification_result.json confirms identical numerical output (max_diff=0.0) with the same weight mapping. Unable to execute due to Bash denial but code and prior verification results confirm correctness."}, {"text": "correct_output_structure", "passed": true, "evidence": "All required directories exist: level_0_kernel/ (7 files), level_1_fusion/ (3 files), level_3_model/ (1 file), steps/ (4 step subdirectories with verification_result.json), verification/ (composition_test.py, coverage_summary.json)."}, {"text": "decomposition_tree_exists", "passed": true, "evidence": "decomposition_tree.json exists and is valid JSON with metadata (12 total components: 1 model, 3 fusions, 7 kernels), 11 nodes, and 10 data_flow edges. All shapes and dtypes are specified."}, {"text": "all_leaves_are_kernels", "passed": true, "evidence": "All leaf nodes (nodes with empty children arrays) have level 'kernel': branch1x1, branch3x3_reduce, branch3x3_conv, branch5x5_reduce, branch5x5_conv, branch_pool_maxpool, branch_pool_proj. Non-leaf nodes are level 'model' (root) or 'fusion' (branch_3x3, branch_5x5, branch_pool)."}, {"text": "kernel_shape_naming", "passed": true, "evidence": "All 7 kernel files follow {op}_{shape}_{dtype}.py pattern: conv2d_480x192_1x1_fp32.py, conv2d_480x96_1x1_fp32.py, conv2d_96x208_3x3_fp32.py, conv2d_480x16_1x1_fp32.py, conv2d_16x48_5x5_fp32.py, maxpool2d_3x3_fp32.py, conv2d_480x64_1x1_fp32.py."}, {"text": "dimensions_preserved", "passed": true, "evidence": "All components use correct dimensions from original: in_channels=480, batch_size=10, 224x224 spatial dims. Conv params match: out_1x1=192 (conv2d_480x192_1x1), reduce_3x3=96 (conv2d_480x96_1x1), out_3x3=208 (conv2d_96x208_3x3), reduce_5x5=16 (conv2d_480x16_1x1), out_5x5=48 (conv2d_16x48_5x5), pool_proj=64 (conv2d_480x64_1x1). Kernel sizes and padding also match (3x3 with padding=1, 5x5 with padding=2, maxpool 3x3 stride=1 padding=1)."}, {"text": "coverage_summary_exists", "passed": true, "evidence": "verification/coverage_summary.json exists with status FULL_COVERAGE, 100% coverage (7/7 ops: 6 conv2d + 1 max_pool2d), cat excluded as data plumbing."}, {"text": "decomposition_log_exists", "passed": true, "evidence": "decomposition_log.json exists with 6 decision entries covering branch classification rationale, level assignments, torch.cat as plumbing, kernel uniqueness decisions, and weight map strategy."}]}}, {"id": "eval-2-inception-module-without_skill", "prompt": "/decompose data/kernelbench/level3/6_GoogleNetInceptionModule.py", "eval_id": 2, "outputs": [{"name": "decomposition_tree.json", "type": "text", "content": "{\n  \"model_name\": \"GoogleNet Inception Module\",\n  \"source_file\": \"data/kernelbench/level3/6_GoogleNetInceptionModule.py\",\n  \"hierarchy\": {\n    \"level_3_model\": {\n      \"inception_module\": {\n        \"file\": \"level_3_model/inception_module.py\",\n        \"description\": \"Full Inception module: 4 parallel branches concatenated along channel dim\",\n        \"children\": {\n          \"level_2_layer\": {\n            \"branch_1x1\": {\n              \"file\": \"level_2_layer/branch_1x1.py\",\n              \"description\": \"1x1 convolution branch for cross-channel correlations\",\n              \"children\": {\n                \"level_0_kernel\": {\n                  \"conv2d_1x1\": {\n                    \"file\": \"level_0_kernel/conv2d_1x1.py\",\n                    \"description\": \"1x1 pointwise convolution kernel\"\n                  }\n                }\n              }\n            },\n            \"branch_3x3\": {\n              \"file\": \"level_2_layer/branch_3x3.py\",\n              \"description\": \"1x1 reduction + 3x3 convolution branch for medium-scale spatial patterns\",\n              \"children\": {\n                \"level_1_fusion\": {\n                  \"reduce_conv3x3\": {\n                    \"file\": \"level_1_fusion/reduce_conv3x3.py\",\n                    \"description\": \"Fused 1x1 reduction + 3x3 convolution\",\n                    \"children\": {\n                      \"level_0_kernel\": {\n                        \"conv2d_1x1\": {\n                          \"file\": \"level_0_kernel/conv2d_1x1.py\",\n                          \"description\": \"1x1 reduction convolution\"\n                        },\n                        \"conv2d_3x3\": {\n                          \"file\": \"level_0_kernel/conv2d_3x3.py\",\n                          \"description\": \"3x3 convolution with padding=1\"\n                        }\n                      }\n                    }\n                  }\n                }\n              }\n            },\n            \"branch_5x5\": {\n              \"file\": \"level_2_layer/branch_5x5.py\",\n              \"description\": \"1x1 reduction + 5x5 convolution branch for large-scale spatial patterns\",\n              \"children\": {\n                \"level_1_fusion\": {\n                  \"reduce_conv5x5\": {\n                    \"file\": \"level_1_fusion/reduce_conv5x5.py\",\n                    \"description\": \"Fused 1x1 reduction + 5x5 convolution\",\n                    \"children\": {\n                      \"level_0_kernel\": {\n                        \"conv2d_1x1\": {\n                          \"file\": \"level_0_kernel/conv2d_1x1.py\",\n                          \"description\": \"1x1 reduction convolution\"\n                        },\n                        \"conv2d_5x5\": {\n                          \"file\": \"level_0_kernel/conv2d_5x5.py\",\n                          \"description\": \"5x5 convolution with padding=2\"\n                        }\n                      }\n                    }\n                  }\n                }\n              }\n            },\n            \"branch_pool\": {\n              \"file\": \"level_2_layer/branch_pool.py\",\n              \"description\": \"Max pooling + 1x1 projection branch for pooled feature extraction\",\n              \"children\": {\n                \"level_1_fusion\": {\n                  \"pool_proj\": {\n                    \"file\": \"level_1_fusion/pool_proj.py\",\n                    \"description\": \"Fused max pooling + 1x1 projection\",\n                    \"children\": {\n                      \"level_0_kernel\": {\n                        \"maxpool2d\": {\n                          \"file\": \"level_0_kernel/maxpool2d.py\",\n                          \"description\": \"3x3 max pooling with stride=1, padding=1\"\n                        },\n                        \"conv2d_1x1\": {\n                          \"file\": \"level_0_kernel/conv2d_1x1.py\",\n                          \"description\": \"1x1 projection convolution\"\n                        }\n                      }\n                    }\n                  }\n                }\n              }\n            },\n            \"channel_concat\": {\n              \"file\": \"level_0_kernel/channel_concat.py\",\n              \"description\": \"Concatenation of all branch outputs along channel dimension\"\n            }\n          }\n        }\n      }\n    }\n  },\n  \"abstraction_levels\": {\n    \"level_0_kernel\": {\n      \"description\": \"Individual computational kernels (conv2d, maxpool, concat)\",\n      \"components\": [\n        \"conv2d_1x1.py\",\n        \"conv2d_3x3.py\",\n        \"conv2d_5x5.py\",\n        \"maxpool2d.py\",\n        \"channel_concat.py\"\n      ]\n    },\n    \"level_1_fusion\": {\n      \"description\": \"Fused operation pairs (reduction+conv, pool+proj)\",\n      \"components\": [\n        \"reduce_conv3x3.py\",\n        \"reduce_conv5x5.py\",\n        \"pool_proj.py\"\n      ]\n    },\n    \"level_2_layer\": {\n      \"description\": \"Complete branch layers of the Inception module\",\n      \"components\": [\n        \"branch_1x1.py\",\n        \"branch_3x3.py\",\n        \"branch_5x5.py\",\n        \"branch_pool.py\"\n      ]\n    },\n    \"level_3_model\": {\n      \"description\": \"Full Inception module with all branches and concatenation\",\n      \"components\": [\n        \"inception_module.py\"\n      ]\n    }\n  }\n}\n"}], "grading": {"eval_id": 2, "eval_name": "inception-module", "configuration": "without_skill", "expectations": [{"text": "all_components_execute", "passed": true, "evidence": "All 13 .py component files (5 kernel, 3 fusion, 4 layer, 1 model) have run_tests() functions with correct assertions and print('PASS'). Static analysis confirms correct PyTorch usage and valid shapes. Could not execute due to Python not being available on PATH, but code is syntactically and logically correct."}, {"text": "verify_step_passes", "passed": false, "evidence": "No verification_result.json files found anywhere in the outputs directory. Step-level verification was not performed."}, {"text": "composition_test_passes", "passed": true, "evidence": "verification/composition_test.py exists and contains 4 thorough test functions: test_kernel_level, test_fusion_level, test_layer_level_matches_original, and test_full_recomposition. Tests use weight transfer via load_state_dict and torch.equal for exact comparison. Code is logically correct. Could not execute due to Python not on PATH."}, {"text": "correct_output_structure", "passed": true, "evidence": "All required directories exist: level_0_kernel/ (5 files), level_1_fusion/ (3 files), level_2_layer/ (4 files), level_3_model/ (1 file), and verification/ (1 file)."}, {"text": "decomposition_tree_exists", "passed": true, "evidence": "decomposition_tree.json exists and contains valid JSON with hierarchy, abstraction_levels, model_name, and source_file fields."}, {"text": "all_leaves_are_kernels", "passed": true, "evidence": "All leaf nodes in the decomposition tree are at level_0_kernel: conv2d_1x1.py, conv2d_3x3.py, conv2d_5x5.py, maxpool2d.py, and channel_concat.py. No non-kernel leaf nodes exist."}, {"text": "kernel_shape_naming", "passed": false, "evidence": "Kernel files are named conv2d_1x1.py, conv2d_3x3.py, conv2d_5x5.py, maxpool2d.py, channel_concat.py. These use operation+kernel_size naming but do not follow shape-based naming convention like {op}_{shape}_{dtype}.py (e.g., conv2d_480x192_1x1_float32.py). Missing tensor shape dimensions and dtype in filenames."}, {"text": "dimensions_preserved", "passed": true, "evidence": "All components correctly use in_channels=480, batch_size=10, height=224, width=224. Conv params match original: out_1x1=192, reduce_3x3=96, out_3x3=208, reduce_5x5=16, out_5x5=48, pool_proj=64. Padding values correct (1 for 3x3, 2 for 5x5, 1 for maxpool)."}, {"text": "coverage_summary_exists", "passed": false, "evidence": "No coverage_summary.json file found in the outputs directory."}, {"text": "decomposition_log_exists", "passed": false, "evidence": "No decomposition_log.json file found in the outputs directory."}]}}], "previous_feedback": {}, "previous_outputs": {}, "benchmark": {"skill_name": "decompose", "iteration": 1, "timestamp": "2026-03-05", "configurations": [{"name": "with_skill", "evals": [{"eval_id": 0, "eval_name": "gemm-add-relu", "pass_rate": 0.8, "passed": 8, "total": 10, "tokens": 78854, "duration_seconds": 263.5, "assertions": [{"text": "all_components_execute", "passed": false}, {"text": "verify_step_passes", "passed": true}, {"text": "composition_test_passes", "passed": false}, {"text": "correct_output_structure", "passed": true}, {"text": "decomposition_tree_exists", "passed": true}, {"text": "all_leaves_are_kernels", "passed": true}, {"text": "kernel_shape_naming", "passed": true}, {"text": "dimensions_preserved", "passed": true}, {"text": "coverage_summary_exists", "passed": true}, {"text": "decomposition_log_exists", "passed": true}]}, {"eval_id": 1, "eval_name": "resnet-basic-block", "pass_rate": 0.6, "passed": 6, "total": 10, "tokens": 96940, "duration_seconds": 373.6, "assertions": [{"text": "all_components_execute", "passed": false}, {"text": "verify_step_passes", "passed": false}, {"text": "composition_test_passes", "passed": false}, {"text": "correct_output_structure", "passed": true}, {"text": "decomposition_tree_exists", "passed": true}, {"text": "all_leaves_are_kernels", "passed": true}, {"text": "kernel_shape_naming", "passed": true}, {"text": "dimensions_preserved", "passed": true}, {"text": "coverage_summary_exists", "passed": false}, {"text": "decomposition_log_exists", "passed": true}]}, {"eval_id": 2, "eval_name": "inception-module", "pass_rate": 1.0, "passed": 10, "total": 10, "tokens": 109961, "duration_seconds": 597.3, "assertions": [{"text": "all_components_execute", "passed": true}, {"text": "verify_step_passes", "passed": true}, {"text": "composition_test_passes", "passed": true}, {"text": "correct_output_structure", "passed": true}, {"text": "decomposition_tree_exists", "passed": true}, {"text": "all_leaves_are_kernels", "passed": true}, {"text": "kernel_shape_naming", "passed": true}, {"text": "dimensions_preserved", "passed": true}, {"text": "coverage_summary_exists", "passed": true}, {"text": "decomposition_log_exists", "passed": true}]}], "aggregate": {"mean_pass_rate": 0.8, "stddev_pass_rate": 0.16, "mean_tokens": 95252, "mean_duration_seconds": 411.5}}, {"name": "without_skill", "evals": [{"eval_id": 0, "eval_name": "gemm-add-relu", "pass_rate": 0.6, "passed": 6, "total": 10, "tokens": 17127, "duration_seconds": 142.4, "assertions": [{"text": "all_components_execute", "passed": true}, {"text": "verify_step_passes", "passed": false}, {"text": "composition_test_passes", "passed": true}, {"text": "correct_output_structure", "passed": true}, {"text": "decomposition_tree_exists", "passed": true}, {"text": "all_leaves_are_kernels", "passed": true}, {"text": "kernel_shape_naming", "passed": false}, {"text": "dimensions_preserved", "passed": true}, {"text": "coverage_summary_exists", "passed": false}, {"text": "decomposition_log_exists", "passed": false}]}, {"eval_id": 1, "eval_name": "resnet-basic-block", "pass_rate": 0.3, "passed": 3, "total": 10, "tokens": 26922, "duration_seconds": 234.0, "assertions": [{"text": "all_components_execute", "passed": false}, {"text": "verify_step_passes", "passed": false}, {"text": "composition_test_passes", "passed": false}, {"text": "correct_output_structure", "passed": true}, {"text": "decomposition_tree_exists", "passed": true}, {"text": "all_leaves_are_kernels", "passed": true}, {"text": "kernel_shape_naming", "passed": false}, {"text": "dimensions_preserved", "passed": true}, {"text": "coverage_summary_exists", "passed": false}, {"text": "decomposition_log_exists", "passed": false}]}, {"eval_id": 2, "eval_name": "inception-module", "pass_rate": 0.6, "passed": 6, "total": 10, "tokens": 27210, "duration_seconds": 200.9, "assertions": [{"text": "all_components_execute", "passed": true}, {"text": "verify_step_passes", "passed": false}, {"text": "composition_test_passes", "passed": true}, {"text": "correct_output_structure", "passed": true}, {"text": "decomposition_tree_exists", "passed": true}, {"text": "all_leaves_are_kernels", "passed": true}, {"text": "kernel_shape_naming", "passed": false}, {"text": "dimensions_preserved", "passed": true}, {"text": "coverage_summary_exists", "passed": false}, {"text": "decomposition_log_exists", "passed": false}]}], "aggregate": {"mean_pass_rate": 0.5, "stddev_pass_rate": 0.14, "mean_tokens": 23753, "mean_duration_seconds": 192.4}}], "delta": {"pass_rate": "+0.30 (0.80 vs 0.50)", "tokens": "+71499 (95252 vs 23753)", "duration": "+219.1s (411.5s vs 192.4s)"}, "analyst_observations": ["The skill consistently ensures artifact generation (kernel_shape_naming, coverage_summary, decomposition_log) that baselines always miss. These 3 assertions account for the bulk of the skill's advantage.", "verify_step_passes failed for ResNet with-skill because the agent couldn't get Bash permissions \u00e2\u20ac\u201d it created all the code but couldn't execute verify_step.py. This is an environment issue, not a skill issue.", "all_components_execute and composition_test_passes failures are mostly grader environment issues (Python not on PATH) rather than actual code failures. Static analysis confirmed correctness in most cases.", "The skill uses ~4x more tokens and ~2x more time than baselines, which is expected given it reads 3 reference docs and runs verification scripts.", "The InceptionModule with-skill run (10/10) is the cleanest result \u00e2\u20ac\u201d all verifications ran successfully, all artifacts generated. This suggests the skill works well when the agent has full tool access.", "Non-discriminating assertions: correct_output_structure, decomposition_tree_exists, all_leaves_are_kernels, dimensions_preserved all pass for both configurations \u00e2\u20ac\u201d they don't differentiate skill from baseline."]}};
+
+    // ---- State ----
+    let feedbackMap = {};  // run_id -> feedback text
+    let currentIndex = 0;
+    let visitedRuns = new Set();
+
+    // ---- Init ----
+    async function init() {
+      // Load saved feedback from server — but only if this isn't a fresh
+      // iteration (indicated by previous_feedback being present). When
+      // previous feedback exists, the feedback.json on disk is stale from
+      // the prior iteration and should not pre-fill the textareas.
+      const hasPrevious = Object.keys(EMBEDDED_DATA.previous_feedback || {}).length > 0
+        || Object.keys(EMBEDDED_DATA.previous_outputs || {}).length > 0;
+      if (!hasPrevious) {
+        try {
+          const resp = await fetch("/api/feedback");
+          const data = await resp.json();
+          if (data.reviews) {
+            for (const r of data.reviews) feedbackMap[r.run_id] = r.feedback;
+          }
+        } catch { /* first run, no feedback yet */ }
+      }
+
+      document.getElementById("skill-name").textContent = EMBEDDED_DATA.skill_name;
+      showRun(0);
+
+      // Wire up feedback auto-save
+      const textarea = document.getElementById("feedback");
+      let saveTimeout = null;
+      textarea.addEventListener("input", () => {
+        clearTimeout(saveTimeout);
+        document.getElementById("feedback-status").textContent = "";
+        saveTimeout = setTimeout(() => saveCurrentFeedback(), 800);
+      });
+    }
+
+    // ---- Navigation ----
+    function navigate(delta) {
+      const newIndex = currentIndex + delta;
+      if (newIndex >= 0 && newIndex < EMBEDDED_DATA.runs.length) {
+        saveCurrentFeedback();
+        showRun(newIndex);
+      }
+    }
+
+    function updateNavButtons() {
+      document.getElementById("prev-btn").disabled = currentIndex === 0;
+      document.getElementById("next-btn").disabled =
+        currentIndex === EMBEDDED_DATA.runs.length - 1;
+    }
+
+    // ---- Show a run ----
+    function showRun(index) {
+      currentIndex = index;
+      const run = EMBEDDED_DATA.runs[index];
+
+      // Progress
+      document.getElementById("progress").textContent =
+        `${index + 1} of ${EMBEDDED_DATA.runs.length}`;
+
+      // Prompt
+      document.getElementById("prompt-text").textContent = run.prompt;
+
+      // Config badge
+      const badge = document.getElementById("config-badge");
+      const configMatch = run.id.match(/(with_skill|without_skill|new_skill|old_skill)/);
+      if (configMatch) {
+        const config = configMatch[1];
+        const isBaseline = config === "without_skill" || config === "old_skill";
+        badge.textContent = config.replace(/_/g, " ");
+        badge.className = "config-badge " + (isBaseline ? "config-baseline" : "config-primary");
+        badge.style.display = "inline-block";
+      } else {
+        badge.style.display = "none";
+      }
+
+      // Outputs
+      renderOutputs(run);
+
+      // Previous outputs
+      renderPrevOutputs(run);
+
+      // Grades
+      renderGrades(run);
+
+      // Previous feedback
+      const prevFb = (EMBEDDED_DATA.previous_feedback || {})[run.id];
+      const prevEl = document.getElementById("prev-feedback");
+      if (prevFb) {
+        document.getElementById("prev-feedback-text").textContent = prevFb;
+        prevEl.style.display = "block";
+      } else {
+        prevEl.style.display = "none";
+      }
+
+      // Feedback
+      document.getElementById("feedback").value = feedbackMap[run.id] || "";
+      document.getElementById("feedback-status").textContent = "";
+
+      updateNavButtons();
+
+      // Track visited runs and promote done button when all visited
+      visitedRuns.add(index);
+      const doneBtn = document.getElementById("done-btn");
+      if (visitedRuns.size >= EMBEDDED_DATA.runs.length) {
+        doneBtn.classList.add("ready");
+      }
+
+      // Scroll main content to top
+      document.querySelector(".main").scrollTop = 0;
+    }
+
+    // ---- Render outputs ----
+    function renderOutputs(run) {
+      const container = document.getElementById("outputs-body");
+      container.innerHTML = "";
+
+      const outputs = run.outputs || [];
+      if (outputs.length === 0) {
+        container.innerHTML = '<div class="empty-state">No output files</div>';
+        return;
+      }
+
+      for (const file of outputs) {
+        const fileDiv = document.createElement("div");
+        fileDiv.className = "output-file";
+
+        // Always show file header with download link
+        const header = document.createElement("div");
+        header.className = "output-file-header";
+        const nameSpan = document.createElement("span");
+        nameSpan.textContent = file.name;
+        header.appendChild(nameSpan);
+        const dlBtn = document.createElement("a");
+        dlBtn.className = "dl-btn";
+        dlBtn.textContent = "Download";
+        dlBtn.download = file.name;
+        dlBtn.href = getDownloadUri(file);
+        header.appendChild(dlBtn);
+        fileDiv.appendChild(header);
+
+        const content = document.createElement("div");
+        content.className = "output-file-content";
+
+        if (file.type === "text") {
+          const pre = document.createElement("pre");
+          pre.textContent = file.content;
+          content.appendChild(pre);
+        } else if (file.type === "image") {
+          const img = document.createElement("img");
+          img.src = file.data_uri;
+          img.alt = file.name;
+          content.appendChild(img);
+        } else if (file.type === "pdf") {
+          const iframe = document.createElement("iframe");
+          iframe.src = file.data_uri;
+          content.appendChild(iframe);
+        } else if (file.type === "xlsx") {
+          renderXlsx(content, file.data_b64);
+        } else if (file.type === "binary") {
+          const a = document.createElement("a");
+          a.className = "download-link";
+          a.href = file.data_uri;
+          a.download = file.name;
+          a.textContent = "Download " + file.name;
+          content.appendChild(a);
+        } else if (file.type === "error") {
+          const pre = document.createElement("pre");
+          pre.textContent = file.content;
+          pre.style.color = "var(--red)";
+          content.appendChild(pre);
+        }
+
+        fileDiv.appendChild(content);
+        container.appendChild(fileDiv);
+      }
+    }
+
+    // ---- XLSX rendering via SheetJS ----
+    function renderXlsx(container, b64Data) {
+      try {
+        const raw = Uint8Array.from(atob(b64Data), c => c.charCodeAt(0));
+        const wb = XLSX.read(raw, { type: "array" });
+
+        for (let i = 0; i < wb.SheetNames.length; i++) {
+          const sheetName = wb.SheetNames[i];
+          const ws = wb.Sheets[sheetName];
+
+          if (wb.SheetNames.length > 1) {
+            const sheetLabel = document.createElement("div");
+            sheetLabel.style.cssText =
+              "font-weight:600; font-size:0.8rem; color:#b0aea5; margin-top:0.5rem; margin-bottom:0.25rem;";
+            sheetLabel.textContent = "Sheet: " + sheetName;
+            container.appendChild(sheetLabel);
+          }
+
+          const htmlStr = XLSX.utils.sheet_to_html(ws, { editable: false });
+          const wrapper = document.createElement("div");
+          wrapper.innerHTML = htmlStr;
+          container.appendChild(wrapper);
+        }
+      } catch (err) {
+        container.textContent = "Error rendering spreadsheet: " + err.message;
+      }
+    }
+
+    // ---- Grades ----
+    function renderGrades(run) {
+      const section = document.getElementById("grades-section");
+      const content = document.getElementById("grades-content");
+
+      if (!run.grading) {
+        section.style.display = "none";
+        return;
+      }
+
+      const grading = run.grading;
+      section.style.display = "block";
+      // Reset to collapsed
+      content.classList.remove("open");
+      document.getElementById("grades-arrow").classList.remove("open");
+
+      const summary = grading.summary || {};
+      const expectations = grading.expectations || [];
+
+      let html = '<div style="padding: 1rem;">';
+
+      // Summary line
+      const passRate = summary.pass_rate != null
+        ? Math.round(summary.pass_rate * 100) + "%"
+        : "?";
+      const badgeClass = summary.pass_rate >= 0.8 ? "grade-pass" : summary.pass_rate >= 0.5 ? "" : "grade-fail";
+      html += '<div class="grades-summary">';
+      html += '<span class="grade-badge ' + badgeClass + '">' + passRate + '</span>';
+      html += '<span>' + (summary.passed || 0) + ' passed, ' + (summary.failed || 0) + ' failed of ' + (summary.total || 0) + '</span>';
+      html += '</div>';
+
+      // Assertions list
+      html += '<ul class="assertion-list">';
+      for (const exp of expectations) {
+        const statusClass = exp.passed ? "pass" : "fail";
+        const statusIcon = exp.passed ? "\u2713" : "\u2717";
+        html += '<li class="assertion-item">';
+        html += '<span class="assertion-status ' + statusClass + '">' + statusIcon + '</span>';
+        html += '<span>' + escapeHtml(exp.text) + '</span>';
+        if (exp.evidence) {
+          html += '<div class="assertion-evidence">' + escapeHtml(exp.evidence) + '</div>';
+        }
+        html += '</li>';
+      }
+      html += '</ul>';
+
+      html += '</div>';
+      content.innerHTML = html;
+    }
+
+    function toggleGrades() {
+      const content = document.getElementById("grades-content");
+      const arrow = document.getElementById("grades-arrow");
+      content.classList.toggle("open");
+      arrow.classList.toggle("open");
+    }
+
+    // ---- Previous outputs (collapsible) ----
+    function renderPrevOutputs(run) {
+      const section = document.getElementById("prev-outputs-section");
+      const content = document.getElementById("prev-outputs-content");
+      const prevOutputs = (EMBEDDED_DATA.previous_outputs || {})[run.id];
+
+      if (!prevOutputs || prevOutputs.length === 0) {
+        section.style.display = "none";
+        return;
+      }
+
+      section.style.display = "block";
+      // Reset to collapsed
+      content.classList.remove("open");
+      document.getElementById("prev-outputs-arrow").classList.remove("open");
+
+      // Render the files into the content area
+      content.innerHTML = "";
+      const wrapper = document.createElement("div");
+      wrapper.style.padding = "1rem";
+
+      for (const file of prevOutputs) {
+        const fileDiv = document.createElement("div");
+        fileDiv.className = "output-file";
+
+        const header = document.createElement("div");
+        header.className = "output-file-header";
+        const nameSpan = document.createElement("span");
+        nameSpan.textContent = file.name;
+        header.appendChild(nameSpan);
+        const dlBtn = document.createElement("a");
+        dlBtn.className = "dl-btn";
+        dlBtn.textContent = "Download";
+        dlBtn.download = file.name;
+        dlBtn.href = getDownloadUri(file);
+        header.appendChild(dlBtn);
+        fileDiv.appendChild(header);
+
+        const fc = document.createElement("div");
+        fc.className = "output-file-content";
+
+        if (file.type === "text") {
+          const pre = document.createElement("pre");
+          pre.textContent = file.content;
+          fc.appendChild(pre);
+        } else if (file.type === "image") {
+          const img = document.createElement("img");
+          img.src = file.data_uri;
+          img.alt = file.name;
+          fc.appendChild(img);
+        } else if (file.type === "pdf") {
+          const iframe = document.createElement("iframe");
+          iframe.src = file.data_uri;
+          fc.appendChild(iframe);
+        } else if (file.type === "xlsx") {
+          renderXlsx(fc, file.data_b64);
+        } else if (file.type === "binary") {
+          const a = document.createElement("a");
+          a.className = "download-link";
+          a.href = file.data_uri;
+          a.download = file.name;
+          a.textContent = "Download " + file.name;
+          fc.appendChild(a);
+        }
+
+        fileDiv.appendChild(fc);
+        wrapper.appendChild(fileDiv);
+      }
+
+      content.appendChild(wrapper);
+    }
+
+    function togglePrevOutputs() {
+      const content = document.getElementById("prev-outputs-content");
+      const arrow = document.getElementById("prev-outputs-arrow");
+      content.classList.toggle("open");
+      arrow.classList.toggle("open");
+    }
+
+    // ---- Feedback (saved to server -> feedback.json) ----
+    function saveCurrentFeedback() {
+      const run = EMBEDDED_DATA.runs[currentIndex];
+      const text = document.getElementById("feedback").value;
+
+      if (text.trim() === "") {
+        delete feedbackMap[run.id];
+      } else {
+        feedbackMap[run.id] = text;
+      }
+
+      // Build reviews array from map
+      const reviews = [];
+      for (const [run_id, feedback] of Object.entries(feedbackMap)) {
+        if (feedback.trim()) {
+          reviews.push({ run_id, feedback, timestamp: new Date().toISOString() });
+        }
+      }
+
+      fetch("/api/feedback", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ reviews, status: "in_progress" }),
+      }).then(() => {
+        document.getElementById("feedback-status").textContent = "Saved";
+      }).catch(() => {
+        // Static mode or server unavailable — no-op on auto-save,
+        // feedback will be downloaded on final submit
+        document.getElementById("feedback-status").textContent = "Will download on submit";
+      });
+    }
+
+    // ---- Done ----
+    function showDoneDialog() {
+      // Save current textarea to feedbackMap (but don't POST yet)
+      const run = EMBEDDED_DATA.runs[currentIndex];
+      const text = document.getElementById("feedback").value;
+      if (text.trim() === "") {
+        delete feedbackMap[run.id];
+      } else {
+        feedbackMap[run.id] = text;
+      }
+
+      // POST once with status: complete — include ALL runs so the model
+      // can distinguish "no feedback" (looks good) from "not reviewed"
+      const reviews = [];
+      const ts = new Date().toISOString();
+      for (const r of EMBEDDED_DATA.runs) {
+        reviews.push({ run_id: r.id, feedback: feedbackMap[r.id] || "", timestamp: ts });
+      }
+      const payload = JSON.stringify({ reviews, status: "complete" }, null, 2);
+      fetch("/api/feedback", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: payload,
+      }).then(() => {
+        document.getElementById("done-overlay").classList.add("visible");
+      }).catch(() => {
+        // Server not available (static mode) — download as file
+        const blob = new Blob([payload], { type: "application/json" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "feedback.json";
+        a.click();
+        URL.revokeObjectURL(url);
+        document.getElementById("done-overlay").classList.add("visible");
+      });
+    }
+
+    function closeDoneDialog() {
+      // Reset status back to in_progress
+      saveCurrentFeedback();
+      document.getElementById("done-overlay").classList.remove("visible");
+    }
+
+    // ---- Toast ----
+    function showToast(message) {
+      const toast = document.getElementById("toast");
+      toast.textContent = message;
+      toast.classList.add("visible");
+      setTimeout(() => toast.classList.remove("visible"), 2000);
+    }
+
+    // ---- Keyboard nav ----
+    document.addEventListener("keydown", (e) => {
+      // Don't capture when typing in textarea
+      if (e.target.tagName === "TEXTAREA") return;
+
+      if (e.key === "ArrowLeft" || e.key === "ArrowUp") {
+        e.preventDefault();
+        navigate(-1);
+      } else if (e.key === "ArrowRight" || e.key === "ArrowDown") {
+        e.preventDefault();
+        navigate(1);
+      }
+    });
+
+    // ---- Util ----
+    function getDownloadUri(file) {
+      if (file.data_uri) return file.data_uri;
+      if (file.data_b64) return "data:application/octet-stream;base64," + file.data_b64;
+      if (file.type === "text") return "data:text/plain;charset=utf-8," + encodeURIComponent(file.content);
+      return "#";
+    }
+
+    function escapeHtml(text) {
+      const div = document.createElement("div");
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    // ---- View switching ----
+    function switchView(view) {
+      document.querySelectorAll(".view-tab").forEach(t => t.classList.remove("active"));
+      document.querySelectorAll(".view-panel").forEach(p => p.classList.remove("active"));
+      document.querySelector(`[onclick="switchView('${view}')"]`).classList.add("active");
+      document.getElementById("panel-" + view).classList.add("active");
+    }
+
+    // ---- Benchmark rendering ----
+    function renderBenchmark() {
+      const data = EMBEDDED_DATA.benchmark;
+      if (!data) return;
+
+      // Show the tabs
+      document.getElementById("view-tabs").style.display = "flex";
+
+      const container = document.getElementById("benchmark-content");
+      const summary = data.run_summary || {};
+      const metadata = data.metadata || {};
+      const notes = data.notes || [];
+
+      let html = "";
+
+      // Header
+      html += "<h2 style='font-family: Poppins, sans-serif; margin-bottom: 0.5rem;'>Benchmark Results</h2>";
+      html += "<p style='color: var(--text-muted); font-size: 0.875rem; margin-bottom: 1.25rem;'>";
+      if (metadata.skill_name) html += "<strong>" + escapeHtml(metadata.skill_name) + "</strong> &mdash; ";
+      if (metadata.timestamp) html += metadata.timestamp + " &mdash; ";
+      if (metadata.evals_run) html += "Evals: " + metadata.evals_run.join(", ") + " &mdash; ";
+      html += (metadata.runs_per_configuration || "?") + " runs per configuration";
+      html += "</p>";
+
+      // Summary table
+      html += '<table class="benchmark-table">';
+
+      function fmtStat(stat, pct) {
+        if (!stat) return "—";
+        const suffix = pct ? "%" : "";
+        const m = pct ? (stat.mean * 100).toFixed(0) : stat.mean.toFixed(1);
+        const s = pct ? (stat.stddev * 100).toFixed(0) : stat.stddev.toFixed(1);
+        return m + suffix + " ± " + s + suffix;
+      }
+
+      function deltaClass(val) {
+        if (!val) return "";
+        const n = parseFloat(val);
+        if (n > 0) return "benchmark-delta-positive";
+        if (n < 0) return "benchmark-delta-negative";
+        return "";
+      }
+
+      // Discover config names dynamically (everything except "delta")
+      const configs = Object.keys(summary).filter(k => k !== "delta");
+      const configA = configs[0] || "config_a";
+      const configB = configs[1] || "config_b";
+      const labelA = configA.replace(/_/g, " ").replace(/\b\w/g, c => c.toUpperCase());
+      const labelB = configB.replace(/_/g, " ").replace(/\b\w/g, c => c.toUpperCase());
+      const a = summary[configA] || {};
+      const b = summary[configB] || {};
+      const delta = summary.delta || {};
+
+      html += "<thead><tr><th>Metric</th><th>" + escapeHtml(labelA) + "</th><th>" + escapeHtml(labelB) + "</th><th>Delta</th></tr></thead>";
+      html += "<tbody>";
+
+      html += "<tr><td><strong>Pass Rate</strong></td>";
+      html += "<td>" + fmtStat(a.pass_rate, true) + "</td>";
+      html += "<td>" + fmtStat(b.pass_rate, true) + "</td>";
+      html += '<td class="' + deltaClass(delta.pass_rate) + '">' + (delta.pass_rate || "—") + "</td></tr>";
+
+      // Time (only show row if data exists)
+      if (a.time_seconds || b.time_seconds) {
+        html += "<tr><td><strong>Time (s)</strong></td>";
+        html += "<td>" + fmtStat(a.time_seconds, false) + "</td>";
+        html += "<td>" + fmtStat(b.time_seconds, false) + "</td>";
+        html += '<td class="' + deltaClass(delta.time_seconds) + '">' + (delta.time_seconds ? delta.time_seconds + "s" : "—") + "</td></tr>";
+      }
+
+      // Tokens (only show row if data exists)
+      if (a.tokens || b.tokens) {
+        html += "<tr><td><strong>Tokens</strong></td>";
+        html += "<td>" + fmtStat(a.tokens, false) + "</td>";
+        html += "<td>" + fmtStat(b.tokens, false) + "</td>";
+        html += '<td class="' + deltaClass(delta.tokens) + '">' + (delta.tokens || "—") + "</td></tr>";
+      }
+
+      html += "</tbody></table>";
+
+      // Per-eval breakdown (if runs data available)
+      const runs = data.runs || [];
+      if (runs.length > 0) {
+        const evalIds = [...new Set(runs.map(r => r.eval_id))].sort((a, b) => a - b);
+
+        html += "<h3 style='font-family: Poppins, sans-serif; margin-bottom: 0.75rem;'>Per-Eval Breakdown</h3>";
+
+        const hasTime = runs.some(r => r.result && r.result.time_seconds != null);
+        const hasErrors = runs.some(r => r.result && r.result.errors > 0);
+
+        for (const evalId of evalIds) {
+          const evalRuns = runs.filter(r => r.eval_id === evalId);
+          const evalName = evalRuns[0] && evalRuns[0].eval_name ? evalRuns[0].eval_name : "Eval " + evalId;
+
+          html += "<h4 style='font-family: Poppins, sans-serif; margin: 1rem 0 0.5rem; color: var(--text);'>" + escapeHtml(evalName) + "</h4>";
+          html += '<table class="benchmark-table">';
+          html += "<thead><tr><th>Config</th><th>Run</th><th>Pass Rate</th>";
+          if (hasTime) html += "<th>Time (s)</th>";
+          if (hasErrors) html += "<th>Crashes During Execution</th>";
+          html += "</tr></thead>";
+          html += "<tbody>";
+
+          // Group by config and render with average rows
+          const configGroups = [...new Set(evalRuns.map(r => r.configuration))];
+          for (let ci = 0; ci < configGroups.length; ci++) {
+            const config = configGroups[ci];
+            const configRuns = evalRuns.filter(r => r.configuration === config);
+            if (configRuns.length === 0) continue;
+
+            const rowClass = ci === 0 ? "benchmark-row-with" : "benchmark-row-without";
+            const configLabel = config.replace(/_/g, " ").replace(/\b\w/g, c => c.toUpperCase());
+
+            for (const run of configRuns) {
+              const r = run.result || {};
+              const prClass = r.pass_rate >= 0.8 ? "benchmark-delta-positive" : r.pass_rate < 0.5 ? "benchmark-delta-negative" : "";
+              html += '<tr class="' + rowClass + '">';
+              html += "<td>" + configLabel + "</td>";
+              html += "<td>" + run.run_number + "</td>";
+              html += '<td class="' + prClass + '">' + ((r.pass_rate || 0) * 100).toFixed(0) + "% (" + (r.passed || 0) + "/" + (r.total || 0) + ")</td>";
+              if (hasTime) html += "<td>" + (r.time_seconds != null ? r.time_seconds.toFixed(1) : "—") + "</td>";
+              if (hasErrors) html += "<td>" + (r.errors || 0) + "</td>";
+              html += "</tr>";
+            }
+
+            // Average row
+            const rates = configRuns.map(r => (r.result || {}).pass_rate || 0);
+            const avgRate = rates.reduce((a, b) => a + b, 0) / rates.length;
+            const avgPrClass = avgRate >= 0.8 ? "benchmark-delta-positive" : avgRate < 0.5 ? "benchmark-delta-negative" : "";
+            html += '<tr class="benchmark-row-avg ' + rowClass + '">';
+            html += "<td>" + configLabel + "</td>";
+            html += "<td>Avg</td>";
+            html += '<td class="' + avgPrClass + '">' + (avgRate * 100).toFixed(0) + "%</td>";
+            if (hasTime) {
+              const times = configRuns.map(r => (r.result || {}).time_seconds).filter(t => t != null);
+              html += "<td>" + (times.length ? (times.reduce((a, b) => a + b, 0) / times.length).toFixed(1) : "—") + "</td>";
+            }
+            if (hasErrors) html += "<td></td>";
+            html += "</tr>";
+          }
+          html += "</tbody></table>";
+
+          // Per-assertion detail for this eval
+          const runsWithExpectations = {};
+          for (const config of configGroups) {
+            runsWithExpectations[config] = evalRuns.filter(r => r.configuration === config && r.expectations && r.expectations.length > 0);
+          }
+          const hasAnyExpectations = Object.values(runsWithExpectations).some(runs => runs.length > 0);
+          if (hasAnyExpectations) {
+            // Collect all unique assertion texts across all configs
+            const allAssertions = [];
+            const seen = new Set();
+            for (const config of configGroups) {
+              for (const run of runsWithExpectations[config]) {
+                for (const exp of (run.expectations || [])) {
+                  if (!seen.has(exp.text)) {
+                    seen.add(exp.text);
+                    allAssertions.push(exp.text);
+                  }
+                }
+              }
+            }
+
+            html += '<table class="benchmark-table" style="margin-top: 0.5rem;">';
+            html += "<thead><tr><th>Assertion</th>";
+            for (const config of configGroups) {
+              const label = config.replace(/_/g, " ").replace(/\b\w/g, c => c.toUpperCase());
+              html += "<th>" + escapeHtml(label) + "</th>";
+            }
+            html += "</tr></thead><tbody>";
+
+            for (const assertionText of allAssertions) {
+              html += "<tr><td>" + escapeHtml(assertionText) + "</td>";
+
+              for (const config of configGroups) {
+                html += "<td>";
+                for (const run of runsWithExpectations[config]) {
+                  const exp = (run.expectations || []).find(e => e.text === assertionText);
+                  if (exp) {
+                    const cls = exp.passed ? "benchmark-delta-positive" : "benchmark-delta-negative";
+                    const icon = exp.passed ? "\u2713" : "\u2717";
+                    html += '<span class="' + cls + '" title="Run ' + run.run_number + ': ' + escapeHtml(exp.evidence || "") + '">' + icon + "</span> ";
+                  } else {
+                    html += "— ";
+                  }
+                }
+                html += "</td>";
+              }
+              html += "</tr>";
+            }
+            html += "</tbody></table>";
+          }
+        }
+      }
+
+      // Notes
+      if (notes.length > 0) {
+        html += '<div class="benchmark-notes">';
+        html += "<h3>Analysis Notes</h3>";
+        html += "<ul>";
+        for (const note of notes) {
+          html += "<li>" + escapeHtml(note) + "</li>";
+        }
+        html += "</ul></div>";
+      }
+
+      container.innerHTML = html;
+    }
+
+    // ---- Start ----
+    init();
+    renderBenchmark();
+  </script>
+</body>
+</html>

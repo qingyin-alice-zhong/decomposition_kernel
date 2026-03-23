@@ -1,0 +1,159 @@
+{
+  "metadata": {
+    "source_file": "data/kernelbench/level3/6_GoogleNetInceptionModule.py",
+    "source_level": "level3",
+    "model_name": "6_GoogleNetInceptionModule",
+    "timestamp": "2026-03-05T12:00:00Z",
+    "total_components": 12,
+    "by_level": {
+      "model": 1,
+      "layer": 0,
+      "fusion": 3,
+      "kernel": 7
+    },
+    "unique_kernels": 7,
+    "verification_status": "PASSED"
+  },
+  "nodes": {
+    "root": {
+      "id": "root",
+      "name": "GoogleNet Inception Module",
+      "level": "model",
+      "path": "level_3_model/inception_module.py",
+      "children": ["branch1x1", "branch_3x3", "branch_5x5", "branch_pool"],
+      "input_shapes": {"x": [10, 480, 224, 224]},
+      "output_shapes": {"output": [10, 512, 224, 224]},
+      "input_dtypes": {"x": "float32"},
+      "output_dtypes": {"output": "float32"}
+    },
+    "branch1x1": {
+      "id": "branch1x1",
+      "name": "1x1 Conv Branch",
+      "level": "kernel",
+      "path": "level_0_kernel/conv2d_480x192_1x1_fp32.py",
+      "instance_count": 1,
+      "children": [],
+      "input_shapes": {"x": [10, 480, 224, 224]},
+      "output_shapes": {"output": [10, 192, 224, 224]},
+      "input_dtypes": {"x": "float32"},
+      "output_dtypes": {"output": "float32"}
+    },
+    "branch_3x3": {
+      "id": "branch_3x3",
+      "name": "3x3 Conv Branch (reduce + conv)",
+      "level": "fusion",
+      "path": "level_1_fusion/branch_3x3.py",
+      "children": ["branch3x3_reduce", "branch3x3_conv"],
+      "input_shapes": {"x": [10, 480, 224, 224]},
+      "output_shapes": {"output": [10, 208, 224, 224]},
+      "input_dtypes": {"x": "float32"},
+      "output_dtypes": {"output": "float32"}
+    },
+    "branch3x3_reduce": {
+      "id": "branch3x3_reduce",
+      "name": "1x1 Reduction for 3x3 branch",
+      "level": "kernel",
+      "path": "level_0_kernel/conv2d_480x96_1x1_fp32.py",
+      "instance_count": 1,
+      "children": [],
+      "input_shapes": {"x": [10, 480, 224, 224]},
+      "output_shapes": {"output": [10, 96, 224, 224]},
+      "input_dtypes": {"x": "float32"},
+      "output_dtypes": {"output": "float32"}
+    },
+    "branch3x3_conv": {
+      "id": "branch3x3_conv",
+      "name": "3x3 Convolution",
+      "level": "kernel",
+      "path": "level_0_kernel/conv2d_96x208_3x3_fp32.py",
+      "instance_count": 1,
+      "children": [],
+      "input_shapes": {"x": [10, 96, 224, 224]},
+      "output_shapes": {"output": [10, 208, 224, 224]},
+      "input_dtypes": {"x": "float32"},
+      "output_dtypes": {"output": "float32"}
+    },
+    "branch_5x5": {
+      "id": "branch_5x5",
+      "name": "5x5 Conv Branch (reduce + conv)",
+      "level": "fusion",
+      "path": "level_1_fusion/branch_5x5.py",
+      "children": ["branch5x5_reduce", "branch5x5_conv"],
+      "input_shapes": {"x": [10, 480, 224, 224]},
+      "output_shapes": {"output": [10, 48, 224, 224]},
+      "input_dtypes": {"x": "float32"},
+      "output_dtypes": {"output": "float32"}
+    },
+    "branch5x5_reduce": {
+      "id": "branch5x5_reduce",
+      "name": "1x1 Reduction for 5x5 branch",
+      "level": "kernel",
+      "path": "level_0_kernel/conv2d_480x16_1x1_fp32.py",
+      "instance_count": 1,
+      "children": [],
+      "input_shapes": {"x": [10, 480, 224, 224]},
+      "output_shapes": {"output": [10, 16, 224, 224]},
+      "input_dtypes": {"x": "float32"},
+      "output_dtypes": {"output": "float32"}
+    },
+    "branch5x5_conv": {
+      "id": "branch5x5_conv",
+      "name": "5x5 Convolution",
+      "level": "kernel",
+      "path": "level_0_kernel/conv2d_16x48_5x5_fp32.py",
+      "instance_count": 1,
+      "children": [],
+      "input_shapes": {"x": [10, 16, 224, 224]},
+      "output_shapes": {"output": [10, 48, 224, 224]},
+      "input_dtypes": {"x": "float32"},
+      "output_dtypes": {"output": "float32"}
+    },
+    "branch_pool": {
+      "id": "branch_pool",
+      "name": "Pool Branch (maxpool + proj)",
+      "level": "fusion",
+      "path": "level_1_fusion/branch_pool.py",
+      "children": ["branch_pool_maxpool", "branch_pool_proj"],
+      "input_shapes": {"x": [10, 480, 224, 224]},
+      "output_shapes": {"output": [10, 64, 224, 224]},
+      "input_dtypes": {"x": "float32"},
+      "output_dtypes": {"output": "float32"}
+    },
+    "branch_pool_maxpool": {
+      "id": "branch_pool_maxpool",
+      "name": "3x3 Max Pooling",
+      "level": "kernel",
+      "path": "level_0_kernel/maxpool2d_3x3_fp32.py",
+      "instance_count": 1,
+      "children": [],
+      "input_shapes": {"x": [10, 480, 224, 224]},
+      "output_shapes": {"output": [10, 480, 224, 224]},
+      "input_dtypes": {"x": "float32"},
+      "output_dtypes": {"output": "float32"}
+    },
+    "branch_pool_proj": {
+      "id": "branch_pool_proj",
+      "name": "1x1 Pool Projection",
+      "level": "kernel",
+      "path": "level_0_kernel/conv2d_480x64_1x1_fp32.py",
+      "instance_count": 1,
+      "children": [],
+      "input_shapes": {"x": [10, 480, 224, 224]},
+      "output_shapes": {"output": [10, 64, 224, 224]},
+      "input_dtypes": {"x": "float32"},
+      "output_dtypes": {"output": "float32"}
+    }
+  },
+  "data_flow": [
+    {"from": "root", "to": "branch1x1", "tensor_name": "x", "shape": [10, 480, 224, 224], "dtype": "float32"},
+    {"from": "root", "to": "branch_3x3", "tensor_name": "x", "shape": [10, 480, 224, 224], "dtype": "float32"},
+    {"from": "root", "to": "branch_5x5", "tensor_name": "x", "shape": [10, 480, 224, 224], "dtype": "float32"},
+    {"from": "root", "to": "branch_pool", "tensor_name": "x", "shape": [10, 480, 224, 224], "dtype": "float32"},
+    {"from": "branch_3x3", "to": "branch3x3_reduce", "tensor_name": "x", "shape": [10, 480, 224, 224], "dtype": "float32"},
+    {"from": "branch3x3_reduce", "to": "branch3x3_conv", "tensor_name": "x", "shape": [10, 96, 224, 224], "dtype": "float32"},
+    {"from": "branch_5x5", "to": "branch5x5_reduce", "tensor_name": "x", "shape": [10, 480, 224, 224], "dtype": "float32"},
+    {"from": "branch5x5_reduce", "to": "branch5x5_conv", "tensor_name": "x", "shape": [10, 16, 224, 224], "dtype": "float32"},
+    {"from": "branch_pool", "to": "branch_pool_maxpool", "tensor_name": "x", "shape": [10, 480, 224, 224], "dtype": "float32"},
+    {"from": "branch_pool_maxpool", "to": "branch_pool_proj", "tensor_name": "x", "shape": [10, 480, 224, 224], "dtype": "float32"}
+  ]
+}

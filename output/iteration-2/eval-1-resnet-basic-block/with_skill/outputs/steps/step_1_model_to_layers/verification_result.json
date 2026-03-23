@@ -1,0 +1,114 @@
+{
+  "timestamp": "2026-03-05T02:14:48.004015",
+  "original_file": "decompose-workspace\\iteration-2\\eval-1-resnet-basic-block\\with_skill\\outputs\\steps\\step_1_model_to_layers\\original.py",
+  "refactored_file": "decompose-workspace\\iteration-2\\eval-1-resnet-basic-block\\with_skill\\outputs\\steps\\step_1_model_to_layers\\refactored.py",
+  "status": "PASS",
+  "anticheat": {
+    "status": "PASS",
+    "violations": [],
+    "source_violations": [],
+    "parameter_violations": []
+  },
+  "weight_transfer": {
+    "status": "OK",
+    "mapped_count": 18,
+    "unmapped_original": [],
+    "unmapped_refactored": [],
+    "weight_map": {
+      "conv1.weight": "conv_bn_relu.conv.weight",
+      "bn1.weight": "conv_bn_relu.bn.weight",
+      "bn1.bias": "conv_bn_relu.bn.bias",
+      "bn1.running_mean": "conv_bn_relu.bn.running_mean",
+      "bn1.running_var": "conv_bn_relu.bn.running_var",
+      "bn1.num_batches_tracked": "conv_bn_relu.bn.num_batches_tracked",
+      "conv2.weight": "conv_bn.conv.weight",
+      "bn2.weight": "conv_bn.bn.weight",
+      "bn2.bias": "conv_bn.bn.bias",
+      "bn2.running_mean": "conv_bn.bn.running_mean",
+      "bn2.running_var": "conv_bn.bn.running_var",
+      "bn2.num_batches_tracked": "conv_bn.bn.num_batches_tracked",
+      "downsample.0.weight": "downsample.conv.weight",
+      "downsample.1.weight": "downsample.bn.weight",
+      "downsample.1.bias": "downsample.bn.bias",
+      "downsample.1.running_mean": "downsample.bn.running_mean",
+      "downsample.1.running_var": "downsample.bn.running_var",
+      "downsample.1.num_batches_tracked": "downsample.bn.num_batches_tracked"
+    }
+  },
+  "numerical_comparison": {
+    "status": "PASS",
+    "rtol": 1e-05,
+    "atol": 1e-06,
+    "input_dtype": "torch.float32",
+    "num_trials": 3,
+    "max_diff_across_trials": 0.0,
+    "trials": [
+      {
+        "trial": 0,
+        "seed": 42,
+        "max_diff": 0.0,
+        "pass": true,
+        "output_details": [
+          {
+            "output_idx": 0,
+            "shape_match": true,
+            "shape": [
+              10,
+              64,
+              224,
+              224
+            ],
+            "dtype": "torch.float32",
+            "max_diff": 0.0,
+            "mean_diff": 0.0,
+            "matches": true
+          }
+        ]
+      },
+      {
+        "trial": 1,
+        "seed": 43,
+        "max_diff": 0.0,
+        "pass": true,
+        "output_details": [
+          {
+            "output_idx": 0,
+            "shape_match": true,
+            "shape": [
+              10,
+              64,
+              224,
+              224
+            ],
+            "dtype": "torch.float32",
+            "max_diff": 0.0,
+            "mean_diff": 0.0,
+            "matches": true
+          }
+        ]
+      },
+      {
+        "trial": 2,
+        "seed": 44,
+        "max_diff": 0.0,
+        "pass": true,
+        "output_details": [
+          {
+            "output_idx": 0,
+            "shape_match": true,
+            "shape": [
+              10,
+              64,
+              224,
+              224
+            ],
+            "dtype": "torch.float32",
+            "max_diff": 0.0,
+            "mean_diff": 0.0,
+            "matches": true
+          }
+        ]
+      }
+    ]
+  }
+}

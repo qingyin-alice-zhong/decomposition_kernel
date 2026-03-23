@@ -1,0 +1,41 @@
+{
+  "timestamp": "2026-03-05T01:38:22.184905",
+  "model_file": "C:\\Users\\liang\\decomposition_workspace\\data\\kernelbench\\level2\\76_Gemm_Add_ReLU.py",
+  "status": "FULL_COVERAGE",
+  "extraction_method": "torch.fx.symbolic_trace",
+  "extraction_warnings": [],
+  "extraction_errors": [],
+  "decomposed_ops_count": 2,
+  "coverage": {
+    "total_original_ops": 2,
+    "total_decomposed_ops": 2,
+    "covered_op_count": 2,
+    "missing_op_types": [],
+    "extra_op_types": [],
+    "coverage_pct": 100.0,
+    "op_details": [
+      {
+        "op_type": "linear",
+        "original_count": 1,
+        "decomposed_count": 1,
+        "status": "covered"
+      },
+      {
+        "op_type": "relu",
+        "original_count": 1,
+        "decomposed_count": 1,
+        "status": "covered"
+      }
+    ],
+    "data_plumbing_excluded": {
+      "add": 1
+    }
+  },
+  "original_compute_ops": {
+    "linear": 1,
+    "relu": 1
+  },
+  "original_plumbing_ops": {
+    "add": 1
+  }
+}

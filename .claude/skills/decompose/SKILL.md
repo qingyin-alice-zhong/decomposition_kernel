@@ -26,6 +26,24 @@ The skill directory is `${CLAUDE_SKILL_DIR}`. It contains:
 Copy `${CLAUDE_SKILL_DIR}/scripts/` into the workspace root as `scripts/` if it
 does not already exist, so that verification commands work with standard paths.
 
+## Python Environment Setup
+
+Before running any scripts, detect the working Python command. Try these in order
+and use whichever succeeds:
+
+```bash
+py --version 2>/dev/null || python3 --version 2>/dev/null || python --version 2>/dev/null
+```
+
+Store the result (e.g. `py`, `python3`, or `python`) and use it for ALL subsequent
+script invocations. Do NOT hardcode `python` — it does not exist on many systems.
+If none of the above work, check for conda (`conda run python --version`) or look
+for a Python binary in common paths (`/usr/bin/python3`, `$HOME/anaconda3/python`).
+
+This detection MUST happen once at the start, before any verification step. Every
+`python` command shown later in this skill should be replaced with whatever command
+you discovered here.
+
 ## Argument Parsing
 
 Parse `$ARGUMENTS` to determine the input type and paths:
@@ -73,7 +91,8 @@ Skip this round if input type is `single_file` with no external file dependencie
 
 - Create `level_2_layer/*.py` files
 - Create `steps/step_1_model_to_layers/refactored.py`
-- Run: `python scripts/verify_step.py --original <parent> --refactored <refactored>`
+- Run: `<PYTHON> scripts/verify_step.py --original <parent> --refactored <refactored>`
+  (where `<PYTHON>` is the command discovered during Python Environment Setup)
 - PASS required before Round 2
 
 ### Round 2: Each Layer → Fusions
@@ -88,10 +107,22 @@ Skip this round if input type is `single_file` with no external file dependencie
 - Create `steps/step_3_{fusion}_to_kernels/refactored.py` for each fusion
 - Run `verify_step.py` for each — ALL must PASS
 
+### Verification is mandatory
+
+Every `verify_step.py` invocation MUST actually be executed via Bash. Do not skip
+verification or defer it to a helper script for the user to run later. If a Bash
+call is denied, retry with a different Python command (`py`, `python3`, `python`).
+If all attempts are denied, ask the user for permission — do not silently continue
+to the next level without verification.
+
+The same applies to `extract_ops.py` and `composition_test.py` — they must be run,
+not just written.
+
 ### Final
 
-- Run: `python scripts/extract_ops.py --model <original> --decomp-dir <output_dir>`
+- Run: `<PYTHON> scripts/extract_ops.py --model <original> --decomp-dir <output_dir>`
 - Create and run `verification/composition_test.py` (use `${CLAUDE_SKILL_DIR}/scripts/composition_template.py` as reference)
+- Run: `<PYTHON> verification/composition_test.py` — MUST print PASS
 - Create `decomposition_tree.json`, `decomposition_log.json`, `decomposition_analysis.md`
 
 ## Abstraction Levels (Quick Reference)

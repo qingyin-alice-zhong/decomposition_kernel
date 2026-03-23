@@ -1,0 +1,57 @@
+{
+  "eval_id": 0,
+  "eval_name": "gemm-add-relu",
+  "configuration": "with_skill",
+  "expectations": [
+    {
+      "text": "all_components_execute",
+      "passed": false,
+      "evidence": "Could not execute: Python not found in environment PATH. Static analysis shows all 4 .py files (3 in level_0_kernel/, 1 in level_1_fusion/) have valid run_tests() functions with proper structure and correct imports. Cannot confirm runtime PASS."
+    },
+    {
+      "text": "verify_step_passes",
+      "passed": true,
+      "evidence": "steps/step_1_gemm_add_relu_to_kernels/verification_result.json shows \"status\": \"PASS\" with max_diff=0.0 across 3 trials, anticheat PASS, and weight_transfer OK."
+    },
+    {
+      "text": "composition_test_passes",
+      "passed": false,
+      "evidence": "Could not execute verification/composition_test.py: Python not found in environment. Static analysis shows the test is well-structured with correct weight mapping and 3-trial verification, but runtime PASS cannot be confirmed."
+    },
+    {
+      "text": "correct_output_structure",
+      "passed": true,
+      "evidence": "All required directories exist: level_0_kernel/ (3 kernel .py files), level_1_fusion/ (gemm_add_relu.py), steps/step_1_gemm_add_relu_to_kernels/ (original.py, refactored.py, verification_result.json, children/), verification/ (composition_test.py, coverage_summary.json)."
+    },
+    {
+      "text": "decomposition_tree_exists",
+      "passed": true,
+      "evidence": "decomposition_tree.json exists and is valid JSON with metadata, nodes (root + 3 kernel nodes), and data_flow sections."
+    },
+    {
+      "text": "all_leaves_are_kernels",
+      "passed": true,
+      "evidence": "All 3 leaf nodes (linear_nobias, bias_add, relu) have \"level\": \"kernel\" and empty children arrays. The only non-leaf node (root) is at level \"fusion\"."
+    },
+    {
+      "text": "kernel_shape_naming",
+      "passed": true,
+      "evidence": "Kernel files use shape-based naming: linear_8192x8192_nobias_fp32.py, bias_add_8192_fp32.py. relu_fp32.py omits shape dimensions, which is documented as intentional for shape-independent elementwise ops in decomposition_log.json."
+    },
+    {
+      "text": "dimensions_preserved",
+      "passed": true,
+      "evidence": "All component files use batch_size=1024, in_features=8192, out_features=8192, matching the original model. Verified in linear_8192x8192_nobias_fp32.py, bias_add_8192_fp32.py (out_features=8192), relu_fp32.py (features=8192), and gemm_add_relu.py."
+    },
+    {
+      "text": "coverage_summary_exists",
+      "passed": true,
+      "evidence": "verification/coverage_summary.json exists with status FULL_COVERAGE, coverage_pct=100.0, covering linear and relu ops with bias add correctly classified as data plumbing."
+    },
+    {
+      "text": "decomposition_log_exists",
+      "passed": true,
+      "evidence": "decomposition_log.json exists with 6 decision entries covering analysis and step_1 phases, documenting classification rationale, naming decisions, and verification results."
+    }
+  ]
+}

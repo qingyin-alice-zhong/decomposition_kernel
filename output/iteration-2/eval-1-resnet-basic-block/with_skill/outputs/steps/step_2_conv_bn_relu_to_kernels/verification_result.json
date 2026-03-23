@@ -1,0 +1,102 @@
+{
+  "timestamp": "2026-03-05T02:16:28.023387",
+  "original_file": "decompose-workspace\\iteration-2\\eval-1-resnet-basic-block\\with_skill\\outputs\\steps\\step_2_conv_bn_relu_to_kernels\\original.py",
+  "refactored_file": "decompose-workspace\\iteration-2\\eval-1-resnet-basic-block\\with_skill\\outputs\\steps\\step_2_conv_bn_relu_to_kernels\\refactored.py",
+  "status": "PASS",
+  "anticheat": {
+    "status": "PASS",
+    "violations": [],
+    "source_violations": [],
+    "parameter_violations": []
+  },
+  "weight_transfer": {
+    "status": "OK",
+    "mapped_count": 6,
+    "unmapped_original": [],
+    "unmapped_refactored": [],
+    "weight_map": {
+      "conv.weight": "conv.conv.weight",
+      "bn.weight": "bn.bn.weight",
+      "bn.bias": "bn.bn.bias",
+      "bn.running_mean": "bn.bn.running_mean",
+      "bn.running_var": "bn.bn.running_var",
+      "bn.num_batches_tracked": "bn.bn.num_batches_tracked"
+    }
+  },
+  "numerical_comparison": {
+    "status": "PASS",
+    "rtol": 1e-05,
+    "atol": 1e-06,
+    "input_dtype": "torch.float32",
+    "num_trials": 3,
+    "max_diff_across_trials": 0.0,
+    "trials": [
+      {
+        "trial": 0,
+        "seed": 42,
+        "max_diff": 0.0,
+        "pass": true,
+        "output_details": [
+          {
+            "output_idx": 0,
+            "shape_match": true,
+            "shape": [
+              10,
+              64,
+              224,
+              224
+            ],
+            "dtype": "torch.float32",
+            "max_diff": 0.0,
+            "mean_diff": 0.0,
+            "matches": true
+          }
+        ]
+      },
+      {
+        "trial": 1,
+        "seed": 43,
+        "max_diff": 0.0,
+        "pass": true,
+        "output_details": [
+          {
+            "output_idx": 0,
+            "shape_match": true,
+            "shape": [
+              10,
+              64,
+              224,
+              224
+            ],
+            "dtype": "torch.float32",
+            "max_diff": 0.0,
+            "mean_diff": 0.0,
+            "matches": true
+          }
+        ]
+      },
+      {
+        "trial": 2,
+        "seed": 44,
+        "max_diff": 0.0,
+        "pass": true,
+        "output_details": [
+          {
+            "output_idx": 0,
+            "shape_match": true,
+            "shape": [
+              10,
+              64,
+              224,
+              224
+            ],
+            "dtype": "torch.float32",
+            "max_diff": 0.0,
+            "mean_diff": 0.0,
+            "matches": true
+          }
+        ]
+      }
+    ]
+  }
+}

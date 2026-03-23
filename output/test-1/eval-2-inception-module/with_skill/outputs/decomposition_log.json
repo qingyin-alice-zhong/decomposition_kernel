@@ -1,0 +1,46 @@
+{
+  "entries": [
+    {
+      "step": "step_1_model_to_branches",
+      "type": "decision",
+      "title": "Classified branch1x1 as L0 kernel, not L1 fusion",
+      "description": "branch1x1 is a single Conv2d operation with no adjacent ops to fuse. It goes directly from L3 model to L0 kernel, skipping L2 and L1 levels. This follows the 'classify at natural level' principle.",
+      "timestamp": "2026-03-05T12:00:00Z"
+    },
+    {
+      "step": "step_1_model_to_branches",
+      "type": "decision",
+      "title": "Classified branch_3x3, branch_5x5, branch_pool as L1 fusions",
+      "description": "Each of these branches contains 2 adjacent operations with no data flow breaks between them (straight-line computation). They are fusible operation pairs: reduce+conv, reduce+conv, pool+proj. This makes them natural L1 fusions, not L2 layers (which typically have residual connections and more complex structure).",
+      "timestamp": "2026-03-05T12:01:00Z"
+    },
+    {
+      "step": "step_1_model_to_branches",
+      "type": "decision",
+      "title": "No L2 layer level needed",
+      "description": "The inception module decomposes directly into L1 fusions and L0 kernels. The branches are too simple to warrant an L2 layer classification -- they lack residual connections or complex multi-fusion structure that characterizes layers.",
+      "timestamp": "2026-03-05T12:02:00Z"
+    },
+    {
+      "step": "step_1_model_to_branches",
+      "type": "decision",
+      "title": "Torch.cat kept as data plumbing in refactored forward()",
+      "description": "The channel-wise concatenation of 4 branch outputs is data plumbing (tensor assembly), not a compute operation. It stays in the refactored forward() per anti-cheat rules.",
+      "timestamp": "2026-03-05T12:03:00Z"
+    },
+    {
+      "step": "step_2_branch3x3_to_kernels",
+      "type": "decision",
+      "title": "All 1x1 convolutions are separate unique kernels",
+      "description": "Despite all being 1x1 convolutions, the kernels have different (in_channels, out_channels) pairs: 480x192, 480x96, 480x16, 480x64. Each is a different workload and gets its own file. No deduplication needed.",
+      "timestamp": "2026-03-05T12:10:00Z"
+    },
+    {
+      "step": "final_verification",
+      "type": "decision",
+      "title": "Explicit weight map in composition_test.py",
+      "description": "The original model uses Sequential indexing (branch3x3.0, branch3x3.1) while composed model uses named submodules (branch3x3_reduce.conv, branch3x3_conv.conv). Created an explicit weight map to handle this mapping correctly.",
+      "timestamp": "2026-03-05T12:20:00Z"
+    }
+  ]
+}

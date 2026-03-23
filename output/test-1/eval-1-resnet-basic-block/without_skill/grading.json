@@ -1,0 +1,57 @@
+{
+  "eval_id": 1,
+  "eval_name": "resnet-basic-block",
+  "configuration": "without_skill",
+  "expectations": [
+    {
+      "text": "all_components_execute",
+      "passed": false,
+      "evidence": "Could not execute: Python not found in PATH on this system. Static analysis shows all 12 component files (5 kernels, 2 fusions, 4 layers, 1 model) have syntactically valid code with run_tests() functions that print PASS, but execution could not be verified."
+    },
+    {
+      "text": "verify_step_passes",
+      "passed": false,
+      "evidence": "No verification_result.json files found anywhere in the outputs directory. Step-level verification was not performed."
+    },
+    {
+      "text": "composition_test_passes",
+      "passed": false,
+      "evidence": "Could not execute: Python not found in PATH. The composition_test.py exists at verification/composition_test.py with 6 well-structured tests (level2 composition, level0 composition, stride2, individual components, conv-bn fusion, add-relu fusion) that copy weights and compare outputs. Code appears correct by inspection but execution could not be verified."
+    },
+    {
+      "text": "correct_output_structure",
+      "passed": true,
+      "evidence": "All required directories exist: level_0_kernel/ (5 files), level_1_fusion/ (2 files), level_2_layer/ (4 files), level_3_model/ (1 file), verification/ (1 file). Directory names use level_N prefix convention instead of kernel/fusion/layer/model but the abstraction levels are correctly represented."
+    },
+    {
+      "text": "decomposition_tree_exists",
+      "passed": true,
+      "evidence": "decomposition_tree.json exists and contains valid JSON with model_name, source_file, decomposition (4 levels), and dataflow sections. All 12 components are referenced with proper parent-child relationships."
+    },
+    {
+      "text": "all_leaves_are_kernels",
+      "passed": true,
+      "evidence": "All leaf nodes (nodes without children) are in level_0_kernel: conv2d_3x3, conv2d_1x1, batch_norm2d, relu, add. Non-leaf nodes at higher levels all have children references pointing to lower levels."
+    },
+    {
+      "text": "kernel_shape_naming",
+      "passed": false,
+      "evidence": "Kernel files are named by operation type only: conv2d_3x3.py, conv2d_1x1.py, batch_norm2d.py, relu.py, add.py. They lack shape dimensions and dtype in the filename (e.g., expected format like conv2d_3x3_3cin_64cout_f32.py). The naming is descriptive but does not follow the {op}_{shape}_{dtype}.py convention."
+    },
+    {
+      "text": "dimensions_preserved",
+      "passed": true,
+      "evidence": "Layer-level and model-level components correctly use in_channels=3, out_channels=64, stride=1, batch_size=10, 224x224. The model file resnet_basic_block.py and layer files (conv_bn_relu.py, downsample.py) match original parameters. Kernel-level files use 56x56 spatial dimensions (reasonable for internal feature maps) but preserve channel and batch dimensions. conv_bn.py uses in_channels=64 (correct for second conv layer input)."
+    },
+    {
+      "text": "coverage_summary_exists",
+      "passed": false,
+      "evidence": "No coverage_summary.json file found in the outputs directory or any subdirectory."
+    },
+    {
+      "text": "decomposition_log_exists",
+      "passed": false,
+      "evidence": "No decomposition_log.json file found in the outputs directory or any subdirectory."
+    }
+  ]
+}

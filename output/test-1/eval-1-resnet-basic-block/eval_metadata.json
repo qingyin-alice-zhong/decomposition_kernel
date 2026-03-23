@@ -1,0 +1,17 @@
+{
+  "eval_id": 1,
+  "eval_name": "resnet-basic-block",
+  "prompt": "/decompose data/kernelbench/level3/8_ResNetBasicBlock.py",
+  "assertions": [
+    {"text": "all_components_execute", "description": "Every .py component file runs without error and prints PASS"},
+    {"text": "verify_step_passes", "description": "All verify_step.py runs at each decomposition gate report PASS"},
+    {"text": "composition_test_passes", "description": "Final composition_test.py passes end-to-end numerical equivalence"},
+    {"text": "correct_output_structure", "description": "Output has expected directory structure (level_X_*/, steps/, verification/)"},
+    {"text": "decomposition_tree_exists", "description": "decomposition_tree.json is present and valid JSON"},
+    {"text": "all_leaves_are_kernels", "description": "Every leaf node in the decomposition tree is at kernel level (L0)"},
+    {"text": "kernel_shape_naming", "description": "Kernel files use shape-based naming ({op}_{shape}_{dtype}.py)"},
+    {"text": "dimensions_preserved", "description": "Component files use exact same dimensions as original model"},
+    {"text": "coverage_summary_exists", "description": "coverage_summary.json produced by extract_ops.py"},
+    {"text": "decomposition_log_exists", "description": "decomposition_log.json records decisions/difficulties"}
+  ]
+}
