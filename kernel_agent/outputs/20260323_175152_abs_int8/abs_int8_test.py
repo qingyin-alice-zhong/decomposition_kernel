@@ -39,10 +39,10 @@ def _test_abs_int8(kernel_path: str):
     M = tensor_size
 
     @df.region()
-    def top(A: Ty[M], B: Ty[M]):
-        @df.kernel(mapping=[1], args=[A, B])
-        def core(local_A: Ty[M] @ Ly, local_B: Ty[M] @ Ly):
-            abs_kernel(local_A, local_B)
+    def top():
+        @df.kernel(mapping=[1])
+        def core(A: Ty[M] @ Ly, B: Ty[M] @ Ly):
+            abs_kernel(A, B)
 
     input_tensor = np.random.randint(-128, 128, (tensor_size,), dtype=np.int8)
     ref_output = reference_abs_int8(input_tensor)

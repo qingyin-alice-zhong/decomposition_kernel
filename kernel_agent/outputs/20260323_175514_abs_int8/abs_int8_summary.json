@@ -1,0 +1,35 @@
+{
+  "kernel_name": "abs_int8",
+  "kernel_path": "/home/qz425/decomposition_workspace/kernel_agent/kernel/abs_int8/abs_int8.cc",
+  "test_path": "/home/qz425/decomposition_workspace/kernel_agent/kernel/abs_int8/abs_int8_test.py",
+  "output_dir": "/home/qz425/decomposition_workspace/kernel_agent/outputs/20260323_175514_abs_int8",
+  "status": {
+    "compilation_success": true,
+    "execution_success": true,
+    "verification_success": true,
+    "skipped": false
+  },
+  "performance_analysis": {
+    "vector_time_us": 120.5,
+    "min_time_us": 112.0,
+    "vector_time_cycles": 50.0,
+    "min_cycles": 50.0,
+    "avg_cycles": 50.0,
+    "max_cycles": 50.0,
+    "trace_analysis_message": "Trace analysis completed."
+  },
+  "command_details": {
+    "command": [
+      "/home/qz425/.conda/envs/allo/bin/python",
+      "/home/qz425/decomposition_workspace/kernel_agent/kernel/abs_int8/abs_int8_test.py",
+      "--kernel_path",
+      "/home/qz425/decomposition_workspace/kernel_agent/kernel/abs_int8/abs_int8.cc"
+    ],
+    "working_directory": "/home/qz425/decomposition_workspace/kernel_agent/kernel/abs_int8",
+    "return_code": 0
+  },
+  "raw_output_lengths": {
+    "stdout_length": 2031,
+    "stderr_length": 6477
+  }
+}
