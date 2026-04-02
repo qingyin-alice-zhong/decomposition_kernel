@@ -1,3 +1,13 @@
+# Update:
+
+
+暂时没有验证完全的kernel： linear_768x3072_fp32, linear_960x320_fp32, linear_960x720_fp32, linear_960x960_fp32, linear_960x2560_fp32, linear_1440x720_fp32, linear_2048x720_fp32, linear_2560x960_fp32, linear_3072x768_fp32, linear_12288x960_fp32。主要问题是：它们太大了，我按seq抽样的全tile（比如 in_features=12288， 按 tile=32 全部算完就是384 个 tile，不知道为什么慢到完全跑不完）测试都还没来得及跑完。
+
+smolVLA的kernel（包括单核实现的.cc文件和调用的py文件）及其readme文件都已经放入文件夹：decomposition_workspace/kernel_agent/kernel
+skill已扩充至：decomposition_workspace/.claude/skills/npu-kernel-gen
+
+
+
 # Hierarchical Decomposition Workspace
 
 Decompose PyTorch models into hierarchical unit tests using an LLM agent. Each model is broken down level by level — Model → Layer → Fusion → Kernel — with **verified correctness at every step**.
