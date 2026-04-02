@@ -1,3 +1,0 @@
-/home/qz425/decomposition_workspace/kernel_agent/top.prj/build/CMakeFiles/top.dir
-/home/qz425/decomposition_workspace/kernel_agent/top.prj/build/CMakeFiles/edit_cache.dir
-/home/qz425/decomposition_workspace/kernel_agent/top.prj/build/CMakeFiles/rebuild_cache.dir
