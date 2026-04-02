@@ -96,7 +96,7 @@ int main(int argc, const char *argv[]) {
 
   // kernel arguments
   unsigned int opcode = 3;
-  auto bo_in0 = xrt::bo(device, 1048 * sizeof(float),
+  auto bo_in0 = xrt::bo(device, 32 * sizeof(float),
                         XRT_BO_FLAGS_HOST_ONLY, kernel.group_id(3));
   float *bufIn0 = bo_in0.map<float *>();
   std::vector<float> srcVec0;
@@ -108,13 +108,21 @@ int main(int argc, const char *argv[]) {
   ifile0.seekg(0, std::ios::end);
   auto ifile0_size = ifile0.tellg();
   ifile0.seekg(0, std::ios::beg);
-  if (ifile0_size != 300 * sizeof(float)) {
+  if (ifile0_size != 32 * sizeof(float)) {
     std::cerr << "Error: Invalid input file, byte number mismatch.\n";
     return 1;
   }
-  std::vector<float> vec0(300);
-  ifile0.read(reinterpret_cast<char*>(vec0.data()), 300 * sizeof(float));
+  std::vector<float> vec0(32);
+  ifile0.read(reinterpret_cast<char*>(vec0.data()), 32 * sizeof(float));
   srcVec0.insert(srcVec0.end(), vec0.begin(), vec0.end());
+  memcpy(bufIn0, srcVec0.data(), (srcVec0.size() * sizeof(float)));
+
+  auto bo_out1 = xrt::bo(device, 1 * sizeof(float),
+                        XRT_BO_FLAGS_HOST_ONLY, kernel.group_id(4));
+  auto bo_in2 = xrt::bo(device, 32 * sizeof(float),
+                        XRT_BO_FLAGS_HOST_ONLY, kernel.group_id(5));
+  float *bufIn2 = bo_in2.map<float *>();
+  std::vector<float> srcVec2;
   std::ifstream ifile2("input2.data");
   if (!ifile2.is_open()) {
     std::cerr << "Error: Could not open input file.\n";
@@ -123,115 +131,14 @@ int main(int argc, const char *argv[]) {
   ifile2.seekg(0, std::ios::end);
   auto ifile2_size = ifile2.tellg();
   ifile2.seekg(0, std::ios::beg);
-  if (ifile2_size != 300 * sizeof(float)) {
+  if (ifile2_size != 32 * sizeof(float)) {
     std::cerr << "Error: Invalid input file, byte number mismatch.\n";
     return 1;
   }
-  std::vector<float> vec2(300);
-  ifile2.read(reinterpret_cast<char*>(vec2.data()), 300 * sizeof(float));
-  srcVec0.insert(srcVec0.end(), vec2.begin(), vec2.end());
-  std::ifstream ifile8("input8.data");
-  if (!ifile8.is_open()) {
-    std::cerr << "Error: Could not open input file.\n";
-    return 1;
-  }
-  ifile8.seekg(0, std::ios::end);
-  auto ifile8_size = ifile8.tellg();
-  ifile8.seekg(0, std::ios::beg);
-  if (ifile8_size != 224 * sizeof(float)) {
-    std::cerr << "Error: Invalid input file, byte number mismatch.\n";
-    return 1;
-  }
-  std::vector<float> vec8(224);
-  ifile8.read(reinterpret_cast<char*>(vec8.data()), 224 * sizeof(float));
-  srcVec0.insert(srcVec0.end(), vec8.begin(), vec8.end());
-  std::ifstream ifile10("input10.data");
-  if (!ifile10.is_open()) {
-    std::cerr << "Error: Could not open input file.\n";
-    return 1;
-  }
-  ifile10.seekg(0, std::ios::end);
-  auto ifile10_size = ifile10.tellg();
-  ifile10.seekg(0, std::ios::beg);
-  if (ifile10_size != 224 * sizeof(float)) {
-    std::cerr << "Error: Invalid input file, byte number mismatch.\n";
-    return 1;
-  }
-  std::vector<float> vec10(224);
-  ifile10.read(reinterpret_cast<char*>(vec10.data()), 224 * sizeof(float));
-  srcVec0.insert(srcVec0.end(), vec10.begin(), vec10.end());
-  memcpy(bufIn0, srcVec0.data(), (srcVec0.size() * sizeof(float)));
-
-  auto bo_out1 = xrt::bo(device, 1024 * sizeof(float),
-                        XRT_BO_FLAGS_HOST_ONLY, kernel.group_id(4));
-  auto bo_in2 = xrt::bo(device, 1048 * sizeof(float),
-                        XRT_BO_FLAGS_HOST_ONLY, kernel.group_id(5));
-  float *bufIn2 = bo_in2.map<float *>();
-  std::vector<float> srcVec2;
-  std::ifstream ifile1("input1.data");
-  if (!ifile1.is_open()) {
-    std::cerr << "Error: Could not open input file.\n";
-    return 1;
-  }
-  ifile1.seekg(0, std::ios::end);
-  auto ifile1_size = ifile1.tellg();
-  ifile1.seekg(0, std::ios::beg);
-  if (ifile1_size != 300 * sizeof(float)) {
-    std::cerr << "Error: Invalid input file, byte number mismatch.\n";
-    return 1;
-  }
-  std::vector<float> vec1(300);
-  ifile1.read(reinterpret_cast<char*>(vec1.data()), 300 * sizeof(float));
-  srcVec2.insert(srcVec2.end(), vec1.begin(), vec1.end());
-  std::ifstream ifile3("input3.data");
-  if (!ifile3.is_open()) {
-    std::cerr << "Error: Could not open input file.\n";
-    return 1;
-  }
-  ifile3.seekg(0, std::ios::end);
-  auto ifile3_size = ifile3.tellg();
-  ifile3.seekg(0, std::ios::beg);
-  if (ifile3_size != 300 * sizeof(float)) {
-    std::cerr << "Error: Invalid input file, byte number mismatch.\n";
-    return 1;
-  }
-  std::vector<float> vec3(300);
-  ifile3.read(reinterpret_cast<char*>(vec3.data()), 300 * sizeof(float));
-  srcVec2.insert(srcVec2.end(), vec3.begin(), vec3.end());
-  std::ifstream ifile9("input9.data");
-  if (!ifile9.is_open()) {
-    std::cerr << "Error: Could not open input file.\n";
-    return 1;
-  }
-  ifile9.seekg(0, std::ios::end);
-  auto ifile9_size = ifile9.tellg();
-  ifile9.seekg(0, std::ios::beg);
-  if (ifile9_size != 224 * sizeof(float)) {
-    std::cerr << "Error: Invalid input file, byte number mismatch.\n";
-    return 1;
-  }
-  std::vector<float> vec9(224);
-  ifile9.read(reinterpret_cast<char*>(vec9.data()), 224 * sizeof(float));
-  srcVec2.insert(srcVec2.end(), vec9.begin(), vec9.end());
-  std::ifstream ifile11("input11.data");
-  if (!ifile11.is_open()) {
-    std::cerr << "Error: Could not open input file.\n";
-    return 1;
-  }
-  ifile11.seekg(0, std::ios::end);
-  auto ifile11_size = ifile11.tellg();
-  ifile11.seekg(0, std::ios::beg);
-  if (ifile11_size != 224 * sizeof(float)) {
-    std::cerr << "Error: Invalid input file, byte number mismatch.\n";
-    return 1;
-  }
-  std::vector<float> vec11(224);
-  ifile11.read(reinterpret_cast<char*>(vec11.data()), 224 * sizeof(float));
-  srcVec2.insert(srcVec2.end(), vec11.begin(), vec11.end());
+  std::vector<float> vec2(32);
+  ifile2.read(reinterpret_cast<char*>(vec2.data()), 32 * sizeof(float));
+  srcVec2.insert(srcVec2.end(), vec2.begin(), vec2.end());
   memcpy(bufIn2, srcVec2.data(), (srcVec2.size() * sizeof(float)));
-
-  auto bo_out3 = xrt::bo(device, 1024 * sizeof(float),
-                        XRT_BO_FLAGS_HOST_ONLY, kernel.group_id(6));
   int tmp_trace_size = (trace_size > 0) ? trace_size : 1;
   auto bo_trace = xrt::bo(device, tmp_trace_size * 4, XRT_BO_FLAGS_HOST_ONLY, kernel.group_id(7));
   if (verbosity >= 1)
@@ -250,7 +157,7 @@ int main(int argc, const char *argv[]) {
   if (!do_profile) {
     auto start = std::chrono::high_resolution_clock::now();
     // gid: (opcode, instr, instr_size, ...)
-    auto run = kernel(opcode, bo_instr, instr_v.size(), bo_in0, bo_out1, bo_in2, bo_out3, bo_trace);
+    auto run = kernel(opcode, bo_instr, instr_v.size(), bo_in0, bo_out1, bo_in2, bo_trace);
     ert_cmd_state r = run.wait();
 
     auto end = std::chrono::high_resolution_clock::now();
@@ -262,7 +169,7 @@ int main(int argc, const char *argv[]) {
     std::cout << "NPU execution time: " << npu_time << "us\n";
   } else {
     for (size_t i = 0; i < n_warmup_iterations; i++) {
-        auto run = kernel(opcode, bo_instr, instr_v.size(), bo_in0, bo_out1, bo_in2, bo_out3, bo_trace);
+        auto run = kernel(opcode, bo_instr, instr_v.size(), bo_in0, bo_out1, bo_in2, bo_trace);
         ert_cmd_state r = run.wait();
         if (r != ERT_CMD_STATE_COMPLETED) {
             std::cout << "Kernel did not complete. Returned status: " << r << "\n";
@@ -273,7 +180,7 @@ int main(int argc, const char *argv[]) {
     float npu_time_min = 9999999;
     for (size_t i = 0; i < n_test_iterations; i++) {
         auto start = std::chrono::high_resolution_clock::now();
-        auto run = kernel(opcode, bo_instr, instr_v.size(), bo_in0, bo_out1, bo_in2, bo_out3);
+        auto run = kernel(opcode, bo_instr, instr_v.size(), bo_in0, bo_out1, bo_in2);
         run.wait();
 
         auto end = std::chrono::high_resolution_clock::now();
@@ -285,31 +192,13 @@ int main(int argc, const char *argv[]) {
     std::cout << "Min NPU execution time: " << npu_time_min << "us\n";
   }
   ifile0.close();
-  ifile2.close();
-  ifile8.close();
-  ifile10.close();
 
   bo_out1.sync(XCL_BO_SYNC_BO_FROM_DEVICE);
   float *bufOut1 = bo_out1.map<float *>();
-  std::ofstream ofile4("output4.data", std::ios::binary);
-  ofile4.write(reinterpret_cast<const char*>(bufOut1 + 0), 512 * sizeof(float));
-  ofile4.close();
-  std::ofstream ofile6("output6.data", std::ios::binary);
-  ofile6.write(reinterpret_cast<const char*>(bufOut1 + 512), 512 * sizeof(float));
-  ofile6.close();
-  ifile1.close();
-  ifile3.close();
-  ifile9.close();
-  ifile11.close();
-
-  bo_out3.sync(XCL_BO_SYNC_BO_FROM_DEVICE);
-  float *bufOut3 = bo_out3.map<float *>();
-  std::ofstream ofile5("output5.data", std::ios::binary);
-  ofile5.write(reinterpret_cast<const char*>(bufOut3 + 0), 512 * sizeof(float));
-  ofile5.close();
-  std::ofstream ofile7("output7.data", std::ios::binary);
-  ofile7.write(reinterpret_cast<const char*>(bufOut3 + 512), 512 * sizeof(float));
-  ofile7.close();
+  std::ofstream ofile1("output1.data", std::ios::binary);
+  ofile1.write(reinterpret_cast<const char*>(bufOut1 + 0), 1 * sizeof(float));
+  ofile1.close();
+  ifile2.close();
   if (trace_size > 0) {
     bo_trace.sync(XCL_BO_SYNC_BO_FROM_DEVICE);
     test_utils::write_out_trace(((char *)bufTrace), trace_size, vm["trace_file"].as<std::string>());

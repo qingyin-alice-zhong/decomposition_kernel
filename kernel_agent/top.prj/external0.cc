@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include <type_traits>
 #include <aie_api/aie.hpp>
-#include "conv2d_3x64_b1a_fp32_.cc"
+#include "linear_12288x960_fp32_.cc"
 
 extern "C" {
 

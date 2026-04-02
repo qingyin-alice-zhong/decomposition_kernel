@@ -1,0 +1,35 @@
+{
+  "kernel_name": "embedding_1024x768_fp32",
+  "kernel_path": "/home/qz425/decomposition_workspace/kernel_agent/kernel/embedding_1024x768_fp32/embedding_1024x768_fp32.cc",
+  "test_path": "/home/qz425/decomposition_workspace/kernel_agent/kernel/embedding_1024x768_fp32/embedding_1024x768_fp32_test.py",
+  "output_dir": "/home/qz425/decomposition_workspace/kernel_agent/outputs/20260331_182005_embedding_1024x768_fp32",
+  "status": {
+    "compilation_success": true,
+    "execution_success": true,
+    "verification_success": true,
+    "skipped": false
+  },
+  "performance_analysis": {
+    "vector_time_us": 792.7214800803878,
+    "min_time_us": 384.0,
+    "vector_time_cycles": null,
+    "min_cycles": null,
+    "avg_cycles": null,
+    "max_cycles": null,
+    "trace_analysis_message": null
+  },
+  "command_details": {
+    "command": [
+      "/home/qz425/.conda/envs/allo/bin/python",
+      "/home/qz425/decomposition_workspace/kernel_agent/kernel/embedding_1024x768_fp32/embedding_1024x768_fp32_test.py",
+      "--kernel_path",
+      "/home/qz425/decomposition_workspace/kernel_agent/kernel/embedding_1024x768_fp32/embedding_1024x768_fp32.cc"
+    ],
+    "working_directory": "/home/qz425/decomposition_workspace/kernel_agent/kernel/embedding_1024x768_fp32",
+    "return_code": 0
+  },
+  "raw_output_lengths": {
+    "stdout_length": 223765,
+    "stderr_length": 6477
+  }
+}

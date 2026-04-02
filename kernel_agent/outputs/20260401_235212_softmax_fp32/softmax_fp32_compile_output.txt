@@ -1,0 +1,237 @@
+COMMAND:
+/home/qz425/.conda/envs/allo/bin/python /home/qz425/decomposition_workspace/kernel_agent/kernel/softmax_fp32/softmax_fp32_test.py --kernel_path /home/qz425/decomposition_workspace/kernel_agent/kernel/softmax_fp32/softmax_fp32.cc
+
+WORKING DIRECTORY:
+/home/qz425/decomposition_workspace/kernel_agent/kernel/softmax_fp32
+
+RETURN CODE:
+0
+
+STDOUT:
+
+
+****** Bootgen v2024.1
+  **** Build date : Apr 22 2025-04:12:47
+    ** Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+    ** Copyright 2022-2024 Advanced Micro Devices, Inc. All Rights Reserved.
+
+
+[INFO]   : Bootimage generated successfully
+
+Info: Embedded Metadata section is missing project.platform.device.core element, adding it.
+Found xchesscc at /opt/xilinx/Vitis/2024.2/aietools
+ AIE Compilation: ━━━━━━━━━━━━━━━━━━━━                      50% -:--:-- 0:00:00 1/2 4 Workers
+Generating: /home/qz425/decomposition_workspace/kernel_agent/top.prj/top.mlir.prj/aie_cdo_elfs.bin
+Generating: /home/qz425/decomposition_workspace/kernel_agent/top.prj/top.mlir.prj/aie_cdo_init.bin
+Generating: /home/qz425/decomposition_workspace/kernel_agent/top.prj/top.mlir.prj/aie_cdo_enable.bin
+-- The C compiler identification is GNU 13.1.0
+-- The CXX compiler identification is GNU 13.1.0
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/bin/gcc-13 - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/g++-13 - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Found Boost: /usr/lib/x86_64-linux-gnu/cmake/Boost-1.74.0/BoostConfig.cmake (found version "1.74.0")
+-- Configuring done (0.2s)
+-- Generating done (0.0s)
+-- Build files have been written to: /home/qz425/decomposition_workspace/kernel_agent/top.prj/build
+[ 33%] Building CXX object CMakeFiles/top.dir/home/qz425/mlir-aie/runtime_lib/test_lib/test_utils.cpp.o
+[ 66%] Building CXX object CMakeFiles/top.dir/test.cpp.o
+[100%] Linking CXX executable top
+[100%] Built target top
+NPU execution time: 824us
+NPU execution time: 638us
+NPU execution time: 671us
+NPU execution time: 1524us
+NPU execution time: 1556us
+NPU execution time: 1555us
+NPU execution time: 1537us
+NPU execution time: 1591us
+NPU execution time: 1819us
+NPU execution time: 1533us
+NPU execution time: 1591us
+NPU execution time: 1586us
+NPU execution time: 835us
+NPU execution time: 1626us
+NPU execution time: 1564us
+NPU execution time: 1680us
+NPU execution time: 1675us
+NPU execution time: 1592us
+NPU execution time: 1528us
+NPU execution time: 1794us
+NPU execution time: 1732us
+NPU execution time: 802us
+NPU execution time: 1480us
+NPU execution time: 721us
+NPU execution time: 1554us
+NPU execution time: 770us
+NPU execution time: 859us
+NPU execution time: 1515us
+NPU execution time: 1586us
+NPU execution time: 947us
+NPU execution time: 609us
+NPU execution time: 1593us
+NPU execution time: 1607us
+NPU execution time: 1616us
+NPU execution time: 761us
+NPU execution time: 1525us
+NPU execution time: 658us
+NPU execution time: 877us
+NPU execution time: 1566us
+NPU execution time: 613us
+NPU execution time: 1796us
+NPU execution time: 633us
+NPU execution time: 638us
+NPU execution time: 616us
+NPU execution time: 613us
+NPU execution time: 638us
+NPU execution time: 619us
+NPU execution time: 610us
+NPU execution time: 605us
+NPU execution time: 618us
+NPU execution time: 587us
+NPU execution time: 586us
+NPU execution time: 587us
+NPU execution time: 626us
+NPU execution time: 625us
+NPU execution time: 580us
+NPU execution time: 620us
+NPU execution time: 577us
+NPU execution time: 1530us
+NPU execution time: 1522us
+NPU execution time: 1786us
+NPU execution time: 1513us
+NPU execution time: 1522us
+NPU execution time: 1564us
+NPU execution time: 1727us
+NPU execution time: 652us
+NPU execution time: 1597us
+NPU execution time: 812us
+NPU execution time: 1674us
+NPU execution time: 1580us
+NPU execution time: 1609us
+NPU execution time: 746us
+NPU execution time: 1623us
+NPU execution time: 1710us
+NPU execution time: 1436us
+NPU execution time: 1529us
+NPU execution time: 1552us
+NPU execution time: 1548us
+NPU execution time: 847us
+NPU execution time: 856us
+NPU execution time: 1504us
+NPU execution time: 948us
+NPU execution time: 1579us
+NPU execution time: 1571us
+NPU execution time: 808us
+NPU execution time: 1632us
+NPU execution time: 1698us
+NPU execution time: 982us
+NPU execution time: 778us
+NPU execution time: 650us
+NPU execution time: 1619us
+NPU execution time: 1565us
+NPU execution time: 1795us
+NPU execution time: 1679us
+NPU execution time: 1558us
+NPU execution time: 1589us
+NPU execution time: 1613us
+NPU execution time: 1553us
+NPU execution time: 836us
+NPU execution time: 1594us
+NPU execution time: 619us
+NPU execution time: 757us
+NPU execution time: 1118us
+NPU execution time: 673us
+NPU execution time: 1586us
+NPU execution time: 1540us
+NPU execution time: 1563us
+NPU execution time: 1601us
+NPU execution time: 937us
+NPU execution time: 1571us
+NPU execution time: 1666us
+NPU execution time: 1541us
+NPU execution time: 1597us
+NPU execution time: 877us
+NPU execution time: 1596us
+NPU execution time: 1563us
+NPU execution time: 1591us
+NPU execution time: 1578us
+NPU execution time: 1796us
+NPU execution time: 758us
+[CASE PASS] seed=0, case=normal, sampled_q=[0, 112], max_abs=2.443e-03, mean_abs=4.685e-05
+[CASE PASS] seed=0, case=uniform_small, sampled_q=[0, 112], max_abs=9.534e-06, mean_abs=3.877e-06
+[CASE PASS] seed=7, case=normal, sampled_q=[0, 112], max_abs=2.696e-03, mean_abs=4.544e-05
+[CASE PASS] seed=7, case=uniform_small, sampled_q=[0, 112], max_abs=9.138e-06, mean_abs=3.831e-06
+Aggregate error stats: max_abs=2.696e-03, mean_abs=2.500e-05 over 4 cases
+All verification cases passed: 4/4
+PASS!
+
+
+STDERR:
+clang version 19.0.0 (https://github.com/Xilinx/llvm-aie b2a279c1939604e2ee82a651683dd995decc25ee)
+Target: aie2-none-unknown-elf
+Thread model: posix
+InstalledDir: /home/qz425/.conda/envs/allo/lib/python3.12/site-packages/llvm-aie/bin
+Build config: +assertions
+Found HIP installation: /opt/rocm, version 6.1.40093
+ (in-process)
+ "/home/qz425/.conda/envs/allo/lib/python3.12/site-packages/llvm-aie/bin/clang++" -cc1 -triple aie2-none-unknown-elf -emit-obj -disable-free -clear-ast-before-backend -main-file-name external0.cc -mrelocation-model static -mframe-pointer=none -fmath-errno -ffp-contract=on -fno-rounding-math -mconstructor-aliases -fno-use-init-array -mllvm -vectorize-loops=false -mllvm -vectorize-slp=false -mllvm --two-entry-phi-node-folding-threshold=10 -fno-threadsafe-statics -mllvm -mandatory-inlining-before-opt=false -mllvm -basic-aa-full-phi-analysis=true -mllvm -basic-aa-max-lookup-search-depth=10 -mllvm -enable-loop-iter-count-assumptions=true -debugger-tuning=gdb -fdebug-compilation-dir=/home/qz425/decomposition_workspace/kernel_agent/top.prj -v -fcoverage-compilation-dir=/home/qz425/decomposition_workspace/kernel_agent/top.prj -resource-dir /home/qz425/.conda/envs/allo/lib/python3.12/site-packages/llvm-aie/lib/clang/19 -D NDEBUG -I /home/qz425/.conda/envs/allo/lib/python3.12/site-packages/mlir_aie/include -I /home/qz425/mlir-aie/aie_kernels/ -I . -internal-isystem /home/qz425/.conda/envs/allo/lib/python3.12/site-packages/llvm-aie/bin/../include/aie2-none-unknown-elf/c++/v1 -internal-isystem /home/qz425/.conda/envs/allo/lib/python3.12/site-packages/llvm-aie/bin/../include/c++/v1 -include aiev2intrin.h -D__AIENGINE__ -D__AIEARCH__=20 -nostdsysteminc -internal-externc-isystem /home/qz425/.conda/envs/allo/lib/python3.12/site-packages/llvm-aie/bin/../include/aie2-none-unknown-elf -O2 -Wno-parentheses -Wno-attributes -Wno-macro-redefined -std=c++20 -fdeprecated-macro -ferror-limit 19 -fgnuc-version=4.2.1 -fno-implicit-modules -fskip-odr-check-in-gmf -fcxx-exceptions -fexceptions -vectorize-loops -vectorize-slp -faddrsig -D__GCC_HAVE_DWARF2_CFI_ASM=1 -o external0.o -x c++ external0.cc
+clang -cc1 version 19.0.0 based upon LLVM 19.0.0 default target x86_64-unknown-linux-gnu
+#include "..." search starts here:
+#include <...> search starts here:
+ /home/qz425/.conda/envs/allo/lib/python3.12/site-packages/mlir_aie/include
+ /home/qz425/mlir-aie/aie_kernels
+ .
+ /home/qz425/.conda/envs/allo/lib/python3.12/site-packages/llvm-aie/bin/../include/aie2-none-unknown-elf/c++/v1
+ /home/qz425/.conda/envs/allo/lib/python3.12/site-packages/llvm-aie/bin/../include/c++/v1
+ /home/qz425/.conda/envs/allo/lib/python3.12/site-packages/llvm-aie/bin/../include/aie2-none-unknown-elf
+ /home/qz425/.conda/envs/allo/lib/python3.12/site-packages/llvm-aie/lib/clang/19/include
+End of search list.
+In file included from external0.cc:7:
+In file included from /home/qz425/.conda/envs/allo/lib/python3.12/site-packages/mlir_aie/include/aie_api/aie.hpp:41:
+In file included from /home/qz425/.conda/envs/allo/lib/python3.12/site-packages/mlir_aie/include/aie_api/detail/abs.hpp:63:
+In file included from /home/qz425/.conda/envs/allo/lib/python3.12/site-packages/mlir_aie/include/aie_api/detail/aie2/abs.hpp:10:
+In file included from /home/qz425/.conda/envs/allo/lib/python3.12/site-packages/mlir_aie/include/aie_api/detail/aie2/../broadcast.hpp:13:
+In file included from /home/qz425/.conda/envs/allo/lib/python3.12/site-packages/mlir_aie/include/aie_api/detail/aie2/../../accum.hpp:10:
+In file included from /home/qz425/.conda/envs/allo/lib/python3.12/site-packages/mlir_aie/include/aie_api/detail/aie2/../../aie_types.hpp:19:
+In file included from /home/qz425/.conda/envs/allo/lib/python3.12/site-packages/mlir_aie/include/aie_api/detail/aie2/../../detail/mdspan.hpp:12:
+In file included from /home/qz425/.conda/envs/allo/lib/python3.12/site-packages/mlir_aie/include/aie_api/detail/aie2/../../detail/../iterator.hpp:12:
+/home/qz425/.conda/envs/allo/lib/python3.12/site-packages/mlir_aie/include/aie_api/detail/aie2/../../detail/../detail/array_helpers.hpp:750:9: warning: if statement has empty body [-Wempty-body]
+  750 |         REQUIRES_MSG(elems % Elems == 0,                          "Array size needs to be a multiple of vector size");
+      |         ^
+/home/qz425/.conda/envs/allo/lib/python3.12/site-packages/mlir_aie/include/aie_api/detail/../detail/utils.hpp:764:13: note: expanded from macro 'REQUIRES_MSG'
+  764 |             STATIC_ASSERT_CONSTANT_EXPRESSION(a, m); \
+      |             ^
+/home/qz425/.conda/envs/allo/lib/python3.12/site-packages/mlir_aie/include/aie_api/detail/../detail/utils.hpp:750:92: note: expanded from macro 'STATIC_ASSERT_CONSTANT_EXPRESSION'
+  750 | #define STATIC_ASSERT_CONSTANT_EXPRESSION(e, m) do { if (!chess_manifest(e)) chess_error(m); } while (0)
+      |                                                                                            ^
+/home/qz425/.conda/envs/allo/lib/python3.12/site-packages/mlir_aie/include/aie_api/detail/aie2/../../detail/../detail/array_helpers.hpp:750:9: note: put the semicolon on a separate line to silence this warning
+/home/qz425/.conda/envs/allo/lib/python3.12/site-packages/mlir_aie/include/aie_api/detail/../detail/utils.hpp:764:13: note: expanded from macro 'REQUIRES_MSG'
+  764 |             STATIC_ASSERT_CONSTANT_EXPRESSION(a, m); \
+      |             ^
+/home/qz425/.conda/envs/allo/lib/python3.12/site-packages/mlir_aie/include/aie_api/detail/../detail/utils.hpp:750:92: note: expanded from macro 'STATIC_ASSERT_CONSTANT_EXPRESSION'
+  750 | #define STATIC_ASSERT_CONSTANT_EXPRESSION(e, m) do { if (!chess_manifest(e)) chess_error(m); } while (0)
+      |                                                                                            ^
+1 warning generated.
+CMake Deprecation Warning at CMakeLists.txt:14 (cmake_minimum_required):
+  Compatibility with CMake < 3.10 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value.  Or, use the <min>...<max> syntax
+  to tell CMake that the project requires at least <min> but has been updated
+  to work with policies introduced by <max> or earlier.
+
+
+CMake Warning (dev) at CMakeLists.txt:46 (find_package):
+  Policy CMP0167 is not set: The FindBoost module is removed.  Run "cmake
+  --help-policy CMP0167" for policy details.  Use the cmake_policy command to
+  set the policy and suppress this warning.
+
+This warning is for project developers.  Use -Wno-dev to suppress it.
+

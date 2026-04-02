@@ -1,0 +1,35 @@
+{
+  "kernel_name": "linear_720x960_fp32",
+  "kernel_path": "/home/qz425/decomposition_workspace/kernel_agent/kernel/linear_720x960_fp32/linear_720x960_fp32.cc",
+  "test_path": "/home/qz425/decomposition_workspace/kernel_agent/kernel/linear_720x960_fp32/linear_720x960_fp32_test.py",
+  "output_dir": "/home/qz425/decomposition_workspace/kernel_agent/outputs/20260401_194425_linear_720x960_fp32",
+  "status": {
+    "compilation_success": true,
+    "execution_success": true,
+    "verification_success": true,
+    "skipped": false
+  },
+  "performance_analysis": {
+    "vector_time_us": 769.9095108695652,
+    "min_time_us": 387.0,
+    "vector_time_cycles": null,
+    "min_cycles": null,
+    "avg_cycles": null,
+    "max_cycles": null,
+    "trace_analysis_message": null
+  },
+  "command_details": {
+    "command": [
+      "/home/qz425/.conda/envs/allo/bin/python",
+      "/home/qz425/decomposition_workspace/kernel_agent/kernel/linear_720x960_fp32/linear_720x960_fp32_test.py",
+      "--kernel_path",
+      "/home/qz425/decomposition_workspace/kernel_agent/kernel/linear_720x960_fp32/linear_720x960_fp32.cc"
+    ],
+    "working_directory": "/home/qz425/decomposition_workspace/kernel_agent/kernel/linear_720x960_fp32",
+    "return_code": 0
+  },
+  "raw_output_lengths": {
+    "stdout_length": 578392,
+    "stderr_length": 6477
+  }
+}

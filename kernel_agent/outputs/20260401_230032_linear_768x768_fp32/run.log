@@ -1,0 +1,17 @@
+2026-04-01 23:00:32 - INFO - Logging initialized. Log file: /home/qz425/decomposition_workspace/kernel_agent/outputs/20260401_230032_linear_768x768_fp32/run.log
+2026-04-01 23:00:32 - INFO - Project root: /home/qz425/decomposition_workspace/kernel_agent
+2026-04-01 23:00:32 - INFO - Kernel file: /home/qz425/decomposition_workspace/kernel_agent/kernel/linear_768x768_fp32/linear_768x768_fp32.cc
+2026-04-01 23:00:32 - INFO - Test file: /home/qz425/decomposition_workspace/kernel_agent/kernel/linear_768x768_fp32/linear_768x768_fp32_test.py
+2026-04-01 23:08:58 - INFO - Summary saved to /home/qz425/decomposition_workspace/kernel_agent/outputs/20260401_230032_linear_768x768_fp32/linear_768x768_fp32_summary.json
+2026-04-01 23:08:58 - INFO - RESULTS SUMMARY
+2026-04-01 23:08:58 - INFO - ====================
+2026-04-01 23:08:58 - INFO - Kernel: linear_768x768_fp32
+2026-04-01 23:08:58 - INFO - Kernel path: /home/qz425/decomposition_workspace/kernel_agent/kernel/linear_768x768_fp32/linear_768x768_fp32.cc
+2026-04-01 23:08:58 - INFO - Test path: /home/qz425/decomposition_workspace/kernel_agent/kernel/linear_768x768_fp32/linear_768x768_fp32_test.py
+2026-04-01 23:08:58 - INFO - Compilation Success: ✓
+2026-04-01 23:08:58 - INFO - Execution Success: ✓
+2026-04-01 23:08:58 - INFO - Verification Success: ✓
+2026-04-01 23:08:58 - INFO - Vector time: 784.395562 us
+2026-04-01 23:08:58 - INFO - Min NPU time: 381.000000 us
+2026-04-01 23:08:58 - INFO - Artifacts saved in: /home/qz425/decomposition_workspace/kernel_agent/outputs/20260401_230032_linear_768x768_fp32
+2026-04-01 23:08:58 - INFO - ============================================================

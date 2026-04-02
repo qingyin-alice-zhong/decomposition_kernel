@@ -1,0 +1,17 @@
+2026-03-31 18:43:08 - INFO - Logging initialized. Log file: /home/qz425/decomposition_workspace/kernel_agent/outputs/20260331_184308_embedding_49280x960_fp32/run.log
+2026-03-31 18:43:08 - INFO - Project root: /home/qz425/decomposition_workspace/kernel_agent
+2026-03-31 18:43:08 - INFO - Kernel file: /home/qz425/decomposition_workspace/kernel_agent/kernel/embedding_49280x960_fp32/embedding_49280x960_fp32.cc
+2026-03-31 18:43:08 - INFO - Test file: /home/qz425/decomposition_workspace/kernel_agent/kernel/embedding_49280x960_fp32/embedding_49280x960_fp32_test.py
+2026-03-31 18:43:45 - INFO - Summary saved to /home/qz425/decomposition_workspace/kernel_agent/outputs/20260331_184308_embedding_49280x960_fp32/embedding_49280x960_fp32_summary.json
+2026-03-31 18:43:45 - INFO - RESULTS SUMMARY
+2026-03-31 18:43:45 - INFO - ====================
+2026-03-31 18:43:45 - INFO - Kernel: embedding_49280x960_fp32
+2026-03-31 18:43:45 - INFO - Kernel path: /home/qz425/decomposition_workspace/kernel_agent/kernel/embedding_49280x960_fp32/embedding_49280x960_fp32.cc
+2026-03-31 18:43:45 - INFO - Test path: /home/qz425/decomposition_workspace/kernel_agent/kernel/embedding_49280x960_fp32/embedding_49280x960_fp32_test.py
+2026-03-31 18:43:45 - INFO - Compilation Success: ✓
+2026-03-31 18:43:45 - INFO - Execution Success: ✓
+2026-03-31 18:43:45 - INFO - Verification Success: ✓
+2026-03-31 18:43:45 - INFO - Vector time: 776.615613 us
+2026-03-31 18:43:45 - INFO - Min NPU time: 390.000000 us
+2026-03-31 18:43:45 - INFO - Artifacts saved in: /home/qz425/decomposition_workspace/kernel_agent/outputs/20260331_184308_embedding_49280x960_fp32
+2026-03-31 18:43:45 - INFO - ============================================================

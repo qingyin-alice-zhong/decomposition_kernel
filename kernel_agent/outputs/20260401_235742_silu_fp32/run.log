@@ -1,0 +1,17 @@
+2026-04-01 23:57:42 - INFO - Logging initialized. Log file: /home/qz425/decomposition_workspace/kernel_agent/outputs/20260401_235742_silu_fp32/run.log
+2026-04-01 23:57:42 - INFO - Project root: /home/qz425/decomposition_workspace/kernel_agent
+2026-04-01 23:57:42 - INFO - Kernel file: /home/qz425/decomposition_workspace/kernel_agent/kernel/silu_fp32/silu_fp32.cc
+2026-04-01 23:57:42 - INFO - Test file: /home/qz425/decomposition_workspace/kernel_agent/kernel/silu_fp32/silu_fp32_test.py
+2026-04-01 23:57:50 - INFO - Summary saved to /home/qz425/decomposition_workspace/kernel_agent/outputs/20260401_235742_silu_fp32/silu_fp32_summary.json
+2026-04-01 23:57:50 - INFO - RESULTS SUMMARY
+2026-04-01 23:57:50 - INFO - ====================
+2026-04-01 23:57:50 - INFO - Kernel: silu_fp32
+2026-04-01 23:57:50 - INFO - Kernel path: /home/qz425/decomposition_workspace/kernel_agent/kernel/silu_fp32/silu_fp32.cc
+2026-04-01 23:57:50 - INFO - Test path: /home/qz425/decomposition_workspace/kernel_agent/kernel/silu_fp32/silu_fp32_test.py
+2026-04-01 23:57:50 - INFO - Compilation Success: ✓
+2026-04-01 23:57:50 - INFO - Execution Success: ✓
+2026-04-01 23:57:50 - INFO - Verification Success: ✓
+2026-04-01 23:57:50 - INFO - Vector time: 2133.500000 us
+2026-04-01 23:57:50 - INFO - Min NPU time: 1936.000000 us
+2026-04-01 23:57:50 - INFO - Artifacts saved in: /home/qz425/decomposition_workspace/kernel_agent/outputs/20260401_235742_silu_fp32
+2026-04-01 23:57:50 - INFO - ============================================================

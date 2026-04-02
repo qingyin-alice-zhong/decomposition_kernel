@@ -1,0 +1,1089 @@
+COMMAND:
+/home/qz425/.conda/envs/allo/bin/python /home/qz425/decomposition_workspace/kernel_agent/kernel/rms_norm_960_fp32/rms_norm_960_fp32_test.py --kernel_path /home/qz425/decomposition_workspace/kernel_agent/kernel/rms_norm_960_fp32/rms_norm_960_fp32.cc
+
+WORKING DIRECTORY:
+/home/qz425/decomposition_workspace/kernel_agent/kernel/rms_norm_960_fp32
+
+RETURN CODE:
+0
+
+STDOUT:
+
+
+****** Bootgen v2024.1
+  **** Build date : Apr 22 2025-04:12:47
+    ** Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+    ** Copyright 2022-2024 Advanced Micro Devices, Inc. All Rights Reserved.
+
+
+[INFO]   : Bootimage generated successfully
+
+Info: Embedded Metadata section is missing project.platform.device.core element, adding it.
+Found xchesscc at /opt/xilinx/Vitis/2024.2/aietools
+ AIE Compilation: ━━━━━━━━━━━━━━━━━━━━                      50% -:--:-- 0:00:00 1/2 4 Workers
+Generating: /home/qz425/decomposition_workspace/kernel_agent/top.prj/top.mlir.prj/aie_cdo_elfs.bin
+Generating: /home/qz425/decomposition_workspace/kernel_agent/top.prj/top.mlir.prj/aie_cdo_init.bin
+Generating: /home/qz425/decomposition_workspace/kernel_agent/top.prj/top.mlir.prj/aie_cdo_enable.bin
+-- The C compiler identification is GNU 13.1.0
+-- The CXX compiler identification is GNU 13.1.0
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/bin/gcc-13 - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/g++-13 - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Found Boost: /usr/lib/x86_64-linux-gnu/cmake/Boost-1.74.0/BoostConfig.cmake (found version "1.74.0")
+-- Configuring done (0.2s)
+-- Generating done (0.0s)
+-- Build files have been written to: /home/qz425/decomposition_workspace/kernel_agent/top.prj/build
+[ 33%] Building CXX object CMakeFiles/top.dir/home/qz425/mlir-aie/runtime_lib/test_lib/test_utils.cpp.o
+[ 66%] Building CXX object CMakeFiles/top.dir/test.cpp.o
+[100%] Linking CXX executable top
+[100%] Built target top
+NPU execution time: 509us
+NPU execution time: 638us
+NPU execution time: 788us
+NPU execution time: 705us
+NPU execution time: 825us
+NPU execution time: 704us
+NPU execution time: 769us
+NPU execution time: 896us
+NPU execution time: 679us
+NPU execution time: 684us
+NPU execution time: 803us
+NPU execution time: 767us
+NPU execution time: 938us
+NPU execution time: 654us
+NPU execution time: 678us
+NPU execution time: 810us
+NPU execution time: 812us
+NPU execution time: 817us
+NPU execution time: 470us
+NPU execution time: 861us
+NPU execution time: 587us
+NPU execution time: 671us
+NPU execution time: 815us
+NPU execution time: 816us
+NPU execution time: 792us
+NPU execution time: 485us
+NPU execution time: 471us
+NPU execution time: 503us
+NPU execution time: 483us
+NPU execution time: 479us
+NPU execution time: 503us
+NPU execution time: 436us
+NPU execution time: 492us
+NPU execution time: 811us
+NPU execution time: 470us
+NPU execution time: 504us
+NPU execution time: 444us
+NPU execution time: 429us
+NPU execution time: 498us
+NPU execution time: 485us
+NPU execution time: 491us
+NPU execution time: 902us
+NPU execution time: 839us
+NPU execution time: 808us
+NPU execution time: 756us
+NPU execution time: 714us
+NPU execution time: 797us
+NPU execution time: 476us
+NPU execution time: 654us
+NPU execution time: 446us
+NPU execution time: 795us
+NPU execution time: 1487us
+NPU execution time: 449us
+NPU execution time: 681us
+NPU execution time: 814us
+NPU execution time: 499us
+NPU execution time: 489us
+NPU execution time: 801us
+NPU execution time: 643us
+NPU execution time: 669us
+NPU execution time: 482us
+NPU execution time: 828us
+NPU execution time: 490us
+NPU execution time: 796us
+NPU execution time: 791us
+NPU execution time: 631us
+NPU execution time: 1518us
+NPU execution time: 615us
+NPU execution time: 649us
+NPU execution time: 844us
+NPU execution time: 654us
+NPU execution time: 650us
+NPU execution time: 790us
+NPU execution time: 742us
+NPU execution time: 799us
+NPU execution time: 635us
+NPU execution time: 679us
+NPU execution time: 511us
+NPU execution time: 909us
+NPU execution time: 665us
+NPU execution time: 784us
+NPU execution time: 669us
+NPU execution time: 461us
+NPU execution time: 763us
+NPU execution time: 650us
+NPU execution time: 864us
+NPU execution time: 802us
+NPU execution time: 647us
+NPU execution time: 692us
+NPU execution time: 807us
+NPU execution time: 489us
+NPU execution time: 630us
+NPU execution time: 456us
+NPU execution time: 634us
+NPU execution time: 460us
+NPU execution time: 668us
+NPU execution time: 622us
+NPU execution time: 1567us
+NPU execution time: 455us
+NPU execution time: 693us
+NPU execution time: 652us
+NPU execution time: 691us
+NPU execution time: 687us
+NPU execution time: 472us
+NPU execution time: 763us
+NPU execution time: 429us
+NPU execution time: 446us
+NPU execution time: 835us
+NPU execution time: 654us
+NPU execution time: 670us
+NPU execution time: 879us
+NPU execution time: 671us
+NPU execution time: 476us
+NPU execution time: 740us
+NPU execution time: 767us
+NPU execution time: 795us
+NPU execution time: 651us
+NPU execution time: 960us
+NPU execution time: 813us
+NPU execution time: 670us
+NPU execution time: 669us
+NPU execution time: 667us
+NPU execution time: 810us
+NPU execution time: 508us
+NPU execution time: 787us
+NPU execution time: 831us
+NPU execution time: 651us
+NPU execution time: 741us
+NPU execution time: 1605us
+NPU execution time: 697us
+NPU execution time: 686us
+NPU execution time: 725us
+NPU execution time: 822us
+NPU execution time: 531us
+NPU execution time: 489us
+NPU execution time: 493us
+NPU execution time: 675us
+NPU execution time: 475us
+NPU execution time: 474us
+NPU execution time: 484us
+NPU execution time: 669us
+NPU execution time: 668us
+NPU execution time: 656us
+NPU execution time: 831us
+NPU execution time: 466us
+NPU execution time: 1221us
+NPU execution time: 847us
+NPU execution time: 641us
+NPU execution time: 1148us
+NPU execution time: 1570us
+NPU execution time: 643us
+NPU execution time: 709us
+NPU execution time: 818us
+NPU execution time: 798us
+NPU execution time: 1401us
+NPU execution time: 1352us
+NPU execution time: 517us
+NPU execution time: 681us
+NPU execution time: 1534us
+NPU execution time: 1145us
+NPU execution time: 735us
+NPU execution time: 698us
+NPU execution time: 1140us
+NPU execution time: 657us
+NPU execution time: 536us
+NPU execution time: 719us
+NPU execution time: 666us
+NPU execution time: 718us
+NPU execution time: 682us
+NPU execution time: 789us
+NPU execution time: 676us
+NPU execution time: 800us
+NPU execution time: 838us
+NPU execution time: 817us
+NPU execution time: 674us
+NPU execution time: 671us
+NPU execution time: 857us
+NPU execution time: 455us
+NPU execution time: 784us
+NPU execution time: 658us
+NPU execution time: 533us
+NPU execution time: 678us
+NPU execution time: 869us
+NPU execution time: 668us
+NPU execution time: 660us
+NPU execution time: 908us
+NPU execution time: 657us
+NPU execution time: 812us
+NPU execution time: 726us
+NPU execution time: 717us
+NPU execution time: 666us
+NPU execution time: 1543us
+NPU execution time: 1305us
+NPU execution time: 773us
+NPU execution time: 673us
+NPU execution time: 832us
+NPU execution time: 472us
+NPU execution time: 867us
+NPU execution time: 496us
+NPU execution time: 837us
+NPU execution time: 635us
+NPU execution time: 758us
+NPU execution time: 830us
+NPU execution time: 764us
+NPU execution time: 676us
+NPU execution time: 799us
+NPU execution time: 1591us
+NPU execution time: 770us
+NPU execution time: 1411us
+NPU execution time: 474us
+NPU execution time: 603us
+NPU execution time: 821us
+NPU execution time: 683us
+NPU execution time: 1139us
+NPU execution time: 697us
+NPU execution time: 812us
+NPU execution time: 481us
+NPU execution time: 785us
+NPU execution time: 854us
+NPU execution time: 724us
+NPU execution time: 663us
+NPU execution time: 486us
+NPU execution time: 877us
+NPU execution time: 679us
+NPU execution time: 806us
+NPU execution time: 792us
+NPU execution time: 539us
+NPU execution time: 799us
+NPU execution time: 677us
+NPU execution time: 796us
+NPU execution time: 1545us
+NPU execution time: 804us
+NPU execution time: 533us
+NPU execution time: 696us
+NPU execution time: 856us
+NPU execution time: 815us
+NPU execution time: 792us
+NPU execution time: 852us
+NPU execution time: 694us
+NPU execution time: 473us
+NPU execution time: 677us
+NPU execution time: 433us
+NPU execution time: 485us
+NPU execution time: 453us
+NPU execution time: 782us
+NPU execution time: 755us
+NPU execution time: 780us
+NPU execution time: 751us
+NPU execution time: 470us
+NPU execution time: 762us
+NPU execution time: 797us
+NPU execution time: 657us
+NPU execution time: 757us
+NPU execution time: 626us
+NPU execution time: 656us
+NPU execution time: 591us
+NPU execution time: 476us
+NPU execution time: 687us
+NPU execution time: 789us
+NPU execution time: 1185us
+NPU execution time: 1655us
+NPU execution time: 1068us
+NPU execution time: 1421us
+NPU execution time: 791us
+NPU execution time: 1124us
+NPU execution time: 717us
+NPU execution time: 1005us
+NPU execution time: 1407us
+NPU execution time: 744us
+NPU execution time: 472us
+NPU execution time: 459us
+NPU execution time: 678us
+NPU execution time: 490us
+NPU execution time: 752us
+NPU execution time: 795us
+NPU execution time: 474us
+NPU execution time: 466us
+NPU execution time: 776us
+NPU execution time: 660us
+NPU execution time: 630us
+NPU execution time: 774us
+NPU execution time: 636us
+NPU execution time: 828us
+NPU execution time: 830us
+NPU execution time: 677us
+NPU execution time: 665us
+NPU execution time: 774us
+NPU execution time: 1470us
+NPU execution time: 1206us
+NPU execution time: 479us
+NPU execution time: 449us
+NPU execution time: 643us
+NPU execution time: 683us
+NPU execution time: 709us
+NPU execution time: 820us
+NPU execution time: 652us
+NPU execution time: 759us
+NPU execution time: 668us
+NPU execution time: 738us
+NPU execution time: 650us
+NPU execution time: 466us
+NPU execution time: 793us
+NPU execution time: 656us
+NPU execution time: 689us
+NPU execution time: 1189us
+NPU execution time: 482us
+NPU execution time: 861us
+NPU execution time: 887us
+NPU execution time: 1126us
+NPU execution time: 685us
+NPU execution time: 801us
+NPU execution time: 1490us
+NPU execution time: 681us
+NPU execution time: 800us
+NPU execution time: 780us
+NPU execution time: 687us
+NPU execution time: 650us
+NPU execution time: 574us
+NPU execution time: 723us
+NPU execution time: 749us
+NPU execution time: 812us
+NPU execution time: 804us
+NPU execution time: 923us
+NPU execution time: 653us
+NPU execution time: 390us
+NPU execution time: 715us
+NPU execution time: 469us
+NPU execution time: 820us
+NPU execution time: 655us
+NPU execution time: 676us
+NPU execution time: 423us
+NPU execution time: 671us
+NPU execution time: 544us
+NPU execution time: 469us
+NPU execution time: 455us
+NPU execution time: 823us
+NPU execution time: 685us
+NPU execution time: 597us
+NPU execution time: 876us
+NPU execution time: 908us
+NPU execution time: 648us
+NPU execution time: 730us
+NPU execution time: 644us
+NPU execution time: 456us
+NPU execution time: 783us
+NPU execution time: 657us
+NPU execution time: 501us
+NPU execution time: 1501us
+NPU execution time: 832us
+NPU execution time: 508us
+NPU execution time: 693us
+NPU execution time: 785us
+NPU execution time: 675us
+NPU execution time: 671us
+NPU execution time: 825us
+NPU execution time: 786us
+NPU execution time: 796us
+NPU execution time: 390us
+NPU execution time: 653us
+NPU execution time: 884us
+NPU execution time: 646us
+NPU execution time: 1274us
+NPU execution time: 787us
+NPU execution time: 644us
+NPU execution time: 466us
+NPU execution time: 903us
+NPU execution time: 455us
+NPU execution time: 736us
+NPU execution time: 908us
+NPU execution time: 725us
+NPU execution time: 482us
+NPU execution time: 825us
+NPU execution time: 663us
+NPU execution time: 807us
+NPU execution time: 666us
+NPU execution time: 830us
+NPU execution time: 781us
+NPU execution time: 642us
+NPU execution time: 531us
+NPU execution time: 481us
+NPU execution time: 678us
+NPU execution time: 503us
+NPU execution time: 813us
+NPU execution time: 851us
+NPU execution time: 662us
+NPU execution time: 684us
+NPU execution time: 836us
+NPU execution time: 808us
+NPU execution time: 829us
+NPU execution time: 667us
+NPU execution time: 822us
+NPU execution time: 850us
+NPU execution time: 671us
+NPU execution time: 617us
+NPU execution time: 721us
+NPU execution time: 678us
+NPU execution time: 1498us
+NPU execution time: 880us
+NPU execution time: 827us
+NPU execution time: 454us
+NPU execution time: 692us
+NPU execution time: 613us
+NPU execution time: 749us
+NPU execution time: 742us
+NPU execution time: 876us
+NPU execution time: 560us
+NPU execution time: 652us
+NPU execution time: 806us
+NPU execution time: 651us
+NPU execution time: 700us
+NPU execution time: 830us
+NPU execution time: 793us
+NPU execution time: 689us
+NPU execution time: 805us
+NPU execution time: 739us
+NPU execution time: 843us
+NPU execution time: 825us
+NPU execution time: 747us
+NPU execution time: 668us
+NPU execution time: 816us
+NPU execution time: 773us
+NPU execution time: 760us
+NPU execution time: 702us
+NPU execution time: 470us
+NPU execution time: 729us
+NPU execution time: 450us
+NPU execution time: 677us
+NPU execution time: 798us
+NPU execution time: 661us
+NPU execution time: 932us
+NPU execution time: 683us
+NPU execution time: 453us
+NPU execution time: 619us
+NPU execution time: 733us
+NPU execution time: 644us
+NPU execution time: 483us
+NPU execution time: 1122us
+NPU execution time: 1119us
+NPU execution time: 804us
+NPU execution time: 649us
+NPU execution time: 620us
+NPU execution time: 495us
+NPU execution time: 796us
+NPU execution time: 790us
+NPU execution time: 900us
+NPU execution time: 1546us
+NPU execution time: 692us
+NPU execution time: 660us
+NPU execution time: 390us
+NPU execution time: 1611us
+NPU execution time: 826us
+NPU execution time: 462us
+NPU execution time: 687us
+NPU execution time: 672us
+NPU execution time: 627us
+NPU execution time: 570us
+NPU execution time: 546us
+NPU execution time: 622us
+NPU execution time: 662us
+NPU execution time: 665us
+NPU execution time: 664us
+NPU execution time: 815us
+NPU execution time: 813us
+NPU execution time: 837us
+NPU execution time: 1478us
+NPU execution time: 805us
+NPU execution time: 1524us
+NPU execution time: 730us
+NPU execution time: 689us
+NPU execution time: 1158us
+NPU execution time: 737us
+NPU execution time: 439us
+NPU execution time: 748us
+NPU execution time: 779us
+NPU execution time: 1488us
+NPU execution time: 787us
+NPU execution time: 417us
+NPU execution time: 486us
+NPU execution time: 798us
+NPU execution time: 1490us
+NPU execution time: 476us
+NPU execution time: 471us
+NPU execution time: 625us
+NPU execution time: 750us
+NPU execution time: 1484us
+NPU execution time: 447us
+NPU execution time: 724us
+NPU execution time: 731us
+NPU execution time: 810us
+NPU execution time: 724us
+NPU execution time: 1467us
+NPU execution time: 667us
+NPU execution time: 517us
+NPU execution time: 807us
+NPU execution time: 801us
+NPU execution time: 833us
+NPU execution time: 589us
+NPU execution time: 656us
+NPU execution time: 868us
+NPU execution time: 1522us
+NPU execution time: 486us
+NPU execution time: 787us
+NPU execution time: 724us
+NPU execution time: 1423us
+NPU execution time: 390us
+NPU execution time: 1052us
+NPU execution time: 793us
+NPU execution time: 668us
+NPU execution time: 680us
+NPU execution time: 893us
+NPU execution time: 696us
+NPU execution time: 678us
+NPU execution time: 804us
+NPU execution time: 715us
+NPU execution time: 657us
+NPU execution time: 491us
+NPU execution time: 852us
+NPU execution time: 468us
+NPU execution time: 639us
+NPU execution time: 665us
+NPU execution time: 955us
+NPU execution time: 391us
+NPU execution time: 391us
+NPU execution time: 392us
+NPU execution time: 801us
+NPU execution time: 655us
+NPU execution time: 462us
+NPU execution time: 721us
+NPU execution time: 893us
+NPU execution time: 390us
+NPU execution time: 735us
+NPU execution time: 391us
+NPU execution time: 834us
+NPU execution time: 738us
+NPU execution time: 647us
+NPU execution time: 781us
+NPU execution time: 751us
+NPU execution time: 679us
+NPU execution time: 801us
+NPU execution time: 454us
+NPU execution time: 686us
+NPU execution time: 811us
+NPU execution time: 466us
+NPU execution time: 390us
+NPU execution time: 809us
+NPU execution time: 641us
+NPU execution time: 615us
+NPU execution time: 635us
+NPU execution time: 731us
+NPU execution time: 629us
+NPU execution time: 621us
+NPU execution time: 810us
+NPU execution time: 491us
+NPU execution time: 780us
+NPU execution time: 391us
+NPU execution time: 660us
+NPU execution time: 817us
+NPU execution time: 657us
+NPU execution time: 1590us
+NPU execution time: 468us
+NPU execution time: 649us
+NPU execution time: 741us
+NPU execution time: 911us
+NPU execution time: 662us
+NPU execution time: 781us
+NPU execution time: 726us
+NPU execution time: 671us
+NPU execution time: 784us
+NPU execution time: 746us
+NPU execution time: 802us
+NPU execution time: 463us
+NPU execution time: 642us
+NPU execution time: 485us
+NPU execution time: 1322us
+NPU execution time: 865us
+NPU execution time: 637us
+NPU execution time: 785us
+NPU execution time: 492us
+NPU execution time: 449us
+NPU execution time: 792us
+NPU execution time: 677us
+NPU execution time: 614us
+NPU execution time: 669us
+NPU execution time: 890us
+NPU execution time: 769us
+NPU execution time: 675us
+NPU execution time: 671us
+NPU execution time: 744us
+NPU execution time: 953us
+NPU execution time: 645us
+NPU execution time: 786us
+NPU execution time: 490us
+NPU execution time: 425us
+NPU execution time: 429us
+NPU execution time: 386us
+NPU execution time: 429us
+NPU execution time: 470us
+NPU execution time: 888us
+NPU execution time: 481us
+NPU execution time: 624us
+NPU execution time: 682us
+NPU execution time: 487us
+NPU execution time: 757us
+NPU execution time: 686us
+NPU execution time: 485us
+NPU execution time: 772us
+NPU execution time: 742us
+NPU execution time: 772us
+NPU execution time: 807us
+NPU execution time: 1133us
+NPU execution time: 680us
+NPU execution time: 656us
+NPU execution time: 784us
+NPU execution time: 653us
+NPU execution time: 678us
+NPU execution time: 750us
+NPU execution time: 432us
+NPU execution time: 702us
+NPU execution time: 634us
+NPU execution time: 1680us
+NPU execution time: 418us
+NPU execution time: 417us
+NPU execution time: 397us
+NPU execution time: 515us
+NPU execution time: 883us
+NPU execution time: 804us
+NPU execution time: 1526us
+NPU execution time: 694us
+NPU execution time: 845us
+NPU execution time: 500us
+NPU execution time: 819us
+NPU execution time: 787us
+NPU execution time: 825us
+NPU execution time: 470us
+NPU execution time: 888us
+NPU execution time: 956us
+NPU execution time: 772us
+NPU execution time: 887us
+NPU execution time: 634us
+NPU execution time: 1506us
+NPU execution time: 693us
+NPU execution time: 663us
+NPU execution time: 663us
+NPU execution time: 601us
+NPU execution time: 460us
+NPU execution time: 664us
+NPU execution time: 470us
+NPU execution time: 656us
+NPU execution time: 606us
+NPU execution time: 670us
+NPU execution time: 811us
+NPU execution time: 788us
+NPU execution time: 680us
+NPU execution time: 694us
+NPU execution time: 1516us
+NPU execution time: 1229us
+NPU execution time: 661us
+NPU execution time: 798us
+NPU execution time: 746us
+NPU execution time: 666us
+NPU execution time: 700us
+NPU execution time: 751us
+NPU execution time: 680us
+NPU execution time: 805us
+NPU execution time: 643us
+NPU execution time: 736us
+NPU execution time: 843us
+NPU execution time: 807us
+NPU execution time: 726us
+NPU execution time: 469us
+NPU execution time: 660us
+NPU execution time: 778us
+NPU execution time: 715us
+NPU execution time: 921us
+NPU execution time: 1519us
+NPU execution time: 792us
+NPU execution time: 687us
+NPU execution time: 673us
+NPU execution time: 803us
+NPU execution time: 661us
+NPU execution time: 789us
+NPU execution time: 780us
+NPU execution time: 467us
+NPU execution time: 489us
+NPU execution time: 479us
+NPU execution time: 619us
+NPU execution time: 659us
+NPU execution time: 810us
+NPU execution time: 390us
+NPU execution time: 843us
+NPU execution time: 1119us
+NPU execution time: 785us
+NPU execution time: 659us
+NPU execution time: 836us
+NPU execution time: 905us
+NPU execution time: 761us
+NPU execution time: 859us
+NPU execution time: 808us
+NPU execution time: 686us
+NPU execution time: 672us
+NPU execution time: 812us
+NPU execution time: 671us
+NPU execution time: 490us
+NPU execution time: 872us
+NPU execution time: 832us
+NPU execution time: 468us
+NPU execution time: 816us
+NPU execution time: 829us
+NPU execution time: 741us
+NPU execution time: 793us
+NPU execution time: 974us
+NPU execution time: 1533us
+NPU execution time: 803us
+NPU execution time: 1490us
+NPU execution time: 850us
+NPU execution time: 675us
+NPU execution time: 468us
+NPU execution time: 1501us
+NPU execution time: 488us
+NPU execution time: 499us
+NPU execution time: 702us
+NPU execution time: 1532us
+NPU execution time: 809us
+NPU execution time: 687us
+NPU execution time: 558us
+NPU execution time: 838us
+NPU execution time: 458us
+NPU execution time: 1168us
+NPU execution time: 744us
+NPU execution time: 782us
+NPU execution time: 701us
+NPU execution time: 1484us
+NPU execution time: 492us
+NPU execution time: 621us
+NPU execution time: 1450us
+NPU execution time: 811us
+NPU execution time: 826us
+NPU execution time: 652us
+NPU execution time: 749us
+NPU execution time: 801us
+NPU execution time: 476us
+NPU execution time: 450us
+NPU execution time: 455us
+NPU execution time: 497us
+NPU execution time: 525us
+NPU execution time: 673us
+NPU execution time: 470us
+NPU execution time: 867us
+NPU execution time: 506us
+NPU execution time: 875us
+NPU execution time: 684us
+NPU execution time: 1515us
+NPU execution time: 661us
+NPU execution time: 891us
+NPU execution time: 751us
+NPU execution time: 695us
+NPU execution time: 868us
+NPU execution time: 797us
+NPU execution time: 696us
+NPU execution time: 1162us
+NPU execution time: 822us
+NPU execution time: 873us
+NPU execution time: 660us
+NPU execution time: 823us
+NPU execution time: 455us
+NPU execution time: 839us
+NPU execution time: 844us
+NPU execution time: 418us
+NPU execution time: 399us
+NPU execution time: 429us
+NPU execution time: 814us
+NPU execution time: 713us
+NPU execution time: 639us
+NPU execution time: 766us
+NPU execution time: 882us
+NPU execution time: 674us
+NPU execution time: 779us
+NPU execution time: 715us
+NPU execution time: 464us
+NPU execution time: 780us
+NPU execution time: 794us
+NPU execution time: 1665us
+NPU execution time: 652us
+NPU execution time: 811us
+NPU execution time: 833us
+NPU execution time: 516us
+NPU execution time: 730us
+NPU execution time: 630us
+NPU execution time: 1505us
+NPU execution time: 469us
+NPU execution time: 675us
+NPU execution time: 874us
+NPU execution time: 700us
+NPU execution time: 658us
+NPU execution time: 682us
+NPU execution time: 787us
+NPU execution time: 772us
+NPU execution time: 852us
+NPU execution time: 687us
+NPU execution time: 806us
+NPU execution time: 650us
+NPU execution time: 697us
+NPU execution time: 579us
+NPU execution time: 866us
+NPU execution time: 793us
+NPU execution time: 662us
+NPU execution time: 757us
+NPU execution time: 1524us
+NPU execution time: 714us
+NPU execution time: 655us
+NPU execution time: 821us
+NPU execution time: 732us
+NPU execution time: 655us
+NPU execution time: 704us
+NPU execution time: 822us
+NPU execution time: 677us
+NPU execution time: 662us
+NPU execution time: 441us
+NPU execution time: 857us
+NPU execution time: 1507us
+NPU execution time: 523us
+NPU execution time: 787us
+NPU execution time: 662us
+NPU execution time: 787us
+NPU execution time: 685us
+NPU execution time: 1590us
+NPU execution time: 675us
+NPU execution time: 891us
+NPU execution time: 890us
+NPU execution time: 784us
+NPU execution time: 677us
+NPU execution time: 667us
+NPU execution time: 469us
+NPU execution time: 816us
+NPU execution time: 673us
+NPU execution time: 692us
+NPU execution time: 838us
+NPU execution time: 746us
+NPU execution time: 689us
+NPU execution time: 666us
+NPU execution time: 684us
+NPU execution time: 916us
+NPU execution time: 1130us
+NPU execution time: 459us
+NPU execution time: 807us
+NPU execution time: 654us
+NPU execution time: 795us
+NPU execution time: 806us
+NPU execution time: 729us
+NPU execution time: 811us
+NPU execution time: 769us
+NPU execution time: 673us
+NPU execution time: 691us
+NPU execution time: 682us
+NPU execution time: 824us
+NPU execution time: 680us
+NPU execution time: 691us
+NPU execution time: 488us
+NPU execution time: 765us
+NPU execution time: 808us
+NPU execution time: 650us
+NPU execution time: 840us
+NPU execution time: 752us
+NPU execution time: 783us
+NPU execution time: 687us
+NPU execution time: 503us
+NPU execution time: 864us
+NPU execution time: 875us
+NPU execution time: 1452us
+NPU execution time: 1629us
+NPU execution time: 484us
+NPU execution time: 817us
+NPU execution time: 471us
+NPU execution time: 1121us
+NPU execution time: 637us
+NPU execution time: 718us
+NPU execution time: 685us
+NPU execution time: 822us
+NPU execution time: 481us
+NPU execution time: 779us
+NPU execution time: 783us
+NPU execution time: 837us
+NPU execution time: 742us
+NPU execution time: 512us
+NPU execution time: 800us
+NPU execution time: 788us
+NPU execution time: 755us
+NPU execution time: 726us
+NPU execution time: 706us
+NPU execution time: 870us
+NPU execution time: 817us
+NPU execution time: 706us
+NPU execution time: 834us
+NPU execution time: 674us
+NPU execution time: 686us
+NPU execution time: 804us
+NPU execution time: 765us
+NPU execution time: 1503us
+NPU execution time: 740us
+NPU execution time: 698us
+NPU execution time: 800us
+NPU execution time: 750us
+NPU execution time: 786us
+NPU execution time: 840us
+NPU execution time: 1518us
+NPU execution time: 819us
+NPU execution time: 739us
+NPU execution time: 791us
+NPU execution time: 1693us
+NPU execution time: 700us
+NPU execution time: 742us
+NPU execution time: 846us
+NPU execution time: 705us
+NPU execution time: 1616us
+NPU execution time: 807us
+NPU execution time: 778us
+NPU execution time: 1387us
+NPU execution time: 768us
+NPU execution time: 1423us
+NPU execution time: 1341us
+NPU execution time: 1401us
+NPU execution time: 900us
+NPU execution time: 720us
+NPU execution time: 591us
+NPU execution time: 816us
+NPU execution time: 760us
+NPU execution time: 823us
+NPU execution time: 792us
+NPU execution time: 739us
+NPU execution time: 702us
+NPU execution time: 695us
+NPU execution time: 780us
+NPU execution time: 1181us
+NPU execution time: 913us
+NPU execution time: 826us
+NPU execution time: 895us
+NPU execution time: 1151us
+NPU execution time: 816us
+NPU execution time: 759us
+NPU execution time: 893us
+NPU execution time: 810us
+NPU execution time: 761us
+NPU execution time: 818us
+NPU execution time: 614us
+NPU execution time: 922us
+NPU execution time: 467us
+NPU execution time: 474us
+NPU execution time: 630us
+NPU execution time: 708us
+NPU execution time: 640us
+NPU execution time: 761us
+NPU execution time: 904us
+NPU execution time: 431us
+NPU execution time: 800us
+NPU execution time: 834us
+NPU execution time: 494us
+NPU execution time: 655us
+NPU execution time: 709us
+NPU execution time: 901us
+NPU execution time: 855us
+[CASE PASS] seed=0, case=normal, max_abs=4.768e-07, mean_abs=7.387e-08
+[CASE PASS] seed=0, case=uniform_small, max_abs=2.384e-07, mean_abs=2.987e-08
+[CASE PASS] seed=0, case=uniform_large, max_abs=2.384e-07, mean_abs=3.019e-08
+[CASE PASS] seed=0, case=boundary_mix, max_abs=0.000e+00, mean_abs=0.000e+00
+[CASE PASS] seed=7, case=normal, max_abs=0.000e+00, mean_abs=0.000e+00
+[CASE PASS] seed=7, case=uniform_small, max_abs=2.384e-07, mean_abs=2.984e-08
+[CASE PASS] seed=7, case=uniform_large, max_abs=0.000e+00, mean_abs=0.000e+00
+[CASE PASS] seed=7, case=boundary_mix, max_abs=0.000e+00, mean_abs=0.000e+00
+[CASE PASS] seed=13, case=normal, max_abs=4.768e-07, mean_abs=4.814e-08
+[CASE PASS] seed=13, case=uniform_small, max_abs=2.384e-07, mean_abs=2.971e-08
+[CASE PASS] seed=13, case=uniform_large, max_abs=2.384e-07, mean_abs=2.880e-08
+[CASE PASS] seed=13, case=boundary_mix, max_abs=0.000e+00, mean_abs=0.000e+00
+[CASE PASS] seed=23, case=normal, max_abs=4.768e-07, mean_abs=2.349e-08
+[CASE PASS] seed=23, case=uniform_small, max_abs=0.000e+00, mean_abs=0.000e+00
+[CASE PASS] seed=23, case=uniform_large, max_abs=0.000e+00, mean_abs=0.000e+00
+[CASE PASS] seed=23, case=boundary_mix, max_abs=0.000e+00, mean_abs=0.000e+00
+Aggregate error stats: max_abs=4.768e-07, mean_abs=1.837e-08 over 16 cases
+All verification cases passed: 16/16
+PASS!
+
+
+STDERR:
+clang version 19.0.0 (https://github.com/Xilinx/llvm-aie b2a279c1939604e2ee82a651683dd995decc25ee)
+Target: aie2-none-unknown-elf
+Thread model: posix
+InstalledDir: /home/qz425/.conda/envs/allo/lib/python3.12/site-packages/llvm-aie/bin
+Build config: +assertions
+Found HIP installation: /opt/rocm, version 6.1.40093
+ (in-process)
+ "/home/qz425/.conda/envs/allo/lib/python3.12/site-packages/llvm-aie/bin/clang++" -cc1 -triple aie2-none-unknown-elf -emit-obj -disable-free -clear-ast-before-backend -main-file-name external0.cc -mrelocation-model static -mframe-pointer=none -fmath-errno -ffp-contract=on -fno-rounding-math -mconstructor-aliases -fno-use-init-array -mllvm -vectorize-loops=false -mllvm -vectorize-slp=false -mllvm --two-entry-phi-node-folding-threshold=10 -fno-threadsafe-statics -mllvm -mandatory-inlining-before-opt=false -mllvm -basic-aa-full-phi-analysis=true -mllvm -basic-aa-max-lookup-search-depth=10 -mllvm -enable-loop-iter-count-assumptions=true -debugger-tuning=gdb -fdebug-compilation-dir=/home/qz425/decomposition_workspace/kernel_agent/top.prj -v -fcoverage-compilation-dir=/home/qz425/decomposition_workspace/kernel_agent/top.prj -resource-dir /home/qz425/.conda/envs/allo/lib/python3.12/site-packages/llvm-aie/lib/clang/19 -D NDEBUG -I /home/qz425/.conda/envs/allo/lib/python3.12/site-packages/mlir_aie/include -I /home/qz425/mlir-aie/aie_kernels/ -I . -internal-isystem /home/qz425/.conda/envs/allo/lib/python3.12/site-packages/llvm-aie/bin/../include/aie2-none-unknown-elf/c++/v1 -internal-isystem /home/qz425/.conda/envs/allo/lib/python3.12/site-packages/llvm-aie/bin/../include/c++/v1 -include aiev2intrin.h -D__AIENGINE__ -D__AIEARCH__=20 -nostdsysteminc -internal-externc-isystem /home/qz425/.conda/envs/allo/lib/python3.12/site-packages/llvm-aie/bin/../include/aie2-none-unknown-elf -O2 -Wno-parentheses -Wno-attributes -Wno-macro-redefined -std=c++20 -fdeprecated-macro -ferror-limit 19 -fgnuc-version=4.2.1 -fno-implicit-modules -fskip-odr-check-in-gmf -fcxx-exceptions -fexceptions -vectorize-loops -vectorize-slp -faddrsig -D__GCC_HAVE_DWARF2_CFI_ASM=1 -o external0.o -x c++ external0.cc
+clang -cc1 version 19.0.0 based upon LLVM 19.0.0 default target x86_64-unknown-linux-gnu
+#include "..." search starts here:
+#include <...> search starts here:
+ /home/qz425/.conda/envs/allo/lib/python3.12/site-packages/mlir_aie/include
+ /home/qz425/mlir-aie/aie_kernels
+ .
+ /home/qz425/.conda/envs/allo/lib/python3.12/site-packages/llvm-aie/bin/../include/aie2-none-unknown-elf/c++/v1
+ /home/qz425/.conda/envs/allo/lib/python3.12/site-packages/llvm-aie/bin/../include/c++/v1
+ /home/qz425/.conda/envs/allo/lib/python3.12/site-packages/llvm-aie/bin/../include/aie2-none-unknown-elf
+ /home/qz425/.conda/envs/allo/lib/python3.12/site-packages/llvm-aie/lib/clang/19/include
+End of search list.
+In file included from external0.cc:7:
+In file included from /home/qz425/.conda/envs/allo/lib/python3.12/site-packages/mlir_aie/include/aie_api/aie.hpp:41:
+In file included from /home/qz425/.conda/envs/allo/lib/python3.12/site-packages/mlir_aie/include/aie_api/detail/abs.hpp:63:
+In file included from /home/qz425/.conda/envs/allo/lib/python3.12/site-packages/mlir_aie/include/aie_api/detail/aie2/abs.hpp:10:
+In file included from /home/qz425/.conda/envs/allo/lib/python3.12/site-packages/mlir_aie/include/aie_api/detail/aie2/../broadcast.hpp:13:
+In file included from /home/qz425/.conda/envs/allo/lib/python3.12/site-packages/mlir_aie/include/aie_api/detail/aie2/../../accum.hpp:10:
+In file included from /home/qz425/.conda/envs/allo/lib/python3.12/site-packages/mlir_aie/include/aie_api/detail/aie2/../../aie_types.hpp:19:
+In file included from /home/qz425/.conda/envs/allo/lib/python3.12/site-packages/mlir_aie/include/aie_api/detail/aie2/../../detail/mdspan.hpp:12:
+In file included from /home/qz425/.conda/envs/allo/lib/python3.12/site-packages/mlir_aie/include/aie_api/detail/aie2/../../detail/../iterator.hpp:12:
+/home/qz425/.conda/envs/allo/lib/python3.12/site-packages/mlir_aie/include/aie_api/detail/aie2/../../detail/../detail/array_helpers.hpp:750:9: warning: if statement has empty body [-Wempty-body]
+  750 |         REQUIRES_MSG(elems % Elems == 0,                          "Array size needs to be a multiple of vector size");
+      |         ^
+/home/qz425/.conda/envs/allo/lib/python3.12/site-packages/mlir_aie/include/aie_api/detail/../detail/utils.hpp:764:13: note: expanded from macro 'REQUIRES_MSG'
+  764 |             STATIC_ASSERT_CONSTANT_EXPRESSION(a, m); \
+      |             ^
+/home/qz425/.conda/envs/allo/lib/python3.12/site-packages/mlir_aie/include/aie_api/detail/../detail/utils.hpp:750:92: note: expanded from macro 'STATIC_ASSERT_CONSTANT_EXPRESSION'
+  750 | #define STATIC_ASSERT_CONSTANT_EXPRESSION(e, m) do { if (!chess_manifest(e)) chess_error(m); } while (0)
+      |                                                                                            ^
+/home/qz425/.conda/envs/allo/lib/python3.12/site-packages/mlir_aie/include/aie_api/detail/aie2/../../detail/../detail/array_helpers.hpp:750:9: note: put the semicolon on a separate line to silence this warning
+/home/qz425/.conda/envs/allo/lib/python3.12/site-packages/mlir_aie/include/aie_api/detail/../detail/utils.hpp:764:13: note: expanded from macro 'REQUIRES_MSG'
+  764 |             STATIC_ASSERT_CONSTANT_EXPRESSION(a, m); \
+      |             ^
+/home/qz425/.conda/envs/allo/lib/python3.12/site-packages/mlir_aie/include/aie_api/detail/../detail/utils.hpp:750:92: note: expanded from macro 'STATIC_ASSERT_CONSTANT_EXPRESSION'
+  750 | #define STATIC_ASSERT_CONSTANT_EXPRESSION(e, m) do { if (!chess_manifest(e)) chess_error(m); } while (0)
+      |                                                                                            ^
+1 warning generated.
+CMake Deprecation Warning at CMakeLists.txt:14 (cmake_minimum_required):
+  Compatibility with CMake < 3.10 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value.  Or, use the <min>...<max> syntax
+  to tell CMake that the project requires at least <min> but has been updated
+  to work with policies introduced by <max> or earlier.
+
+
+CMake Warning (dev) at CMakeLists.txt:46 (find_package):
+  Policy CMP0167 is not set: The FindBoost module is removed.  Run "cmake
+  --help-policy CMP0167" for policy details.  Use the cmake_policy command to
+  set the policy and suppress this warning.
+
+This warning is for project developers.  Use -Wno-dev to suppress it.
+

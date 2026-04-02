@@ -12,6 +12,7 @@ PROJECT_ROOT = Path(__file__).resolve().parent
 
 TIME_PATTERN = re.compile(r"Avg NPU execution time:\s*([0-9]+(?:\.[0-9]+)?)\s*(us|ms|s)")
 MIN_TIME_PATTERN = re.compile(r"Min NPU execution time:\s*([0-9]+(?:\.[0-9]+)?)\s*(us|ms|s)")
+NPU_TIME_SAMPLE_PATTERN = re.compile(r"NPU execution time:\s*([0-9]+(?:\.[0-9]+)?)\s*us")
 CYCLE_PATTERN = re.compile(
     r"First/Min/Avg/Max cycles is\s*"
     r"([0-9]+(?:\.[0-9]+)?)\s*/\s*"
@@ -120,6 +121,13 @@ def _extract_metrics(stdout: str) -> dict:
         value = float(min_time_match.group(1))
         unit = min_time_match.group(2)
         metrics["min_time_us"] = _convert_to_us(value, unit)
+
+    time_samples_us = [float(match) for match in NPU_TIME_SAMPLE_PATTERN.findall(stdout)]
+    if time_samples_us:
+        if metrics["vector_time_us"] is None:
+            metrics["vector_time_us"] = sum(time_samples_us) / len(time_samples_us)
+        if metrics["min_time_us"] is None:
+            metrics["min_time_us"] = min(time_samples_us)
 
     cycle_match = CYCLE_PATTERN.search(stdout)
     if cycle_match:
